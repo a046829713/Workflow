@@ -1,0 +1,500 @@
+{% extends "Company/base.html" %}
+
+{% load static %}
+
+
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'Company/index.css' %}">
+<link rel="stylesheet" href="{% static 'AssembleWmodel/assemblewmodel.css' %}">
+{% endblock extra_css %}
+
+{% block title%}
+W型號組裝
+{% endblock title %}
+
+
+{% block content %}
+
+<form action="{% url 'AssembleWmodel' %}" method="post">
+    <!-- 驗證用 -->
+    {% csrf_token %} 
+    <div class="costom_container mt-3">
+
+        <div class="mt-3 dotted-line">
+            <h3 style="text-align: center;">紙管膠膜
+                <div class="custom-tooltip-wrapper">
+                    <i class="custom-tooltip">
+                        <img src="{% static 'Company\question-mark.png' %}" height="20" width="20" alt="提示" />
+                        <span class="custom-tooltip-text">
+                            1.
+                            <br> 
+                            
+                        </span>
+                    </i>
+                </div>
+                
+            </h3>
+            
+        </div>
+        <div class="third_container">
+            <div class="row">
+            
+                <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.triImpellerSilencer.label }}</label>
+                <div class="col-md-10 mt-2">
+                    {{ form.triImpellerSilencer }}
+                </div>
+            </div>
+            <div class="row threeimpeller_select_area">
+            
+                <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.threeimpeller_select.label }}
+                    <div class="custom-tooltip-wrapper">
+                        <i class="custom-tooltip">
+                            <img src="{% static 'Company\question-mark.png' %}" height="20" width="20" alt="提示" />
+                            <span class="custom-tooltip-text">
+                                1.如果三葉輪選擇附加,才會有膠膜,不附加沒有膠膜
+                                <br> 
+                                
+                            </span>
+                        </i>
+                    </div>
+                </label>
+                
+                <div class="col-md-10 mt-2">
+                    {{ form.threeimpeller_select }}
+                </div>
+            </div>
+            <div class="row papertubelining_area">
+            
+                <label for="" class="col-md-2 col-form-label form-label fs-5 " >{{ form.papertubelining.label }}</label>
+                <div class="col-md-10 mt-2">
+                    {{ form.papertubelining }}
+                </div>
+            </div>
+
+            <div class="row filminnerdiameter_area">            
+                <label for="" class="col-md-2 col-form-label form-label fs-5 " >{{ form.filminnerdiameter.label }}</label>
+                <div class="col-md-10 mt-2">
+                    {{ form.filminnerdiameter }}
+                </div>
+            </div>
+
+            <div class="row filmlength_area">
+            
+                <label for="" class="col-md-2 col-form-label form-label fs-5" >{{ form.filmlength.label }}</label>
+                <div class="col-md-10 mt-2">
+                    {{ form.filmlength }}
+                </div>
+            </div>
+            <div class="row Threeimpellerlengths">
+            
+                <label for="" class="col-md-2 col-form-label form-label fs-5" >{{ form.Threeimpellerlengths.label }}</label>
+                <div class="col-md-10 mt-2">
+                    {{ form.Threeimpellerlengths }}
+                </div>
+            </div>
+        </div> 
+         
+        <div class="mt-3 dotted-line">
+            <h3 style="text-align: center;">上下蓋
+                
+            </h3>
+        </div>
+        <div class="third_container">
+            <div class="row">
+            
+                <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.up_buttom_cover_color.label }}</label>
+                <div class="col-md-10 mt-2">
+                    {{ form.up_buttom_cover_color }}
+                </div>
+            </div>
+            <div class="row">
+            
+                <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.down_buttom_cover_color.label }}</label>
+                <div class="col-md-10 mt-2">
+                    {{ form.down_buttom_cover_color }}
+                </div>
+            </div>
+            <div class="row">
+            
+                <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.up_top_cover_color.label }}</label>
+                <div class="col-md-10 mt-2">
+                    {{ form.up_top_cover_color }}
+                </div>
+            </div>
+            <div class="row">
+            
+                <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.down_top_cover_color.label }}</label>
+                <div class="col-md-10 mt-2">
+                    {{ form.down_top_cover_color }}
+                </div>
+            </div>
+            <div class="row">
+            
+                <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.up_top_cover_tag.label }}</label>
+                <div class="col-md-10 mt-2">
+                    {{ form.up_top_cover_tag }}
+                </div>
+            </div>
+            <div class="row">
+            
+                <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.down_top_cover_tag.label }}</label>
+                <div class="col-md-10 mt-2">
+                    {{ form.down_top_cover_tag }}
+                </div>
+            </div>
+            <div class="row">
+            
+                <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.magnet.label }}</label>
+                <div class="col-md-10 mt-2">
+                    {{ form.magnet }}
+                </div>
+            </div>
+    
+        </div>
+       
+        <div class="mt-3 dotted-line">
+            <h3 style="text-align: center;">鐵條款式
+                <div class="custom-tooltip-wrapper">
+                    <i class="custom-tooltip">
+                        <img src="{% static 'Company\question-mark.png' %}" height="20" width="20" alt="提示" />
+                        <span class="custom-tooltip-text">
+                            1.選擇超輕量款不用選擇張力,張力是固定的                                               
+                        </span>
+                    </i>
+                </div>        
+            </h3>
+    
+        </div>
+        <div class="third_container">
+            <div class="row">
+            
+                <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.productnotypes.label }}</label>
+                <div class="col-md-10 mt-2">
+                    {{ form.productnotypes }}
+                </div>
+            </div>
+            <div class="row" id="tensions_area">
+            
+                <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.tensions.label }}</label>
+                <div class="col-md-10 mt-2">
+                    {{ form.tensions }}
+                </div>
+            </div>
+        </div> 
+
+
+        <div class="mt-3 dotted-line">
+            <h3 style="text-align: center;">滾輪</h3>
+    
+        </div>
+        <div class="third_container">
+            <div class="row">
+            
+                <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.rollertypes.label }}</label>
+                <div class="col-md-10 mt-2">
+                    {{ form.rollertypes }}
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="mt-3 dotted-line">
+            <h3 style="text-align: center;">泡棉</h3>
+    
+        </div>
+        <div class="third_container">
+            <div class="row">
+            
+                <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.foam_is_have.label }}</label>
+                <div class="col-md-10 mt-2">
+                    {{ form.foam_is_have }}
+                </div>
+            </div>
+    
+    
+        </div>
+
+        <div class="mt-3 dotted-line">
+            <h3 style="text-align: center;">手炳握把</h3>
+    
+        </div>
+        <div class="third_container">
+            <div class="row">
+            
+                <label for="" class="col-md-2 col-form-label form-label fs-5">
+                    {{ form.handletype.label }}
+                    <div class="custom-tooltip-wrapper">
+                        <i class="custom-tooltip">
+                            <img src="{% static 'Company\question-mark.png' %}" height="20" width="20" alt="提示" />
+                            <span class="custom-tooltip-text">
+                                1.如果是伸縮的時候沒有彎管
+                                <br> 
+                                
+                            </span>
+                        </i>
+                    </div>
+                </label>
+                <div class="col-md-10 mt-2">
+                    {{ form.handletype }}
+                </div>
+            </div>
+            <div class="row handlecolor_area">
+            
+                <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.handlecolor.label }}</label>
+                <div class="col-md-10 mt-2">
+                    {{ form.handlecolor }}
+                </div>
+            </div>
+            <div class="row tubecolor_area">
+            
+                <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.tubecolor.label }}</label>
+                <div class="col-md-10 mt-2">
+                    {{ form.tubecolor }}
+                </div>
+            </div>
+            <div class="row flexibletubehandlelength_area">
+            
+                <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.flexibletubehandlelength.label }}</label>
+                <div class="col-md-10 mt-2">
+                    {{ form.flexibletubehandlelength }}
+                </div>
+            </div>
+    
+        </div>
+
+        <div class="third_container">
+            <div class="row bendpipecolor_area">
+            
+                <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.bendpipecolor.label }}</label>
+                <div class="col-md-10 mt-2">
+                    {{ form.bendpipecolor }}
+                </div>
+            </div>
+    
+    
+        </div>
+       
+
+        <div class="mt-3 dotted-line">
+            <h3 style="text-align: center;">拉把黑球</h3>
+    
+        </div>
+        <div class="third_container">
+            <div class="row">
+            
+                <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.pulltheblackballis_have.label }}</label>
+                <div class="col-md-10 mt-2">
+                    {{ form.pulltheblackballis_have }}
+                </div>
+            </div>
+    
+    
+        </div>
+    
+    
+    
+        <div class="mt-3 dotted-line">
+            <h3 style="text-align: center;">齒輪</h3>
+    
+        </div>
+        <div class="third_container">
+            <div class="row">
+            
+                <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.percent.label }}</label>
+                <div class="col-md-10 mt-2">
+                    {{ form.percent }}
+                </div>
+            </div>
+    
+    
+        </div>
+
+        <!-- <div class="mt-3 dotted-line">
+            <h3 style="text-align: center;">彈簧</h3>
+    
+        </div>
+        <div class="third_container">
+            <div class="row">
+            
+                <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.strong.label }}</label>
+                <div class="col-md-10 mt-2">
+                    {{ form.strong }}
+                </div>
+            </div>   
+        </div>  -->
+        
+        <div class="mt-3">
+            <div class="d-flex justify-content-around">
+                <button type="submit" class="btn  btn-outline-primary">產生</button>              
+            </div>        
+        </div>
+    
+        <div class="mt-3">&nbsp;</div>
+    </div>
+</form>
+
+
+
+<div class="costom_container mt-3">
+    <div class="mt-3 dotted-line">
+        <h3 style="text-align: center;">歷史紀錄</h3>
+        
+    </div>
+    <div class="mt-3">
+        <table class="table table-light table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">料號</th>
+                    <th scope="col">日期</th>
+                    <th scope="col">特徵描述</th>
+                    <th scope="col">詳細資料</th>
+                    <th scope="col">刪除</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+</div>
+
+
+{% endblock content %}
+
+
+{% block extra_js_body %}
+<script>
+// 使用者的規則
+$(document).ready(function(){
+    // 初始化區域
+    if ($('#id_triImpellerSilencer').val() == '三葉輪'){        
+        $(".papertubelining_area").hide()
+        $(".filmlength_area").hide()
+        
+    }
+    if ($('#id_handletype').val() == '標準'){        
+        $(".flexibletubehandlelength_area").hide()
+        $("#id_flexibletubehandlelength").val('').prop('required',false);
+        
+        $(".tubecolor_area").hide()
+        $("#id_tubecolor").val('').prop('required',false);
+    }
+
+    $('#id_productnotypes').change(function(){
+        if ($('#id_productnotypes').val() == '超輕量款'){
+            $("#tensions_area").hide()
+            $("#id_tensions").val('')
+        }else{
+            $("#tensions_area").show()
+        }
+        
+    })
+
+    $("#id_triImpellerSilencer").change(function(){
+        if ($('#id_triImpellerSilencer').val() == '管塞'){
+            // 显示的字段设置为必填
+            $(".papertubelining_area").show();
+            $("#id_papertubelining").prop('required',true);
+            $(".filmlength_area").show();
+            $("#id_filmlength").prop('required',true);
+
+            // 隐藏的字段移除必填
+            $(".threeimpeller_select_area").hide();
+            $("#id_threeimpeller_select").val('').prop('required',false);
+            
+            $(".filminnerdiameter_area").hide();
+            $("#id_filminnerdiameter").val('').prop('required',false);
+
+            $(".Threeimpellerlengths").hide();
+            $("#id_Threeimpellerlengths").val('').prop('required',false);
+        }else{
+            // 隐藏的字段移除必填
+            $(".papertubelining_area").hide();
+            $("#id_papertubelining").val('').prop('required',false);
+            $(".filmlength_area").hide();
+            $("#id_filmlength").val('').prop('required',false);
+
+            // 显示的字段设置为必填
+            $(".threeimpeller_select_area").show();
+            $("#id_threeimpeller_select").prop('required',true);
+            $(".filminnerdiameter_area").show();
+            $("#id_filminnerdiameter").prop('required',true);
+            $(".Threeimpellerlengths").show();
+            $("#id_Threeimpellerlengths").prop('required',true);
+        }        
+    });
+
+
+
+
+    $('#id_threeimpeller_select').change(function(){
+        if ($('#id_threeimpeller_select').val() == '不附加'){
+            $(".filminnerdiameter_area").hide()
+            $("#id_filminnerdiameter").val('')
+            
+        }else{
+            $(".filminnerdiameter_area").show()
+        }
+    })
+
+
+    $('#id_handletype').change(function(){ 
+        if ($('#id_handletype').val() == '標準'){        
+            $(".flexibletubehandlelength_area").hide()            
+            $("#id_flexibletubehandlelength").val('').prop('required',false);
+            
+            $(".bendpipecolor_area").show()
+            $(".id_bendpipecolor").prop('required',true);
+            
+            
+            $(".tubecolor_area").hide()
+            $("#id_tubecolor").val('').prop('required',false);
+
+            $(".handlecolor_area").show()
+            $(".id_handlecolor").prop('required',true);
+        }else{
+            $(".flexibletubehandlelength_area").show()
+            $("#id_flexibletubehandlelength").prop('required',true);
+
+
+            
+            $(".tubecolor_area").show()
+            $("#id_tubecolor").prop('required',true);
+            
+            // 如果是伸縮的時候沒有彎管
+            $(".bendpipecolor_area").hide()
+            $(".id_bendpipecolor").val('').prop('required',false);
+
+            $(".handlecolor_area").hide()
+            $(".id_handlecolor").val('').prop('required',false);
+        }
+    }
+    )
+})
+
+
+
+</script>
+
+{% endblock extra_js_body %}

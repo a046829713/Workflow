@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title%}
+權限不足
+{% endblock title %}
+
+{% block extra_css %}
+<link href="{% static 'Company/forbidden.css' %}" rel="stylesheet">
+{% endblock extra_css %}
+
+
+
+{% block content %}
+<div class="errorContainer mt-4">
+    <div class="card zoom"
+        style="width: 18rem; margin-left: 5%; border-color: #dc3545; background-color: #f8d7da;">
+        <div
+            style="display: flex; justify-content: center; align-items: center; height: 100px; background-color: #dc3545;">
+            <h1 class="mb-0" style="color: #fff;">403 權限不足</h1>
+        </div>
+
+        <div class="card-body">
+            <p class="card-text text-dark">您沒有權限訪問此頁面，將在3秒後跳轉到首頁...</p>
+            <a href="{% url 'index' %}" class="btn text-light" style="background-color: #dc3545;">首頁</a>
+        </div>
+    </div>
+
+</div>
+{% endblock content %}
+
+{% block extra_js_body %}
+<script>
+    // 使用setTimeout在3秒後自動跳轉到首頁
+    setTimeout(function () {
+        window.location.href = "{% url 'index' %}";
+    }, 3000);
+</script>
+{% endblock extra_js_body %} 

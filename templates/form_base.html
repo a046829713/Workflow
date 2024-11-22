@@ -1,0 +1,105 @@
+{% load static %}
+{% load my_filters %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="43200"> <!-- 每12小時頁面自動刷新 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'Company/bootstrap.min.css' %}" rel="stylesheet">
+    <script src="{% static 'Company/jquery.min.js' %}"></script>
+    <link href="{% static 'Company/select2.min.css' %}" rel="stylesheet">
+    <script src="{% static 'Company/select2.min.js' %}"></script>
+    
+
+    {{ form.media.css }}
+    
+    {% block static_file %}
+    
+    {% endblock static_file %}
+    
+    <title>
+        {% block title%}
+        {% endblock title %}
+    </title>
+</head>
+
+<body>
+    {{ form.media.js }}
+    <div class="container mt-5">
+        {% if error_title %}
+        <h1 class="text-danger">{{ error_title }}</h1>
+        {% endif %}
+
+
+        <!-- 專門用於附件上傳 -->
+        {% block attachment_content %}
+        
+        
+        
+        {% endblock attachment_content %}
+
+
+
+
+        <form action="{% url 'changeURLSaveORSubmit' %}" method="POST" enctype="multipart/form-data" id="main_form">
+            <!-- init -->
+            <input type="hidden" name="form_name" value="{{ form_sys_info|get_element:0 }}">
+            <!-- form_id 的前墜-->
+            <input type="hidden" name="form_id" value="{{ form_sys_info|get_element:1 }}">
+            <input type="hidden" name="version_number" value="{{ form_sys_info|get_element:2 }}">
+            <input type="hidden" name="applicant" value="{{ user.username }}">
+            <input type="hidden" name="result" value="審核中">
+            <input type="hidden" name="application_date" value="">
+            <input type="hidden" name="closing_date" value="">
+
+            <!-- 如果是Reset的話代表說 已經被退簽要重新申請 -->
+            <input type="hidden" name="form_id_Per" value={% if Reset %}""{% else %}{{ form_id_Per }}{% endif %}>
+            <input type="hidden" name="parents_form_id" value={% if Reset %}{{ form_id_Per }}{% elif parents_form_id %}{{ parents_form_id }}{% else %}''{% endif %}>
+
+            {% block content %}
+            {% endblock content %}
+
+            <!-- Submit Button -->
+            {% csrf_token %}
+
+
+            <!-- your form fields... -->
+            {% if OnlyChangeData %}
+                <button type="button" name="action" value="save" class="btn btn-outline-primary"
+                    onclick="handleSubmit()">儲存</button>
+            {% else %}
+                <button type="submit" name="action" value="submit" class="btn btn-outline-success" >表單送簽</button>
+                <button type="button" name="action" value="save" class="btn btn-outline-primary"
+                    onclick="handleSubmit()">儲存</button>
+            {% endif %}
+        </form>
+
+
+    </div>
+
+
+
+
+
+    <!-- 有些表單可以在form表外面實現自己的功能 -->
+    {% block hidden_area %}
+    {% endblock hidden_area %}
+
+    {% block extra_js_body %}
+    {% endblock extra_js_body %}
+
+
+    <script>
+        // 透過手動送出繞過django的檢查機制
+        function handleSubmit(event) {
+            var form = $("#main_form");
+            form.submit();
+        }
+
+    </script>
+</body>
+
+</html>

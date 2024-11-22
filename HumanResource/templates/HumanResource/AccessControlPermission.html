@@ -1,0 +1,115 @@
+{% extends "form_base.html" %}
+
+{% load static %}
+
+
+{% block static_file %}
+
+
+
+<link rel="stylesheet" href="{% static 'HumanResource/AccessControlPermission.css' %}">
+
+{% endblock static_file %}
+
+{% block title%}
+門禁權限申請單
+{% endblock title %}
+
+
+{% block content %}
+<!-- 每一份文件的Title區域 -->
+<div style="position: relative;">
+    <h1 class="text-center">門禁權限申請單</h1>
+    <img src="{% static 'Company/YBICO_Logo.png' %}" alt="Description Image" style="position: absolute; top: 0; right: 0; height: 48px; width: 90px;">
+</div>
+
+
+
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne" style="background-color: rgb(190, 225, 247); text-align: center;">
+            基本資料
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <div class="custom-container">
+                    
+
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label fs-5">{{ form.ApplicationCategory.label }}
+                            <span class="text-danger">*</span>                            
+                        </label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.ApplicationCategory }}
+                        </div>
+                    </div>
+
+                    
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label fs-5">{{ form.requestforaccess.label }}
+                            <!-- <span class="text-danger">*</span>                             -->
+                        </label>
+                        
+                        <div class="col-md-10 mt-2">
+                            {{ form.requestforaccess }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label fs-5">{{ form.application_reason.label }}
+                            <span class="text-danger">*</span>
+                        </label>
+                        
+                        <div class="col-md-10 mt-2">
+                            {{ form.application_reason }}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <span class="text-danger">
+                            1.密碼及卡片應由申請者本人妥善保管，禁止與他人共用，避免無法辨識進出者身分。
+                        </span> 
+                        <br>
+                        <span class="text-danger">
+                            2.申請卡片者，如有遺失或損壞卡片時，酌收工本費用100元。
+                        </span>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+{% endblock content %}
+
+{% block extra_js_body %}   
+<script type="text/javascript">
+    
+    $(document).ready(function() {
+        $('.secret_card_number_area').hide()
+
+
+        $('#ApplicationCategory').on('change', function() {
+            var selectedValues = $(this).val(); // 獲取選中的選項值
+                        
+            if ( selectedValues.includes('門禁卡片遺失補發') & selectedValues.length == 1){                
+                $('#requestforaccess').prop('required',false)
+            }else{
+                $('#requestforaccess').prop('required',true)
+            }
+        });
+            
+        
+
+
+    });
+
+</script>
+
+{% endblock extra_js_body %}

@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="43200"> <!-- 每12小時頁面自動刷新 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章瀏覽</title>
+    
+    <style>
+        body {
+            padding: 20px;
+            background-color: #f4f7f6; /* 轻柔的背景色 */
+            color: #333; /* 文字颜色 */
+        }
+        .article-container {
+            width: 80%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+        }
+        h1 {
+            color: #0056b3; /* 标题颜色 */
+            margin-bottom: 20px;
+        }
+        div.content {
+            line-height: 1.6; /* 行高 */
+            font-size: 16px; /* 字体大小 */
+        }
+    </style>
+</head>
+<body>
+
+<div class="article-container">
+    <h1>{{ article.project_name }}</h1>
+    <div class="content">{{ article.content|safe }}</div>     
+</div>
+
+</body>
+</html>

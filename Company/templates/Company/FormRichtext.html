@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="43200"> <!-- 每12小時頁面自動刷新 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>附件編輯</title>
+    <link href="{% static 'Company/FormRichtext.css' %}" rel="stylesheet">
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    <script src="{% static 'Company/jquery.min.js' %}"></script>
+    <link href="{% static 'Company/select2.min.css' %}" rel="stylesheet">
+    <script src="{% static 'Company/select2.min.js' %}"></script>
+</head>
+<body>
+
+    <div class="form-container">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-field">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+                <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="custom-btn">提交</button>
+        </form>
+    </div>
+    <span id ='select_list_id' style="display: none;">{{ select_list }}</span>
+    <script>
+        $(document).ready(function() {
+            // 初始化 select2 控件
+            $('#Tags_control').select2();
+            var initial_tags = $('#select_list_id').text();
+            var JSON_initial_tags = JSON.parse(initial_tags);            
+            $('#Tags_control').val(JSON_initial_tags).trigger('change');
+        });
+    </script>
+</body>
+</html>

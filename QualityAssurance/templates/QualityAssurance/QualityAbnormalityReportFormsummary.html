@@ -1,0 +1,51 @@
+{% extends "Company/summaryForm_detailed.html" %}
+
+{% load static %}
+{% load my_filters %}
+
+
+
+
+
+{% block form_content %}
+
+                        
+<table class="table table-secondary table-striped table-hover table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">料號品名</th>
+            <th scope="col">異常類別</th>
+            <th scope="col">處置方式</th>
+            <th scope="col">責任單位</th>
+                      
+        </tr>
+        <tbody>
+            {% for form_id,each_data in method_datas %}
+                {% if form_id == form.form_id %}
+                    {% for item in each_data %}
+                        <tr>
+                            <td>{{ item.part_name_and_number }}</td>
+                            <td>{{ item.exception_category }}</td>
+                            <td>{{ item.disposal_way }}</td>
+                            <td>{{ item.responsible_unit }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </thead>
+</table>
+{% endblock form_content %}
+
+
+{% block action_area %}
+{% for key,value in FORMURLS_ONLYCHANGEDATA.items %}
+    {% if key == form.form_name %}
+    <form action="{% url value form_id_Per=form.form_id OnlyChangeData=True %}" method="post">
+    {% endif %}
+{% endfor %}
+{% csrf_token %}
+<button class="btn btn-primary">編輯</button>
+<input type="hidden" name="form_id" value="{{ form.form_id }}">
+</form>
+{% endblock action_area %}

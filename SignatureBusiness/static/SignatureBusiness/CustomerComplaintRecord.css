@@ -1,0 +1,39 @@
+
+.custom-container {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-style: double;
+    border-width: 3px;
+}
+
+.custom-tooltip-wrapper {
+    position: relative;
+    display: inline-block;
+
+}
+
+.custom-tooltip-text {
+    visibility: hidden;
+    width: 300px;
+    height: 450px;
+    background-color: #555;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%; /* Position the tooltip above the text */
+    top: 30px;
+    left: 50%;
+    margin-left: -60px; /* Use half of the width to center the tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.custom-tooltip-wrapper:hover .custom-tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}

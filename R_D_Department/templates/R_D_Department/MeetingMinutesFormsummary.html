@@ -1,0 +1,31 @@
+{% extends "Company/summaryForm_detailed.html" %}
+
+{% load static %}
+{% load my_filters %}
+
+
+
+{% block form_content %}
+
+                        
+<table class="table table-secondary table-striped table-hover table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">來源單號</th>
+            <th scope="col">產品名稱</th>
+            <th scope="col">會議名稱</th>
+            <th scope="col">開始日期時間</th>
+            <th scope="col">結束日期時間</th>
+            <th scope="col">與會人員</th>                        
+        </tr>
+        <tbody>
+            <td>{{ form.data.resource_no }}</td>
+            <td>{{ form.data.newProductName }}</td>
+            <td>{{ form.data.conferenceName }}</td>
+            <td>{{ form.data.conference_start_datetime }}</td>
+            <td>{{ form.data.conference_end_datetime }}</td>
+            <td>{{ form.data.attendees|replace_special_mark }}</td>
+        </tbody>
+    </thead>
+</table>
+{% endblock form_content %}

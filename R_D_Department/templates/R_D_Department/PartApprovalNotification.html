@@ -1,0 +1,254 @@
+{% extends "form_base.html" %}
+
+{% load static %}
+
+
+{% block static_file %}
+<link rel="stylesheet" href="{% static 'R_D_Department/PartApprovalNotification.css' %}">
+{% endblock static_file %}
+
+{% block title%}
+部品承認通知單
+{% endblock title %}
+
+
+{% block content %}
+
+
+<!-- 每一份文件的Title區域 -->
+<h1 class="text-center text-success">部品承認通知單</h1>
+<h1 class="text-success">表單內容</h1>
+<hr>
+
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne" style="background-color: rgb(190, 225, 247); text-align: center;">
+            基本資料
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <div class="custom-container">
+                    <div class="mb-3 row">
+                        <!-- 使用 custom-label class 並調整Grid寬度 -->
+                        <label for="{{ form.prod_number.id_for_label }}" class="col-md-2 col-form-label fs-5 ">{{ form.prod_number.label }}<span class="text-danger">*</span></label>
+                        
+                        <div class="col-md-10 mt-2">
+                            {{ form.prod_number }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="{{ form.version.id_for_label }}" class="col-md-2 col-form-label fs-5 ">{{ form.version.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.version }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="{{ form.model.id_for_label }}" class="col-md-2 col-form-label fs-5 ">{{ form.model.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.model }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="{{ form.send_sample_date.id_for_label }}" class="col-md-2 col-form-label fs-5 ">{{ form.send_sample_date.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.send_sample_date }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="{{ form.fact_number.id_for_label }}" class="col-md-2 col-form-label fs-5 ">{{ form.fact_number.label }}</label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.fact_number }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="{{ form.fact_prod_number.id_for_label }}" class="col-md-2 col-form-label fs-5 ">{{ form.fact_prod_number.label }}</label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.fact_prod_number }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="{{ form.source_type.id_for_label }}" class="col-md-2 col-form-label fs-5 ">{{ form.source_type.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.source_type }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="{{ form.resource_no.id_for_label }}" class="col-md-2 col-form-label fs-5 ">{{ form.resource_no.label }}</label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.resource_no }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="{{ form.size.id_for_label }}" class="col-md-2 col-form-label fs-5 ">{{ form.size.label }}</label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.size }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="{{ form.appearance.id_for_label }}" class="col-md-2 col-form-label fs-5 ">{{ form.appearance.label }}</label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.appearance }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="{{ form.experiment_open.id_for_label }}" class="col-md-2 col-form-label fs-5 ">{{ form.experiment_open.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.experiment_open }}
+                        </div>
+                    </div>
+                    <!-- 附件loop -->
+                    {% for attachment_str in attachment_range %}
+                        {% if forloop.counter == 1 %}
+                            <h3>外部檔案區塊</h3>
+                            <hr>
+                            {% endif %}
+                        {% if forloop.counter == 10 %}
+                            <h3>內部檔案區塊</h3>
+                            <hr>
+                        {% endif %}
+                        {% for parser_attachment in form %}
+                            {% if attachment_str ==  parser_attachment.label %}
+                                <div class="mb-3 mt-3 row">
+                                    <label for="" class="col-md-2 form-label fs-3">{{ parser_attachment.label }}</label>
+                                    <div class="col-md-10 mt-2">
+                                        {% if not Reset %}
+                                            {% for attachment in attachments %}
+                                                {% if attachment.name == parser_attachment.name %}
+                                                最後上傳檔案:
+                                                <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                        {{ parser_attachment }}
+                                    </div>
+                                    
+                                </div>
+                            {% endif %}
+                        {% endfor %}    
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+
+
+
+
+{% block hidden_area %}
+<div id="checklistContainer">
+    <div class="checklistContainer-content">
+        <div class="row">
+            <div class="col-md-11">
+                <h1 id = 'title_show'>
+                    檢查清單
+                    <div class="custom-tooltip-wrapper">
+                        <i class="custom-tooltip">
+                            <img src="{% static 'Company\question-mark.png' %}" height="20" width="20" alt="提示" />
+                            <span class="custom-tooltip-text">
+                                1.表單送出前，請根據一般通知單或簡易通知單檢查必要之項目清單，確認無誤之後再行送出!
+                                <br>                      
+                            </span>
+                        </i>
+                    </div>
+                </h1>
+            </div>
+            <div class="col-md-1">
+                <button class="btn btn-outline-danger" onclick="CloseTheArea()">X</button>
+            </div>
+        </div>
+
+
+        
+        <hr>
+        <div id="checklistTable">
+            <table>
+                <thead>
+                    <tr>
+                        <th>已查看</th>
+                        <th>附件表</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in tasks %}
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="task" value="{{ loop.index }}">
+                        </td>
+                        <td class="task-label fs-5">
+                            {{ task }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            <button type="button" onclick="submitChecklist()" id="confirmbutton">確認</button>
+        </div>
+    </div>
+    
+</div>
+{% endblock hidden_area %}
+
+
+
+
+
+
+
+
+
+
+
+{% block extra_js_body %}
+<script>
+
+
+$(document).ready(function() {
+    // 當使用者調整改變其CSS
+    $('#checklistTable input[type="checkbox"]').change(function() {
+        var label = $(this).closest('tr').find('.task-label');
+        if ($(this).is(':checked')) {
+            label.addClass('strikethrough');
+        } else {
+            label.removeClass('strikethrough');
+        }
+    });
+    
+
+
+    // 攔截表單提交
+    $("form").on("submit", function(event) {
+        event.preventDefault(); // 防止表單自動提交
+        $("#checklistContainer").show()
+    });
+
+
+
+})
+function CloseTheArea(){
+    $("#checklistContainer").hide()
+}
+
+function submitChecklist(){
+    const checkboxes = $('#checklistTable input[type="checkbox"]:checked');    
+    if (checkboxes.length == 9){
+        if ($('#experiment_open').val() == '開立'){
+            console.log("進入")
+            alert('請將要發往給實驗室資料一起補上!')
+            url = "{% url 'ExperimentalTestFormWithoutArg' %}"
+            window.open(url, '_blank'); // 在新分頁中打開指定的 URL
+            
+        }
+        $("form").off("submit").submit(); // 移除 submit 事件處理程序然後提交表單
+    }else {
+        alert('請確認每一個附件是否需要在此表單內!!如果不需要的附件也請勾選已查看');
+    }
+
+}
+</script>
+{% endblock extra_js_body %}

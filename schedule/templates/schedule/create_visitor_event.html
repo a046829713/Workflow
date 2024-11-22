@@ -1,0 +1,116 @@
+{% extends 'schedule/base.html' %}
+{% load static %}
+
+
+{% block extra_head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/l10n/zh-tw.js"></script>
+
+<link rel="stylesheet" href="{% static 'schedule/event.css' %}" type="text/css" media="screen">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap">
+<link rel="stylesheet" href="{% static 'fontawesome-free/css/all.min.css' %}">
+
+
+{% endblock extra_head%}
+
+
+
+{% block body %}
+<div class="muji_container">
+    <div class="selfArea">
+        {% if form.non_field_errors %}
+            <div class="text-danger">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+        <span id="response" class="fs-2 text-danger fw-bold"></span>
+        
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ wizard.management_form }}
+            {% for field in wizard.form %}
+				{% if calendar_slug == 'VendorVisitScheduler' and field.name == 'color_event' %}
+					<input name="step2-color_event" type="hidden" value="#8994AC">
+				{% elif calendar_slug == 'VendorVisitScheduler' and field.name == 'form_id' %}
+					<!-- 代表這邊不需要渲染出來 -->
+				{% else %}
+					<div class="form-group mb-3">
+						<label for="{{ field.id_for_label }}">
+							{{ field.label }}
+							{% if field.field.required %}
+								<span class="text-danger">*</span>
+							{% endif %}
+						</label>
+						{{ field }}
+						{% if field.errors %}
+							<div class="text-danger">
+								{{ field.errors }}
+							</div>
+						{% endif %}
+					</div>
+				{% endif %}
+            {% endfor %}
+            
+            <span class="fs-5 text-danger fw-bold">*為必填欄位</span>
+			<div class="d-flex justify-content-end">
+				<div class="form-navigation">
+					{% if wizard.steps.prev %}
+						<button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" class="btn btn-secondary">上一步</button>
+					{% endif %}
+					<button type="submit" class="btn btn-success">{% if wizard.steps.next %}下一步{% else %}提交{% endif %}</button>
+					<a href="{% url 'fullcalendar' calendar_slug %}" class="btn btn-secondary">取消填寫</a>
+				</div>
+			</div>
+
+        </form>
+		
+    </div>
+    <div class="infoArea">
+		<div class="timeline">
+            <div class="timeline-event {% if wizard.steps.current == 'step1' %}current-step{% endif %}">				
+                <div class="timeline-title">步驟 1</div>
+                <div class="timeline-content">建立訪客資料</div>
+            </div>
+			<div class="timeline-event {% if wizard.steps.current == 'step2' %}current-step{% endif %}">
+                <div class="timeline-title">步驟 2</div>
+                <div class="timeline-content">建立時間資料</div>
+            </div>
+            <div class="timeline-event {% if wizard.steps.current == 'step3' %}current-step{% endif %}">
+                <div class="timeline-title">步驟 3</div>
+                <div class="timeline-content">完成</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>	
+
+	$(document).ready(function () {
+		$('.input-group-append').on('click', function(){
+            $(this).siblings('input').focus();
+        });
+
+        // 初始化 Flatpickr
+        flatpickr('#start_time', {
+            enableTime: true,  // 开启时间选择
+            dateFormat: "Y-m-d H:i",  // 设置日期和时间格式
+            defaultDate: "{{ start_time }}",  // 设置默认日期
+            locale: 'zh_tw'  // 设置语言为繁体中文
+        });
+        flatpickr('#end_time', {
+            enableTime: true,  // 开启时间选择
+            dateFormat: "Y-m-d H:i",  // 设置日期和时间格式
+            defaultDate: "{{ end_time }}",  // 设置日期和时间格式
+            locale: 'zh_tw',  // 设置语言为繁体中文
+        });
+
+		$('.django-select2').select2();
+	});
+</script>
+
+
+
+{% endblock %}

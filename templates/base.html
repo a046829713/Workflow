@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- 這張表專門用於標準顯示不需要導覽列的頁面 -->
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="43200"> <!-- 每12小時頁面自動刷新 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'Company/bootstrap.min.css' %}" rel="stylesheet">
+    <script src="{% static 'Company/jquery.min.js' %}"></script>
+    <link href="{% static 'Company/select2.min.css' %}" rel="stylesheet">
+    <script src="{% static 'Company/select2.min.js' %}"></script>
+    <title>{% block title%}{% endblock title %}</title>
+    {% block extra_css %}
+    {% endblock extra_css %}
+</head>
+
+<body>
+    {% block content %}
+    {% endblock content %}
+    {% block extra_js_body %}
+    {% endblock extra_js_body %}
+</body>
+
+</html>

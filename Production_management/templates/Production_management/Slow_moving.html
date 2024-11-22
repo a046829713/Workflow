@@ -1,0 +1,265 @@
+{% extends "Production_management/base.html" %}
+
+{% load static %}
+{% load my_filters %}
+
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'Company/index.css' %}">
+<link rel="stylesheet" href="{% static 'Production_management/Slow_moving.css' %}">
+
+
+{% endblock extra_css %}
+
+{% block title%}
+現貨庫存速查
+{% endblock title %}
+
+
+
+{% block content %}
+<br>
+
+
+
+
+
+<div id="form-container" style="display:none;">
+    <div class="d-flex justify-content-end align-items-center mb-3">            
+        <button id="close-form">X</button>
+    </div>    
+    <form method="POST" class="row g-3" id="check-form">        
+
+        <div class="mb-3 ">            
+            <label for="part_name_and_number" class="col-form-label">料號品名</label>
+            <input type="text" class="form-control" id="part_name_and_number" name="part_name_and_number" {% if part_name_and_number %}value="{{ part_name_and_number }}"{% endif %}>
+            
+            <label for="quantity-selection" class="col-form-label fs-5">庫存總量(各倉別):</label>
+            <select class="form-control" id="quantity-selection" name="quantity">
+                <option value="" {% if quantity == "" %}selected{% endif %}>選擇數量範圍</option>
+                <option value="zero" {% if quantity == "zero" %}selected{% endif %}>數量 = 0</option>
+                <option value="greater_than_zero" {% if quantity == "greater_than_zero" %}selected{% endif %}>數量 > 0</option>
+            </select>
+
+            <label for="daily_quantity-selection" class="col-form-label fs-5">日用量:</label>
+            <select class="form-control" id="daily_quantity-selection" name="daily_quantity">
+                <option value="" {% if daily_quantity == "" %}selected{% endif %}>選擇數量範圍</option>
+                <option value="zero" {% if daily_quantity == "zero" %}selected{% endif %}>數量 = 0</option>
+                <option value="greater_than_zero" {% if daily_quantity == "greater_than_zero" %}selected{% endif %}>數量 > 0 (含nan)</option>
+                <option value="greater_than_zero_no_nan" {% if daily_quantity == "greater_than_zero_no_nan" %}selected{% endif %}>數量 > 0 (不含nan)</option>
+            </select>
+
+            <label for="SlowM-selection" class="col-form-label fs-5">SlowM(年):</label>
+            <select class="form-control" id="SlowM-selection" name="SlowMyear">
+                <option value="" {% if SlowMyear == "" %}selected{% endif %}>年限選擇</option>
+                <option value="less_than_1" {% if SlowMyear == "less_than_1" %}selected{% endif %}>1年以下</option>
+                <option value="1_to_3" {% if SlowMyear == "1_to_3" %}selected{% endif %}>1年上-3年以下</option>
+                <option value="3_to_5" {% if SlowMyear == "3_to_5" %}selected{% endif %}>3年上-5年以下</option>
+                <option value="more_than_5" {% if SlowMyear == "more_than_5" %}selected{% endif %}>5年上</option>
+            </select>
+            <label for="NoM-selection" class="col-form-label fs-5">NoM(年):</label>
+            <select class="form-control" id="NoM-selection" name="NoMyear">
+                <option value="" {% if NoMyear == "" %}selected{% endif %}>年限選擇</option>
+                <option value="less_than_1" {% if NoMyear == "less_than_1" %}selected{% endif %}>1年以下</option>
+                <option value="1_to_3" {% if NoMyear == "1_to_3" %}selected{% endif %}>1年上-3年以下</option>
+                <option value="3_to_5" {% if NoMyear == "3_to_5" %}selected{% endif %}>3年上-5年以下</option>
+                <option value="more_than_5" {% if NoMyear == "more_than_5" %}selected{% endif %}>5年以上</option>
+            </select>
+            
+            
+            
+        </div>
+    
+        <div class="col-auto">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary mt-4">查詢</button>
+        </div>
+    </form>
+</div>
+
+<div class="row">
+    <div class="col-md-5">
+        <button id="show-form" style="border: none; background: none;">
+            <img src="{% static 'Image\search.png' %}" alt="表單過濾" style="width: 36px; height: 36px;">
+        </button>
+        <a href="{% url 'download_csv' 'slow_moving_query_df' %}" class="btn btn-success">EXCEL 下載</a>
+    </div>
+    <div class="col-md-5">
+        <ul class="custom-pagination">
+            {% if page_obj.has_previous %}
+            <li><a href="?page=1">&laquo;|</a></li>
+            <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+            {% endif %}
+    
+            {% with current=page_obj.number max_pages=page_obj.paginator.num_pages %}
+                {% with start=current end=current|add:5|default:max_pages %}                  
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if num >= start and num <= end %}
+                            <li {% if num == current %}class="custom-active"{% endif %}>
+                                <a href="?page={{ num }}">{{ num }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                {% endwith %}
+            {% endwith %}        
+    
+            {% if page_obj.has_next %}
+            <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+            <li><a href="?page={{ page_obj.paginator.num_pages }}">&raquo;|</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="col-md-2">
+        <span class="text-warning fs-5">目前資料總筆數:{{ data_len }}</span>
+    </div>
+</div>
+
+
+
+
+<div class="custom_container mt-3">
+    <table>
+        <thead>
+            <tr>
+                {% for column in columns %}
+                    {% if column == 'SlowM(年)' %}
+                        <th>
+                            <div style="display: flex; align-items: center; justify-content: space-between;">
+                                <span>{{ column }}</span>
+                                
+                                <form action="{% url 'Slow_moving' %}" method="post" style="margin: 0;">
+                                    {% csrf_token %}
+
+                                    <input type="hidden" name="part_name_and_number" {% if part_name_and_number %}value="{{ part_name_and_number }}"{% endif %}>
+                                    <input type="hidden" name="quantity" {% if quantity %}value="{{ quantity }}"{% endif %}>
+                                    <input type="hidden" name="SlowMyear" {% if SlowMyear %}value="{{ SlowMyear }}"{% endif %}>
+                                    <input type="hidden" name="NoMyear" {% if NoMyear %}value="{{ NoMyear }}"{% endif %}>
+
+                                    {% if slow_sort_direction == 'DESC' %}
+                                        <!-- 即將送出的狀態非當下之狀態 -->
+                                        <input type="hidden" name="slow_sort_direction" value="ASC"> 
+                                        <button type="submit" style="border: none; background: none; padding: 0;">
+                                            <img src="{% static 'Company\DESC.png' %}" alt="表單排序" style="width: 24px; height: 24px;">
+                                        </button>
+                                    {% elif slow_sort_direction == 'ASC'%}
+                                        <!-- 即將送出的狀態非當下之狀態 -->                                        
+                                        <button type="submit" style="border: none; background: none; padding: 0;">
+                                            <img src="{% static 'Company\ASC.png' %}" alt="表單排序" style="width: 24px; height: 24px;">
+                                        </button>
+                                    {% else %}
+                                        <input type="hidden" name="slow_sort_direction" value="DESC">
+                                        <button type="submit" style="border: none; background: none; padding: 0;">
+                                            <img src="{% static 'Company\display.png' %}" alt="表單排序" style="width: 24px; height: 24px;">
+                                        </button>
+                                    {% endif %}
+                                </form>
+                            </div>
+                        </th>
+                    {% elif column == 'NoM(年)' %}
+                        <th>
+                            <div style="display: flex; align-items: center; justify-content: space-between;">
+                                <span>{{ column }}</span>
+                                
+                                <form action="{% url 'Slow_moving' %}" method="post" style="margin: 0;">
+                                    {% csrf_token %}
+
+                                    <input type="hidden" name="part_name_and_number" {% if part_name_and_number %}value="{{ part_name_and_number }}"{% endif %}>
+                                    <input type="hidden" name="quantity" {% if quantity %}value="{{ quantity }}"{% endif %}>
+                                    <input type="hidden" name="SlowMyear" {% if SlowMyear %}value="{{ SlowMyear }}"{% endif %}>
+                                    <input type="hidden" name="NoMyear" {% if NoMyear %}value="{{ NoMyear }}"{% endif %}>
+
+                                    {% if NoM_direction == 'DESC' %}
+                                        <!-- 即將送出的狀態非當下之狀態 -->
+                                        <input type="hidden" name="NoM_direction" value="ASC"> 
+                                        <button type="submit" style="border: none; background: none; padding: 0;">
+                                            <img src="{% static 'Company\DESC.png' %}" alt="表單排序" style="width: 24px; height: 24px;">
+                                        </button>
+                                    {% elif NoM_direction == 'ASC'%}
+                                        <!-- 即將送出的狀態非當下之狀態 -->                                        
+                                        <button type="submit" style="border: none; background: none; padding: 0;">
+                                            <img src="{% static 'Company\ASC.png' %}" alt="表單排序" style="width: 24px; height: 24px;">
+                                        </button>
+                                    {% else %}
+                                        <input type="hidden" name="NoM_direction" value="DESC">
+                                        <button type="submit" style="border: none; background: none; padding: 0;">
+                                            <img src="{% static 'Company\display.png' %}" alt="表單排序" style="width: 24px; height: 24px;">
+                                        </button>
+                                    {% endif %}
+                                </form>
+                            </div>
+                        </th>
+                    {% else %}
+                        <th>{{ column }}</th>
+                    {% endif %}
+                {% endfor %}
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+                <tr>
+                    {% for cell in row %}
+                        {% if forloop.counter == 11 %}
+                            <!--  to_float 是自己定義的 -->
+                            {% if cell|to_float <= 1 %}
+                                <td class='text-success'>{{ cell|safe }}</td>
+                            {% elif cell|to_float > 1 and cell|to_float <= 3 %}
+                                <td class='text-warning'>{{ cell|safe }}</td>
+                            {% elif cell|to_float > 3 and cell|to_float <= 5 %}
+                                <td class='text-danger'>{{ cell|safe }}</td>
+                            {% else %}
+                                <td class='text-danger'>{{ cell|safe }}</td>
+                            {% endif %}
+                        {% else %}
+                            <td>{{ cell|safe }}</td>
+                        {% endif %}
+                    {% endfor %}
+                    <td>
+                        <form action="{% url 'line_chart' %}" method="post" target="_blank">
+                            {% csrf_token %}
+                            <input type="hidden" name="prod_no" value="{{ row.0 }}">
+
+                            {% if row.8 != 'nan' %}
+                                <button class="pretty_button">
+                                    走勢
+                                </button>
+                            {% endif %}
+                        </form>                        
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}
+
+
+{% block extra_js_body %}
+<script>
+
+$(document).ready(function() {
+    $('#quantity-selection').select2({
+        'width':'100%'
+    });
+    $('#SlowM-selection').select2({
+        'width':'100%'
+    });
+    $('#NoM-selection').select2({
+        'width':'100%'
+    });
+    $('#daily_quantity-selection').select2({
+        'width':'100%'
+    });
+
+
+    $('#show-form').click(function() {
+        $('#form-container').fadeIn(); // 使用 jQuery fadeIn 效果显示表单
+    });
+
+    $('#close-form').click(function() {
+        $('#form-container').fadeOut(); // 使用 jQuery fadeOut 效果隐藏表单
+    });
+});
+
+</script>
+{% endblock extra_js_body %}

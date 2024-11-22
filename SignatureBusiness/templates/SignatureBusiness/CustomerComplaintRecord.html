@@ -1,0 +1,230 @@
+{% extends "form_base.html" %}
+
+
+{% load static %}
+
+
+{% block static_file %}
+<link rel="stylesheet" href="{% static 'SignatureBusiness/CustomerComplaintRecord.css' %}">
+{% endblock static_file %}
+
+{% block title%}
+客訴紀錄單
+{% endblock title %}
+
+
+{% block content %}
+
+<!-- 每一份文件的Title區域 -->
+<h1 class="text-center text-success">客訴紀錄單</h1>
+<hr>
+
+
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne" style="background-color: rgb(190, 225, 247); text-align: center;">
+            表單內容
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <div class="custom-container">
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label fs-5">{{ form.customer_number.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.customer_number }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label fs-5">
+                            {{ form.Complaint_type.label }}<span class="text-danger">*</span>
+                            <div class="custom-tooltip-wrapper">
+                                <i class="custom-tooltip">
+                                    <img src="{% static 'Company\question-mark.png' %}" height="20" width="20" alt="提示" />
+                                    <span class="custom-tooltip-text">
+                                        功能性缺失
+                                        <br>                                            
+                                            1.夾緊氣鐵扣無法閉合。
+                                            <br>
+                                            2.剪切器具功能不良。
+                                            <br>
+                                            3.產品預期使用期限不合客戶預期。
+                                            <br>
+                                            4.帶盤車煞車失靈。
+                                            <br>
+                                            5.產品易折易斷裂。
+                                            <br>
+                                        非功能性缺失
+                                        <br>
+                                            1.外觀包裝破損
+                                            <br>
+                                            2.產品數量短少
+                                            <br>
+                                            3.訂單出錯(客戶搞混、LOGO錯印)
+                                            <br>
+                                            4.少零件包、少包裝說明、附件材料缺少
+                                                                        
+                                    </span>
+                                </i>
+                            </div>
+                        </label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.Complaint_type }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label fs-5">{{ form.country.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.country }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label fs-5">{{ form.prod_no.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.prod_no }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">                        
+                        <label for="{{ form.prod_type.id_for_label }}" class="col-md-2 col-form-label fs-5">{{ form.prod_type.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.prod_type }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label fs-5">{{ form.Complaintcontent.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.Complaintcontent }}
+                        </div>
+                    </div>
+                    <!-- 改由客訴處理員填寫時跳出 -->
+                    {% if OnlyChangeData %}
+                        <div class="mb-3 row">                        
+                            <label for="" class="col-md-2 col-form-label fs-5">
+                                {{ form.internalprocessing.label }}
+                            </label>
+                            <div class="col-md-10 mt-2">
+                                {{ form.internalprocessing }}
+                            </div>
+                        </div>
+                    {% endif %}
+                    <!-- 在summary裡面更改 -->
+                    {% if OnlyChangeData %}
+                        <div class="mb-3 row">                        
+                            <label for="" class="col-md-2 col-form-label fs-5">
+                                {{ form.externalprocessing.label }}                            
+                            </label>
+                            <div class="col-md-10 mt-2">
+                                {{ form.externalprocessing }}
+                            </div>
+                        </div>
+                    {% endif %}
+                    <!-- 在summary裡面更改 -->
+                    {% if OnlyChangeData %}
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label fs-5">{{ form.followupafterthreemonths.label }}</label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.followupafterthreemonths }}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="mb-3 mt-3">
+    <label for="" class="form-label fs-3">{{ form.attachment1.label }}
+        <div class="custom-tooltip-wrapper">
+            <i class="custom-tooltip">
+                <img src="{% static 'Company\question-mark.png' %}" height="20" width="20" alt="提示" />
+                <span class="custom-tooltip-text">
+                    1.請將客訴相關，需要給客訴處理人員知道之資訊，如果資料過多，例如:有20張圖片，請打包成一個壓縮檔案後上傳。
+                    <br> 
+                    2.資料內容沒有限制，如果檔案過大造成上傳失敗請洽詢資訊課
+                </span>
+            </i>
+        </div>
+    </label>
+    {{ form.attachment1 }}
+    {% if not Reset %}
+        {% for attachment in attachments %}
+        {% if attachment.name == 'attachment1' %}
+        最後上傳檔案:
+        <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+        {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
+<div class="mb-3 mt-3">
+    <label for="" class="form-label fs-3">{{ form.attachment2.label }}</label>
+    {{ form.attachment2 }}
+    {% if not Reset %}
+        {% for attachment in attachments %}
+        {% if attachment.name == 'attachment2' %}
+        最後上傳檔案:
+        <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+        {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
+<div class="mb-3 mt-3">
+    <label for="" class="form-label fs-3">{{ form.attachment3.label }}</label>
+    {{ form.attachment3 }}
+    {% if not Reset %}
+        {% for attachment in attachments %}
+        {% if attachment.name == 'attachment3' %}
+        最後上傳檔案:
+        <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+        {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
+<div class="mb-3 mt-3">
+    <label for="" class="form-label fs-3">{{ form.attachment4.label }}</label>
+    {{ form.attachment4 }}
+    {% if not Reset %}
+        {% for attachment in attachments %}
+        {% if attachment.name == 'attachment4' %}
+        最後上傳檔案:
+        <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+        {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
+<div class="mb-3 mt-3">
+    <label for="" class="form-label fs-3">{{ form.attachment5.label }}</label>
+    {{ form.attachment5 }}
+    {% if not Reset %}
+        {% for attachment in attachments %}
+        {% if attachment.name == 'attachment5' %}
+        最後上傳檔案:
+        <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+        {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
+<div class="mb-3 mt-3">
+    <label for="" class="form-label fs-3">{{ form.attachment6.label }}</label>
+    {{ form.attachment6 }}
+    {% if not Reset %}
+        {% for attachment in attachments %}
+        {% if attachment.name == 'attachment6' %}
+        最後上傳檔案:
+        <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+        {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>
+
+
+
+
+{% endblock content %}

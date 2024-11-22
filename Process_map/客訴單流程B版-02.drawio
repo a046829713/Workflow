@@ -1,0 +1,88 @@
+<mxfile host="app.diagrams.net" modified="2024-07-10T06:46:29.496Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" etag="uCRuOP0WPAUnVZqD9Xbx" version="24.6.4" type="device">
+  <diagram name="第 1 页" id="DVxI104xGQQh6YhCy5io">
+    <mxGraphModel dx="2739" dy="2153" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="JUWTwgrWtjR09LIdVFYH-33" value="F" style="swimlane;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="270" y="-200" width="450" height="1030" as="geometry" />
+        </mxCell>
+        <mxCell id="JUWTwgrWtjR09LIdVFYH-6" value="結案" style="rounded=0;whiteSpace=wrap;html=1;fontSize=30;" parent="JUWTwgrWtjR09LIdVFYH-33" vertex="1">
+          <mxGeometry x="75" y="930" width="300" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="JUWTwgrWtjR09LIdVFYH-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="JUWTwgrWtjR09LIdVFYH-33" source="JUWTwgrWtjR09LIdVFYH-8" target="JUWTwgrWtjR09LIdVFYH-6" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JUWTwgrWtjR09LIdVFYH-8" value="業務主管確認" style="rounded=0;whiteSpace=wrap;html=1;fontSize=30;" parent="JUWTwgrWtjR09LIdVFYH-33" vertex="1">
+          <mxGeometry x="75" y="800" width="300" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="OnzJD47iVq15EQSGY7vW-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="JUWTwgrWtjR09LIdVFYH-33" source="bE45aXJs_qbLUX0QkxPY-1" target="OnzJD47iVq15EQSGY7vW-1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bE45aXJs_qbLUX0QkxPY-1" value="資料提交" style="rounded=0;whiteSpace=wrap;html=1;fontSize=30;" parent="JUWTwgrWtjR09LIdVFYH-33" vertex="1">
+          <mxGeometry x="75" y="60" width="300" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="V24n9CJ10rQMxnEFlb81-39" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="JUWTwgrWtjR09LIdVFYH-33" source="OnzJD47iVq15EQSGY7vW-1" target="V24n9CJ10rQMxnEFlb81-38" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zGFW7o5n5WUBGwIOVU0x-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="JUWTwgrWtjR09LIdVFYH-33" source="OnzJD47iVq15EQSGY7vW-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-200" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OnzJD47iVq15EQSGY7vW-1" value="客訴處理員" style="rounded=0;whiteSpace=wrap;html=1;fontSize=30;" parent="JUWTwgrWtjR09LIdVFYH-33" vertex="1">
+          <mxGeometry x="75" y="190" width="300" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="V24n9CJ10rQMxnEFlb81-49" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="JUWTwgrWtjR09LIdVFYH-33" source="JUWTwgrWtjR09LIdVFYH-4" target="2d6SODUYImdIgiVVGYNb-1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JUWTwgrWtjR09LIdVFYH-4" value="申請業務確認" style="rounded=0;whiteSpace=wrap;html=1;fontSize=30;" parent="JUWTwgrWtjR09LIdVFYH-33" vertex="1">
+          <mxGeometry x="75" y="520" width="300" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2d6SODUYImdIgiVVGYNb-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="JUWTwgrWtjR09LIdVFYH-33" source="2d6SODUYImdIgiVVGYNb-1" target="JUWTwgrWtjR09LIdVFYH-8" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="2d6SODUYImdIgiVVGYNb-1" value="客訴覆核員" style="rounded=0;whiteSpace=wrap;html=1;fontSize=30;" parent="JUWTwgrWtjR09LIdVFYH-33" vertex="1">
+          <mxGeometry x="75" y="670" width="300" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="V24n9CJ10rQMxnEFlb81-44" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="JUWTwgrWtjR09LIdVFYH-33" source="V24n9CJ10rQMxnEFlb81-38" target="JUWTwgrWtjR09LIdVFYH-4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="V24n9CJ10rQMxnEFlb81-46" value="False&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="V24n9CJ10rQMxnEFlb81-44" vertex="1" connectable="0">
+          <mxGeometry x="-0.1077" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="V24n9CJ10rQMxnEFlb81-38" value="加簽" style="rhombus;whiteSpace=wrap;html=1;fontSize=30;rounded=0;" parent="JUWTwgrWtjR09LIdVFYH-33" vertex="1">
+          <mxGeometry x="185" y="320" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="V24n9CJ10rQMxnEFlb81-28" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="V24n9CJ10rQMxnEFlb81-8" target="V24n9CJ10rQMxnEFlb81-27" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="V24n9CJ10rQMxnEFlb81-8" value="加簽研發副理" style="whiteSpace=wrap;html=1;fontSize=30;" parent="1" vertex="1">
+          <mxGeometry x="800" y="285" width="270" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="V24n9CJ10rQMxnEFlb81-42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="V24n9CJ10rQMxnEFlb81-27" target="OnzJD47iVq15EQSGY7vW-1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1260" y="515" />
+              <mxPoint x="1260" y="20" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="V24n9CJ10rQMxnEFlb81-27" value="判斷是否需要設變&lt;div&gt;(不論結果都要回給客訴處理員)&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;fontSize=30;" parent="1" vertex="1">
+          <mxGeometry x="792.97" y="420" width="284.07" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="V24n9CJ10rQMxnEFlb81-47" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="V24n9CJ10rQMxnEFlb81-38" target="V24n9CJ10rQMxnEFlb81-8" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="V24n9CJ10rQMxnEFlb81-48" value="True" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="735" y="148" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="zGFW7o5n5WUBGwIOVU0x-2" value="&lt;font style=&quot;font-size: 26px;&quot;&gt;Email通知&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-180" y="-10" width="250" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

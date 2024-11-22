@@ -1,0 +1,92 @@
+.costom_container{
+    background-color: white;
+    border-radius: 10px;
+}
+
+
+.result{
+    border-bottom: 2px dashed rgb(255, 165, 30);
+    color: rgb(255, 165, 30);
+}
+
+
+
+
+.table_area{
+    margin: 3%;
+    
+}
+
+.custom-table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 1em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.custom-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+.custom-table th,
+.custom-table td {
+    padding: 12px 15px;
+}
+
+.custom-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.custom-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.custom-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.custom-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+
+
+.custom-table2 {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 1em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.custom-table2 thead tr {
+    background-color: #0144a3;
+    color: #ffffff;
+    text-align: left;
+}
+
+.custom-table2 th,
+.custom-table2 td {
+    padding: 12px 15px;
+}
+
+.custom-table2 tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.custom-table2 tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.custom-table2 tbody tr:last-of-type {
+    border-bottom: 2px solid #0144a3;
+}
+
+.custom-table2 tbody tr:hover {
+    background-color: #f1f1f1;
+}

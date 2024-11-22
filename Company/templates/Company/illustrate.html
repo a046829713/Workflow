@@ -1,0 +1,66 @@
+{% extends "Company/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link href="{% static 'Company\application.css' %}" rel="stylesheet">
+<link href="{% static 'Company\index.css' %}" rel="stylesheet">
+{% endblock extra_css %}
+
+
+{% block content %}
+    <div class="btn_Area mt-3">
+        <h3 class="text-primary text-center">簽核系統說明</h3>
+        <hr>
+        <span class="fs-4">
+            1.各部門的表單列表都會在線上表單內的表單功能。
+            <br>            
+            2.待辦審核會出現紅色數字框,提醒尚未完成的案件數量。
+            <br>            
+            3.每天都會寄出email通知,通知待辦審核還有完成案子的使用者。
+            <br>            
+
+            
+        </span>
+    </div>
+    <div class="btn_Area mt-3">
+        <h3 class="text-primary text-center">簽核按鈕說明</h3>
+        <hr>
+        <span class="fs-4">
+            1.<span class="text-success">核准</span>:審核人員,確認資料無誤,點擊核准,表單繼續完成接下來之關卡。
+            <br>
+            <br>
+            2.<span class="text-success">確認</span>:確認人員,確認資料無誤,點擊確認,表單繼續完成接下來之關卡。
+            <br>
+            <br>
+            3.<span class="text-danger">退簽</span>,退回至申請人:審核人員,確認資料有誤,點擊退簽,退回至申請人,(表單流程結束形同作廢)。
+            <br>
+            <br>
+            4.<span class="text-success">結案</span>:審核人員,確認資料無誤,點擊結案,表單流程結束(正常流程結束)。
+            <br>
+            <br>
+            5.<span class="text-success">加簽</span>:審核人員,確認資料無誤,但需要多人同意或給意見時,點擊加簽,表單流程需等加簽人員簽屬完成
+            (若為搶簽模式),一人加簽即可,(若為會簽模式),多人加簽即可,簽屬完成之後,當站點的審核人員得選擇其他按鈕。
+            <br>
+            <br>
+            6.<span class="text-success">同意加簽</span>:審核人員,收到所屬的相關案子時,針對指派的案子審核是否同意加簽,若對資料內容都無異議,
+            點擊同意加簽。
+            <br>
+            <br>
+            7.<span class="text-danger">不同意加簽</span>:審核人員,收到所屬的相關案子時,針對指派的案子審核是否同意加簽,若對資料內容有異議,
+            點擊不同意加簽。
+            <br>
+            <br>
+            8.<span class="text-warning">駁回</span>:當上一關審核完畢之後,當站點的審核人員,如認為有資料疑慮時,點擊駁回,返回上一關。
+        </span>
+    </div>
+    <div class="btn_Area mt-3">
+        <h3 class="text-primary text-center">說明文件放置區</h3>
+        <hr>
+        <div class="d-flex justify-content-around" style="margin-left: -30px;">
+            <button class="btn btn-outline-primary" type="button"><a href="{% url 'download_pdf' pdf_filename='重工單操作說明A版.pdf' %}" target="_blank">重工單操作說明A版</a></button>
+            <button class="btn btn-outline-primary" type="button"><a href="{% url 'download_pdf' pdf_filename='重工單操作說明B版.pdf' %}" target="_blank">重工單操作說明B版</a></button>
+        </div>
+        <br>
+    </div>
+
+{% endblock content %}

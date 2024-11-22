@@ -1,0 +1,59 @@
+.costom_container{
+    background-color: white;
+    border-radius: 10px;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    /* 更深的陰影效果 */
+}
+
+th,
+td {
+    padding: 15px;
+    background-color: rgba(38, 50, 56, 0.85);
+    /* 深灰色背景 */
+    color: #E0E0E0;
+    /* 亮灰色文字，增加可讀性 */
+    text-align: left;
+    /* 设置文本居中对齐 */
+}
+
+
+thead th {
+    background-color: #263238;
+    /* 更深的藍灰色作為表頭背景 */
+    text-align: left;
+}
+
+tbody tr {
+    &:hover {
+        background-color: rgba(48, 63, 159, 0.3);
+        /* 深藍色滑動效果 */
+    }
+
+    border-bottom: 2px solid #4b814c;
+    /* 暗綠色作為底部邊界 */
+}
+
+tbody td {
+    position: relative;
+
+    &:hover {
+        &:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: -9999px;
+            bottom: -9999px;
+            background-color: rgba(67, 76, 94, 0.2);
+            /* 深色懸停擴展背景 */
+            z-index: -1;
+        }
+    }
+}

@@ -1,0 +1,67 @@
+<mxfile host="app.diagrams.net" modified="2024-01-30T08:35:37.878Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36" etag="NGCv2D_B2ILV9G9UgoZu" version="23.0.1" type="device">
+  <diagram name="第 1 页" id="KKFvPZFs3ryWU3wQ9edE">
+    <mxGraphModel dx="1434" dy="772" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2CAsGEeZ75HO2Cb-YCat-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="2CAsGEeZ75HO2Cb-YCat-1" target="2CAsGEeZ75HO2Cb-YCat-4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="2CAsGEeZ75HO2Cb-YCat-1" value="直屬主管審核" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="340" y="150" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2CAsGEeZ75HO2Cb-YCat-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="2CAsGEeZ75HO2Cb-YCat-2" target="2CAsGEeZ75HO2Cb-YCat-1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="2CAsGEeZ75HO2Cb-YCat-2" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;資料送出&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="340" y="20" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="2CAsGEeZ75HO2Cb-YCat-7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="2CAsGEeZ75HO2Cb-YCat-4" target="2CAsGEeZ75HO2Cb-YCat-6" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="2CAsGEeZ75HO2Cb-YCat-4" value="部門主管審核" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="340" y="250" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2CAsGEeZ75HO2Cb-YCat-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="2CAsGEeZ75HO2Cb-YCat-6" target="2CAsGEeZ75HO2Cb-YCat-8" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="2CAsGEeZ75HO2Cb-YCat-6" value="人資單位主管審核" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="340" y="360" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2CAsGEeZ75HO2Cb-YCat-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="2CAsGEeZ75HO2Cb-YCat-8" target="2CAsGEeZ75HO2Cb-YCat-10" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="2CAsGEeZ75HO2Cb-YCat-8" value="管理部主管審核" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="340" y="460" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2CAsGEeZ75HO2Cb-YCat-13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="2CAsGEeZ75HO2Cb-YCat-10" target="2CAsGEeZ75HO2Cb-YCat-12" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="2CAsGEeZ75HO2Cb-YCat-10" value="總經理室審核" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="340" y="560" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2CAsGEeZ75HO2Cb-YCat-15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="2CAsGEeZ75HO2Cb-YCat-12" target="2CAsGEeZ75HO2Cb-YCat-14" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lOFWHWi4G_FyQeSUAr9i-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="2CAsGEeZ75HO2Cb-YCat-12" target="lOFWHWi4G_FyQeSUAr9i-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="2CAsGEeZ75HO2Cb-YCat-12" value="人資設定權限" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="340" y="670" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2CAsGEeZ75HO2Cb-YCat-17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="2CAsGEeZ75HO2Cb-YCat-14" target="2CAsGEeZ75HO2Cb-YCat-16" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="2CAsGEeZ75HO2Cb-YCat-14" value="申請人確認" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="340" y="770" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="2CAsGEeZ75HO2Cb-YCat-16" value="結案" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="340" y="870" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="lOFWHWi4G_FyQeSUAr9i-1" value="1.確認密碼(卡片設定權限)&lt;br&gt;2.發放卡片" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="597.5" width="230" height="205" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

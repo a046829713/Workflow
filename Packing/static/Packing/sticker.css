@@ -1,0 +1,94 @@
+.Edit_Area {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    /* 或其他合適的值 */
+}
+
+.Edit-content {
+    position: fixed;
+    background-color: #fefefe;
+    width: 50%;
+    padding: 20px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    /* 或其他合適的值 */
+}
+
+
+#form-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    /* 使弹出窗口靠右 */
+    width: 100%;
+    /* 控制最大宽度 */
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* 背景色稍微透明以看到下面的内容 */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    /* 水平方向靠右对齐 */
+    z-index: 1000;
+    overflow-y: auto;
+    /* 在垂直方向上添加滚动条 */
+}
+
+#check-form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 40%;
+    z-index: 1001;
+}
+
+#close-form {
+    padding: 5px 10px;
+    background-color: #ff9494;
+    border: none;
+    border-radius: 5px;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#close-form:hover {
+    background-color: #e6e6e6;
+    color: #000;
+}
+
+#check-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#check-form>#close-form {
+    align-self: flex-end;
+    margin: 10px 0;
+}
+
+#show-form {
+    border: none;
+    /* 去掉按钮的边框 */
+    background: none;
+    /* 去掉按钮的背景色 */
+    padding: 0;
+    /* 去掉内边距 */
+}
+
+#show-form img {
+    width: 24px;
+    /* 控制图像的宽度 */
+    height: 24px;
+    /* 控制图像的高度 */
+}

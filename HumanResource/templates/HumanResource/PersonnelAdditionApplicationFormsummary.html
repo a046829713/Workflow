@@ -1,0 +1,45 @@
+{% extends "Company/summaryForm_detailed.html" %}
+{% load static %}
+
+{% load my_filters %}
+
+
+{% block extra_css_second %}
+
+{% endblock extra_css_second %}
+
+
+
+{% block form_content %}                        
+<table>
+    <thead>
+        <tr>
+            <th scope="col">增補職稱</th>
+        </tr>
+        <tbody>             
+            <tr>
+                <td>{{ form.data.add_job_title }}</td>
+            </tr> 
+        </tbody>
+    </thead>
+</table>
+
+{% endblock form_content %}
+
+
+{% block action_area %}
+{% for key,value in FORMURLS_ONLYCHANGEDATA.items %}
+    {% if key == form.form_name %}
+    <form action="{% url value form_id_Per=form.form_id OnlyChangeData=True %}" method="post">
+    {% endif %}
+{% endfor %}
+{% csrf_token %}
+<button class="btn btn-primary">編輯</button>
+<input type="hidden" name="form_id" value="{{ form.form_id }}">
+</form>
+{% endblock action_area %}
+
+
+{% block extra_js_body2 %}
+
+{% endblock extra_js_body2 %}

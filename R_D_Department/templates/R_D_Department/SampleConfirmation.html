@@ -1,0 +1,211 @@
+{% extends "form_base.html" %}
+
+{% load static %}
+
+
+{% block static_file %}
+<link rel="stylesheet" href="{% static 'R_D_Department/SampleConfirmation.css' %}">
+{% endblock static_file %}
+
+{% block title%}
+樣品確認單
+{% endblock title %}
+
+
+{% block content %}
+
+
+<!-- 每一份文件的Title區域 -->
+<h1 class="text-center text-success">樣品確認單</h1>
+<h1 class="text-success">表單內容</h1>
+<hr>
+<div class="mt-3">
+    <label for="" class="form-label fs-3">{{ form.iso_file_no.label }}</label>
+    {{ form.iso_file_no }}
+</div>
+<div class="mt-3">
+    <label for="" class="form-label fs-3">{{ form.marchine_model.label }}</label>
+    {{ form.marchine_model }}
+</div>
+<div class="mt-3">
+    <label for="" class="form-label fs-3">{{ form.sample_order_number.label }}</label>
+    {{ form.sample_order_number }}
+</div>
+<div class="mt-3">
+    <label for="" class="form-label fs-3">{{ form.customer_number.label }}</label>
+    <h6 class="text-danger">如果有選擇來源單號就不要填寫了!!</h6>
+    {{ form.customer_number }}
+</div>
+<div class="mt-3">
+    <label for="" class="form-label fs-3">{{ form.resource_no.label }}</label>
+    {{ form.resource_no }}
+</div>
+<div class="mt-3">
+    <label for="" class="form-label fs-3">{{ form.sample_type.label }}</label>
+    {{ form.sample_type }}
+</div>
+<div class="mt-3">
+    <label for="" class="form-label fs-3">{{ form.othersample_type.label }}</label>
+    {{ form.othersample_type }}
+</div>
+<div class="mt-3">
+    <label for="" class="form-label fs-3">{{ form.version.label }}</label>
+    {{ form.version }}
+</div>
+
+<div class="mt-3 custom-container">
+    <h3 class="text-success">檢查點</h3>
+    <hr>
+    <div class="mt-3">
+        <label for="" class="form-label fs-3">{{ form.Function_is_qualified.label }}</label>
+        {{ form.Function_is_qualified }}
+    </div>
+    <div class="mt-3">
+        <label for="" class="form-label fs-3">{{ form.design_is_qualified.label }}</label>
+        {{ form.design_is_qualified }}
+    </div>
+    <div class="mt-3">
+        <label for="" class="form-label fs-3">{{ form.smoothness_is_qualified.label }}</label>
+        {{ form.smoothness_is_qualified }}
+    </div>
+    <div class="mt-3">
+        <label for="" class="form-label fs-3">{{ form.noise_is_qualified.label }}</label>
+        {{ form.noise_is_qualified }}
+    </div>
+    <div class="mt-3">
+        <label for="" class="form-label fs-3">{{ form.gap_check_is_qualified.label }}</label>
+        {{ form.gap_check_is_qualified }}
+    </div>
+    <div class="mt-3">
+        <label for="" class="form-label fs-3">{{ form.strength_is_qualified.label }}</label>
+        {{ form.strength_is_qualified }}
+    </div>
+    <div class="mt-3">
+        <label for="" class="form-label fs-3">{{ form.assembly_method_is_qualified.label }}</label>
+        {{ form.assembly_method_is_qualified }}
+    </div>
+    <div class="mt-3">
+        <label for="" class="form-label fs-3">{{ form.adjustment_method_is_qualified.label }}</label>
+        {{ form.adjustment_method_is_qualified }}
+    </div>
+    <div class="mt-3">
+        <label for="" class="form-label fs-3">{{ form.processing_manufacturability_is_qualified.label }}</label>
+        {{ form.processing_manufacturability_is_qualified }}
+    </div>
+    <div class="mt-3">
+        <label for="" class="form-label fs-3">{{ form.plastic_material_is_qualified.label }}</label>
+        {{ form.plastic_material_is_qualified }}
+    </div>
+    <div class="mt-3">
+        <label for="" class="form-label fs-3">{{ form.exterior_is_qualified.label }}</label>
+        {{ form.exterior_is_qualified }}
+    </div>
+    <div class="mt-3">
+        <label for="" class="form-label fs-3">{{ form.carry_is_qualified.label }}</label>
+        {{ form.carry_is_qualified }}
+    </div>
+    <div class="mt-3">
+        <label for="" class="form-label fs-3">{{ form.durability_test_discussion_is_qualified.label }}</label>
+        {{ form.durability_test_discussion_is_qualified }}
+    </div>
+    <div class="mt-3">
+        <label for="" class="form-label fs-3">{{ form.cost_review_is_qualified.label }}</label>
+        {{ form.cost_review_is_qualified }}
+    </div>
+    <div class="mt-3">
+        <label for="" class="form-label fs-3">{{ form.easy_replacement_items_is_qualified.label }}</label>
+        {{ form.easy_replacement_items_is_qualified }}
+    </div>
+    <div class="mt-3">
+        <label for="" class="form-label fs-3">{{ form.oil_glue_is_qualified.label }}</label>
+        {{ form.oil_glue_is_qualified }}
+    </div>
+</div>
+
+<div class="mt-3">
+    <label for="" class="form-label fs-3">{{ form.content.label }}</label>
+    {{ form.content }}
+</div>
+
+<div class="mb-3 mt-3">
+    <label for="" class="form-label fs-3">{{ form.attachment1.label }}</label>
+    {{ form.attachment1 }}
+    {% if not Reset %}
+    {% for attachment in attachments %}
+    {% if attachment.name == 'attachment1' %}
+    最後上傳檔案:
+    <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</div>
+<div class="mb-3 mt-3">
+    <label for="" class="form-label fs-3">{{ form.attachment2.label }}</label>
+    {{ form.attachment2 }}
+    {% if not Reset %}
+    {% for attachment in attachments %}
+    {% if attachment.name == 'attachment2' %}
+    最後上傳檔案:
+    <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</div>
+<div class="mb-3 mt-3">
+    <label for="" class="form-label fs-3">{{ form.attachment3.label }}</label>
+    {{ form.attachment3 }}
+    {% if not Reset %}
+    {% for attachment in attachments %}
+    {% if attachment.name == 'attachment3' %}
+    最後上傳檔案:
+    <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</div>
+<div class="mb-3 mt-3">
+    <label for="" class="form-label fs-3">{{ form.attachment4.label }}</label>
+    {{ form.attachment4 }}
+    {% if not Reset %}
+    {% for attachment in attachments %}
+    {% if attachment.name == 'attachment4' %}
+    最後上傳檔案:
+    <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</div>
+<div class="mb-3 mt-3">
+    <label for="" class="form-label fs-3">{{ form.attachment5.label }}</label>
+    {{ form.attachment5 }}
+    {% if not Reset %}
+    {% for attachment in attachments %}
+    {% if attachment.name == 'attachment5' %}
+    最後上傳檔案:
+    <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</div>
+<div class="mb-3 mt-3">
+    <label for="" class="form-label fs-3">{{ form.attachment6.label }}</label>
+    {{ form.attachment6 }}
+    {% if not Reset %}
+    {% for attachment in attachments %}
+    {% if attachment.name == 'attachment6' %}
+    最後上傳檔案:
+    <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</div>
+
+
+{% endblock content %}
+
+{% block extra_js_body %}
+
+<script>
+
+</script>
+{% endblock extra_js_body %}

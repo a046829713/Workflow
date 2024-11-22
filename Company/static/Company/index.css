@@ -1,0 +1,43 @@
+body {
+    margin: 0px;
+    background: linear-gradient(to left, #348F50, #56B4D3);
+    font-family: 'Arial', sans-serif;
+}
+
+
+.containerCustom {
+    width: 85%;
+    margin: 10px auto;
+
+}
+
+.change_ranking-content {
+    position: fixed;
+    background-color: #fefefe;
+    width: 50%;
+    padding: 20px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    /* 或其他合適的值 */
+}
+
+
+.change_ranking {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    /* 或其他合適的值 */
+}
+
+.navbar {
+    border-radius: 10px;
+}
+

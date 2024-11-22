@@ -1,0 +1,432 @@
+{% extends "form_base.html" %}
+
+{% load static %}
+
+
+{% block static_file %}
+<link rel="stylesheet" href="{% static 'QualityAssurance/QualityAbnormalityReport.css' %}">
+<link href="{% static 'Company\base.css' %}" rel="stylesheet">
+{% endblock static_file %}
+
+{% block title%}
+品質異常單
+{% endblock title %}
+
+
+{% block content %}
+
+<!-- 每一份文件的Title區域 -->
+<h1 class="text-center text-success">品質異常單</h1>
+<h1 class="text-success">表單內容</h1>
+<hr>
+
+<div class="mt-3">
+    <label for="" class="form-label fs-3">{{ form.model_number.label }}</label>
+    {{ form.model_number }}
+</div>
+<div class="mt-3">
+    <label for="" class="form-label fs-3">{{ form.model_name.label }}</label>
+    {{ form.model_name }}
+</div>
+
+
+<!-- disposal_method -->
+<div class="mt-3 mb-3">
+    <!-- get -->
+    {% for formset in formsets %}
+    {{ formset.management_form }}
+
+    {% for form in formset %}
+    <div class="form-group custom-container mt-3 {% if forloop.parentloop.counter > 1 %}hidden-alternative{% endif %}">
+        {% for field in form %}
+
+        <div class="field-container">
+            <label for="{{ field.id_for_label }}" class="fs-3 text-success">{{ field.label }}</label>
+            {{ field }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+    {% endfor %}
+
+
+    <!-- post -->
+    {% for formset,hidden_tags in combin_formsets %}
+    {{ formset.management_form }}
+
+    {% for form in formset %}
+    <div
+        class="form-group custom-container mt-3 {% if forloop.parentloop.counter > 1 and hidden_tags %}hidden-alternative{% endif %}">
+        {% for field in form %}
+        <div class="field-container">
+            <label for="{{ field.id_for_label }}" class="fs-3 text-success">{{ field.label }}</label>
+            {{ field }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+    {% endfor %}
+    <div class="mt-3">
+        <button id="addForm" type="button" class="btn btn-outline-success">+</button>
+    </div>
+</div>
+
+
+<div class="mt-3 mb-3">
+    <label for="" class="form-label fs-3">{{ form.source_category.label }}</label>
+    {{ form.source_category }}
+</div>
+
+<div class="mt-3 mb-3 custom-container customer_demand_categories">
+    <h1 style="color: var(--bs-green-600);">客訴類別</h1>
+    <label for="" class="form-label fs-3">{{ form.resource_no.label }}</label>
+    {{ form.resource_no }}
+
+</div>
+
+<div class="mt-3 mb-3 custom-container manufacturers_defective_category">
+    <h1 style="color: var(--bs-green-600);">廠商不良類別</h1>
+    <label for="" class="form-label fs-3">{{ form.purchase_number.label }}</label>
+    {{ form.purchase_number }}
+    <label for="" class="form-label fs-3">{{ form.fact_number.label }}</label>
+    {{ form.fact_number }}
+    <label for="" class="form-label fs-3">{{ form.batch_sizes.label }}</label>
+    {{ form.batch_sizes }}
+
+
+</div>
+
+
+<div class="mt-3 mb-3 custom-container production_line_category">
+    <h1 style="color: var(--bs-green-600);">產線類別</h1>
+    <label for="" class="form-label fs-3">{{ form.manufacturing_order.label }}</label>
+    {{ form.manufacturing_order }}
+    <label for="" class="form-label fs-3">{{ form.assemble.label }}</label>
+    {{ form.assemble }}
+    <label for="" class="form-label fs-3">{{ form.material_status.label }}</label>
+    {{ form.material_status }}
+
+</div>
+
+
+<div class="mt-3 mb-6">
+    <label for="" class="form-label fs-3">{{ form.Exception_description.label }}</label>
+    {{ form.Exception_description }}
+</div>
+
+<div class="mb-3 mt-3">
+    <label for="" class="form-label fs-3">{{ form.attachment1.label }}</label>
+    {{ form.attachment1 }}
+    {% if not Reset %}
+    {% for attachment in attachments %}
+    {% if attachment.name == 'attachment1' %}
+    最後上傳檔案:
+    <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</div>
+<div class="mb-3 mt-3">
+    <label for="" class="form-label fs-3">{{ form.attachment2.label }}</label>
+    {{ form.attachment2 }}
+    {% if not Reset %}
+    {% for attachment in attachments %}
+    {% if attachment.name == 'attachment2' %}
+    最後上傳檔案:
+    <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</div>
+<div class="mb-3 mt-3">
+    <label for="" class="form-label fs-3">{{ form.attachment3.label }}</label>
+    {{ form.attachment3 }}
+    {% if not Reset %}
+    {% for attachment in attachments %}
+    {% if attachment.name == 'attachment3' %}
+    最後上傳檔案:
+    <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</div>
+<div class="mb-3 mt-3">
+    <label for="" class="form-label fs-3">{{ form.attachment4.label }}</label>
+    {{ form.attachment4 }}
+    {% if not Reset %}
+    {% for attachment in attachments %}
+    {% if attachment.name == 'attachment4' %}
+    最後上傳檔案:
+    <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</div>
+<div class="mb-3 mt-3">
+    <label for="" class="form-label fs-3">{{ form.attachment5.label }}</label>
+    {{ form.attachment5 }}
+    {% if not Reset %}
+    {% for attachment in attachments %}
+    {% if attachment.name == 'attachment5' %}
+    最後上傳檔案:
+    <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</div>
+<div class="mb-3 mt-3">
+    <label for="" class="form-label fs-3">{{ form.attachment6.label }}</label>
+    {{ form.attachment6 }}
+    {% if not Reset %}
+    {% for attachment in attachments %}
+    {% if attachment.name == 'attachment6' %}
+    最後上傳檔案:
+    <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</div>
+
+<h1 class="text-success mt-6">判斷階段(現場人員可以直接跳過)</h1>
+<hr>
+
+
+<div class="mt-3 mb-3 custom-container">
+    <div class="mt-3 mb-6">
+        <label for="" class="form-label fs-3">{{ form.number_retries.label }}</label>
+        {{ form.number_retries }}
+    </div>
+    <div class="mt-3 mb-6">
+        <label for="" class="form-label fs-3">{{ form.cause_analysis.label }}</label>
+        {{ form.cause_analysis }}
+    </div>
+    <div class="mt-3 mb-6">
+        <label for="" class="form-label fs-3">{{ form.temporary_measures.label }}</label>
+        {{ form.temporary_measures }}
+    </div>
+    <div class="mt-3 mb-6">
+        <label for="" class="form-label fs-3">{{ form.permanent_disposal_countermeasures.label }}</label>
+        {{ form.permanent_disposal_countermeasures }}
+    </div>
+
+
+
+    <div class="mb-3 mt-3">
+        <label for="" class="form-label fs-3">{{ form.attachment7.label }}</label>
+        {{ form.attachment7 }}
+        {% if not Reset %}
+        {% for attachment in attachments %}
+        {% if attachment.name == 'attachment7' %}
+        最後上傳檔案:
+        <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="" class="form-label fs-3">{{ form.attachment8.label }}</label>
+        {{ form.attachment8 }}
+        {% if not Reset %}
+        {% for attachment in attachments %}
+        {% if attachment.name == 'attachment8' %}
+        最後上傳檔案:
+        <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="" class="form-label fs-3">{{ form.attachment9.label }}</label>
+        {{ form.attachment9 }}
+        {% if not Reset %}
+        {% for attachment in attachments %}
+        {% if attachment.name == 'attachment9' %}
+        最後上傳檔案:
+        <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="" class="form-label fs-3">{{ form.attachment10.label }}</label>
+        {{ form.attachment10 }}
+        {% if not Reset %}
+        {% for attachment in attachments %}
+        {% if attachment.name == 'attachment10' %}
+        最後上傳檔案:
+        <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="" class="form-label fs-3">{{ form.attachment11.label }}</label>
+        {{ form.attachment11 }}
+        {% if not Reset %}
+        {% for attachment in attachments %}
+        {% if attachment.name == 'attachment11' %}
+        最後上傳檔案:
+        <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </div>
+    <div class="mb-3 mt-3">
+        <label for="" class="form-label fs-3">{{ form.attachment12.label }}</label>
+        {{ form.attachment12 }}
+        {% if not Reset %}
+        {% for attachment in attachments %}
+        {% if attachment.name == 'attachment12' %}
+        最後上傳檔案:
+        <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="mt-3 mb-3 custom-container">
+        <h3 class="text-success">處置單據</h3>
+        <hr>
+
+        <div class="mt-3 mb-6">
+            <label for="" class="form-label fs-3">{{ form.rework_order.label }}</label>
+            {{ form.rework_order }}
+        </div>
+        <div class="mt-3 mb-6">
+            <label for="" class="form-label fs-3">{{ form.other_disposition_documents.label }}</label>
+            {{ form.other_disposition_documents }}
+        </div>
+    </div>
+    
+    <div class="mt-3 mb-6">
+        <label for="" class="form-label fs-3">{{ form.remark_area.label }}</label>
+        {{ form.remark_area }}
+    </div>
+</div>
+
+<!-- 用來給javescript取用 -->
+<div id="data_pass_area" style="display: none;">{{ form.data }}</div>
+{% endblock content %}
+
+{% block extra_js_body %}
+<script>
+    function initializeSelect2(selectElement, initialData) {
+        selectElement.select2({
+            ajax: {
+                url: "{% url 'get_prod_choices_ajax' %}",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data.results
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 1
+        });
+
+        if (initialData) {
+            selectElement.append(new Option(initialData.text, initialData.id, true, true));
+            selectElement.trigger('change');
+        }
+    }
+
+    $(document).ready(function () {
+        // 檢查是否有資料
+        var formDataString = $("#data_pass_area").text();
+        
+        
+        if (formDataString !=='<MultiValueDict: {}>') {
+            // 如果有資料，則進行處理
+            var correctedString = formDataString.replace(/'/g, '"');
+
+            // 在這里添加 try-catch 可以捕捉 JSON 解析過程中可能出現的錯誤
+            try {
+                var formData = JSON.parse(correctedString);
+
+                $('.js-data-example-ajax').each(function (index) {
+                    var partNameKey = `disposal_method${index}-0-part_name_and_number`;
+                    var initialData = formData[partNameKey];
+
+                    if (initialData) {
+                        initializeSelect2($(this), { id: initialData, text: initialData });
+                    } else {
+                        initializeSelect2($(this), null);
+                    }
+                });
+            } catch (e) {
+                console.error("JSON 解析錯誤:", e);
+            }
+        } else {
+            // 如果沒有資料，可能需要進行其他處理，或者直接初始化為空
+            $('.js-data-example-ajax').each(function (index) {
+                initializeSelect2($(this), null);
+            });
+        }
+        
+        // 初始化
+        if ($('#source_category').val() !='客戶報怨及要求'){
+            $('.customer_demand_categories').hide()
+        }
+        if ($('#source_category').val() !='廠商進料不良'){
+            $('.manufacturers_defective_category').hide()
+        }
+        if ($('#source_category').val() !='產線組裝不良'){
+            $('.production_line_category').hide()
+        }
+
+        // 使用jQuery監聽<select>元素的更改事件
+        $('#source_category').change(function() {
+            // 獲取選中的選項的值
+            var selectedValue = $(this).val();
+
+            // 使用選中的選項值做些事情
+            console.log(selectedValue);
+
+            if (selectedValue =='客戶報怨及要求'){
+                $('.customer_demand_categories').show()
+                $('.manufacturers_defective_category').hide()
+                $('.production_line_category').hide()
+            }
+            else if (selectedValue =='廠商進料不良'){
+                $('.manufacturers_defective_category').show()
+                $('.customer_demand_categories').hide()
+                $('.production_line_category').hide()
+            }
+            else if (selectedValue =='產線組裝不良'){
+                $('.production_line_category').show()
+                $('.manufacturers_defective_category').hide()
+                $('.customer_demand_categories').hide()
+            }else{
+                $('.production_line_category').hide()
+                $('.manufacturers_defective_category').hide()
+                $('.customer_demand_categories').hide()
+            }
+        });
+
+
+        
+    });
+
+
+
+    // 用來將隱藏的框框打開
+    // 並且將選擇框初始化 這樣才能使用ajax動態查詢
+    $('#addForm').click(function () {
+        var element = $('.hidden-alternative').first();
+        element.removeClass('hidden-alternative');
+        initializeSelect2(element.find('.js-data-example-ajax'), null);
+
+        // 初始化除了 .js-data-example-ajax 以外的所有 select 元素
+        element.find('select').not('.js-data-example-ajax').select2();
+    });
+
+</script>
+
+{% endblock extra_js_body %}

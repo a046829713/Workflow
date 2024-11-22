@@ -1,0 +1,197 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="43200"> <!-- 每12小時頁面自動刷新 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首頁</title>
+
+    <script src="{% static 'three/build/three.js' %}"></script>
+    <script src="{% static 'three/examples/js/controls/OrbitControls.js' %}"></script>
+    
+    <link href="{% static 'Company\index2.css' %}" rel="stylesheet">
+    <link href="{% static 'Company/base.css' %}" rel="stylesheet">
+    <link href="{% static 'Company/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'Company/select2.min.css' %}" rel="stylesheet">
+    <link href="{% static 'Company/jquery-ui.css' %}" rel="stylesheet" >
+    <script src="{% static 'Company/jquery.min.js' %}"></script>
+    <script src="{% static 'Company/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'Company/select2.min.js' %}"></script>
+    <script src="{% static 'Company/jquery-ui.js' %}"></script>
+</head>
+
+<body>
+    <div class="container">
+        <main class="content">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid">                    
+                    <a class="navbar-brand fs-2" href="{% url 'index' %}" style="color:  rgb(62, 106, 125)">YBICO</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{% url 'index' %}" style="color:  rgb(62, 106, 125)">首頁</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="https://www.ybico.com.tw/" style="color:  rgb(62, 106, 125)">形象官網</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link  dropdown-toggle" href="#"role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false" style="color:  rgb(62, 106, 125)">其他功能</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: #ffffff70;">
+                                    <li><a class="dropdown-item" href="{% url 'AssembleWmodel' %}" style="color:  rgb(62, 106, 125)">W型號組裝</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'Dailyvalue' %}" style="color:  rgb(62, 106, 125)">日用量查詢</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'article-list' %}" style="color:  rgb(62, 106, 125)">知識庫</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'packing_index' %}" style="color:  rgb(62, 106, 125)">包裝系統</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'fullcalendar' 'VendorVisitScheduler' %}" style="color:  rgb(62, 106, 125)">廠商訪客預約登記行事曆</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'value_stream_map' %}" style="color:  rgb(62, 106, 125)">物料價值流圖</a></li>
+                                </ul>
+                            </li>
+    
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false" style="color:  rgb(62, 106, 125)">
+                                    線上表單
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: #ffffff70;">
+                                    <li><a class="dropdown-item" href="{% url 'form_application' %}" style="color:  rgb(62, 106, 125)">表單功能</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'IllustrateForm' %}" style="color:  rgb(62, 106, 125)">功能說明</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="{% url 'add_model' %}" style="color:  rgb(62, 106, 125)">表單流程添加</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'admin:index' %}" style="color:  rgb(62, 106, 125)">系統維護</a></li>                                
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </main>
+        <header class="header">
+            YBICO
+        </header>
+        
+        <main class="content">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid"> 
+                    {% if user.is_authenticated %}
+                    <p class="me-4" style="color:  rgb(62, 106, 125)"">歡迎進入，{{ user.FullName }}
+                        <a href="{% url 'change_passward' %}" class="text-primary">
+                            密碼修改
+                        </a>
+                    </p>                   
+                    
+                    <a href="{% url 'logout' %}">
+                        <button class="btn btn-outline-danger me-2" type="button" >登出</button>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'login' %}">
+                        <button class="btn btn-outline-success me-2" type="button">登入</button>
+                    </a>
+                    {% endif %}
+                </div>
+            </nav>
+        </main>
+        
+    </div>
+        
+    <canvas class="draw"></canvas>
+
+    <script>
+        //Scene
+        const scene = new THREE.Scene();
+        //-----------------------------------------textureLoader-----------------------------------------
+        const textureLoader = new THREE.TextureLoader();
+        const particleTexture = textureLoader.load("{% static 'Image\alphaSnow.jpg' %}");
+
+        //Resizing
+        window.addEventListener("resize", () => {
+            //這意味著，每當瀏覽器視窗的大小改變時，resize 事件會被觸發
+            //Update Size
+            aspect.width = window.innerWidth;
+            aspect.height = window.innerHeight;
+
+            //New Aspect Ratio
+            camera.aspect = aspect.width / aspect.height;
+            camera.updateProjectionMatrix();
+
+            //New RendererSize
+            renderer.setSize(aspect.width, aspect.height);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        });
+
+
+
+        //Mesh  
+        const geometry = new THREE.BufferGeometry(1, 1);
+        const verticesAmount = 10000;
+        const positionArray = new Float32Array(verticesAmount * 3); //We Need 3000 slot
+        for (let i = 0; i < verticesAmount * 3; i++) {
+            positionArray[i] = (Math.random() - 0.5) * 4;
+        }
+
+        geometry.setAttribute("position", new THREE.BufferAttribute(positionArray, 3));
+        const material = new THREE.PointsMaterial();
+        material.size = 0.02;
+        material.alphaMap = particleTexture;
+        material.transparent = true;
+        material.depthTest = false;
+
+        const mesh = new THREE.Points(geometry, material);
+        scene.add(mesh);
+
+
+
+        //Camera
+        const aspect = {
+            width: window.innerWidth,
+            height: window.innerHeight,
+        };
+        const camera = new THREE.PerspectiveCamera(75, aspect.width / aspect.height, 0.01, 100);
+        camera.position.z = 2;
+        scene.add(camera);
+
+        //Renderer
+        const canvas = document.querySelector(".draw");
+
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+        renderer.setSize(aspect.width, aspect.height);
+
+
+        //OrbitControls
+        const orbitControls = new THREE.OrbitControls(camera, canvas);
+        orbitControls.enableDamping = true;
+        orbitControls.enableZoom = false;
+        orbitControls.enableRotate = false;
+        orbitControls.autoRotate = true;
+        orbitControls.autoRotateSpeed = 0.2;
+
+        //Clock Class
+        const clock = new THREE.Clock();
+
+        const animate = () => {
+            //GetElapsedTime
+            const elapsedTime = clock.getElapsedTime();
+
+            //Update Controls
+            orbitControls.update();
+
+            //Renderer
+            renderer.render(scene, camera);
+
+            //RequestAnimationFrame
+            window.requestAnimationFrame(animate);
+        };
+        animate();
+    </script>
+</body>
+
+</html>

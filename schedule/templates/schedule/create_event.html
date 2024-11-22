@@ -1,0 +1,108 @@
+{% extends 'schedule/base.html' %}
+{% load static %}
+
+
+{% block extra_head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<link rel="stylesheet" href="{% static 'schedule/event.css' %}" type="text/css" media="screen">
+{% endblock extra_head%}
+
+
+
+{% block body %}
+<div class="selfArea">
+	{% if calendar_slug  == 'LaboratorySchedule' %}
+		<button class="btn btn-success mb-2" onclick="AskFormTodoTime()">查詢建議時間</button>
+	{% endif %}
+	
+	{% if calendar_slug  == 'VendorVisitScheduler' %}
+		<a href="{% url 'visitor_list' %}" class="btn btn-primary mb-2">編輯拜訪資料</a>
+		<a href="{% url 'fullcalendar' calendar_slug %}" class="btn btn-primary mb-2">返回日歷</a>
+	{% endif %}
+	{% if form.non_field_errors %}
+		<div class="text-danger">
+			{{ form.non_field_errors }}
+		</div>
+	{% endif %}
+	<span id='respone' class="fs-5 text-danger fw-blod"></span>
+	<form action="" method="post">
+		{% csrf_token %}
+        {% for field in form %}
+			{% if field.name == "form_id" and calendar_slug  == 'VendorVisitScheduler' %}
+			{% elif field.name == "form_without_view" and calendar_slug  == 'LaboratorySchedule' %}
+			{% else %}
+				<p>
+					{{ field.label_tag }}
+					{{ field }}
+					{% if field.help_text %}
+						<br><span style="color: gray;">{{ field.help_text }}</span>  <!-- 添加幫助文本 -->
+					{% endif %}
+					{{ field.errors }}
+				</p>
+			{% endif %}
+
+        {% endfor %}
+		<br>
+		<button type="submit" class="btn btn-outline-success">儲存</button>
+	</form>
+</div>
+
+
+
+<script>
+	function AskFormTodoTime() {
+		var user_chose_id = $('#user_chose_id').val();
+		var start_time = $('#start_time').val();
+		var token = $('input[name = "csrfmiddlewaretoken"]').val()
+
+		if (!user_chose_id) {
+			alert("請先選擇表單號碼")
+			return
+		}
+
+		if (!start_time) {
+			alert("請先選擇起始時間")
+			return
+		}
+
+		if (user_chose_id && start_time) {
+
+
+			$.ajax({
+				type: 'POST',
+				url: "{% url 'api_ask_form_todo_time' %}",
+				dataType: 'json',
+				data: {
+					'user_chose_id': user_chose_id,
+					'start_time': start_time,
+					'csrfmiddlewaretoken':token					
+				},
+				success: function (result) {
+					$('#respone').text("建議結束時間:" + result['finally_date']);
+				},
+				error: function (req, status, error) {
+					console.log(error);
+				}
+			});
+		}
+	}
+
+	document.addEventListener('DOMContentLoaded', function () {
+		flatpickr('.flatpickr', {
+			enableTime: true,  // 开启时间选择
+			dateFormat: "Y-m-d H:i",  // 设置日期和时间格式
+		});
+	});
+
+	$(document).ready(function () {
+		$('.django-select2').select2();
+
+
+
+	});
+</script>
+
+
+
+{% endblock %}

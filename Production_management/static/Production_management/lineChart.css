@@ -1,0 +1,55 @@
+body {
+    margin: 0px;
+    font-family: 'Arial', sans-serif;
+}
+
+.containerCustom {
+    width: 80%;
+    margin: 10px auto;
+
+}
+
+.main_context {
+    background-color: #c1c1c1; /* 选用近白的灰色背景色，给人现代感 */
+    padding: 20px; /* 添加内边距 */
+    border-radius: 8px; /* 轻微的圆角 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 添加阴影增加层次感 */
+    margin: 20px auto; /* 上下外边距 */
+    width: 100%; /* 宽度设置为90%，中间留白 */
+    
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #333;
+    /* 深色背景 */
+    color: #eee;
+    /* 浅色文字 */
+    border-radius: 8px;
+    overflow: hidden;
+    /* 使得表格圆角生效 */
+}
+
+th,
+td {
+    padding: 10px;
+    border-bottom: 1px solid #555;
+    /* 深色分隔线 */
+}
+
+th {
+    background-color: #444;
+    /* 标题栏稍微亮一点的深色 */
+}
+
+tr:hover {
+    background-color: #555;
+    /* 鼠标悬停时的行背景颜色 */
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #383838;
+    /* 为奇数行设置更深的背景色 */
+}

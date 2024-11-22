@@ -1,0 +1,246 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="43200"> <!-- 每12小時頁面自動刷新 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title%}{% endblock title %}</title>
+    {% block extra_css %}
+    {% endblock extra_css %}
+
+    <link href="{% static 'Company/bootstrap.min.css' %}" rel="stylesheet">
+    <script src="{% static 'Company/jquery.min.js' %}"></script>
+    <script src="{% static 'Company\form_info_Base.js' %}"></script>
+    <link href="{% static 'Company/select2.min.css' %}" rel="stylesheet">
+    <script src="{% static 'Company/select2.min.js' %}"></script>
+
+    <style>
+        .overlay {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 10;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            overflow-x: hidden;
+            transition: 0.5s;
+        }
+
+        .overlay-content {
+            position: relative;
+            top: 25%;
+            width: 100%;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .overlay a {
+            padding: 8px;
+            text-decoration: none;
+            font-size: 36px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .overlay a:hover,
+        .overlay a:focus {
+            color: #f1f1f1;
+        }
+
+        .overlay .closebtn {
+            position: absolute;
+            top: 20px;
+            right: 45px;
+            font-size: 60px;
+            background: none;
+            border: none;
+            color: #818181;
+            cursor: pointer;
+        }
+
+        .openbtn {
+            font-size: 30px;
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 2;
+            background-color: #818181;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+        }
+
+        .openbtn:hover {
+            background-color: #444;
+        }
+
+    </style>
+</head>
+
+<body>
+    {% block extra_js_body %}
+    {% endblock extra_js_body %}
+    <div class="container">
+        <div>
+
+            <div id="curtainMenu" class="overlay">
+                <button class="closebtn">&times;</button>
+                <div class="overlay-content">
+                <a href="{% url 'index' %}">首頁</a>
+                </div>
+            </div>
+            <button class="openbtn">&#9776;</button>
+            <h1 class="text-success">申請人資訊</h1>            
+            <table class="table table-success table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-success">工號</th>
+                        <th scope="col" class="text-success">中文姓名</th>
+                        <th scope="col" class="text-success">信箱</th>
+                        <th scope="col" class="text-success">申請日期</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ customuser.username }}</td>
+                        <td>{{ customuser.FullName }}</td>
+                        <td>{{ customuser.email }}</td>
+                        <td>{{ form.application_date }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <h1 class="text-success">關係表單</h1>
+           
+            <table class="table table-success table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-success">表單編號</th>
+                        <th scope="col" class="text-success">表單名稱</th>
+                        <th scope="col" class="text-success">申請日期</th>
+                    </tr>
+                </thead>                
+                {% for each_form in relationship_forms %}
+                    <tbody>
+                        <tr>
+                            <td>
+                                <form action="{% url 'form_information_finish' form_id=each_form.form_id %}" method="post" target="_blank">
+                                    {% csrf_token %}
+                                    <button class="btn btn-success">{{ each_form.form_id }}</button>
+                                    <input type="hidden" name="form_id" value="{{ form.form_id }}">
+                                </form>
+                            </td>
+                            <td>{{ each_form.form_name }}</td>
+                            <td>{{ each_form.application_date }}</td>
+                        </tr>
+                    </tbody>
+                {% endfor %}
+                
+            </table>
+            
+        </div>
+        <div>
+            <h1 class="text-success">表單附件</h1>
+            <table class="table table-success table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-success">附件名稱</th>
+                        <th scope="col" class="text-success">附件下載</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% block form_attachment %}
+                    {% endblock form_attachment %}
+
+                </tbody>
+            </table>
+
+
+        </div>
+        <div>
+            <h1 class="text-success">表單內容</h1>
+            <table class="table table-success table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-success">表單編號</th>
+                        <th scope="col" class="text-success">表單名稱</th>
+                        <th scope="col" class="text-success">版本</th>
+                        <th scope="col" class="text-success">表單內容</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ form.form_id }}</td>
+                        <td id="target_form_name">{{ form.form_name }}</td>
+                        <td id="version">{{ form.version_number }}</td>
+                        <td>
+                            {% block form_content %}
+
+                            {% endblock form_content %}
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+
+        <div>
+            <h1 class="text-success">表單關卡</h1>
+            {% block form_level %}
+
+            {% endblock form_level %}
+        </div>
+
+        <div>
+            <h1 class="text-success">表單流程</h1>
+
+            <table class="table table-success table-striped table-hover">
+                <tbody>
+                    {% block form_process %}
+                    {% endblock form_process %}
+
+                </tbody>
+            </table>
+
+        </div>
+
+        <div>
+            {% block select_form_process_next_active %}
+            {% endblock select_form_process_next_active %}
+        </div>
+    </div>
+
+
+    {% block food_extra_js_body %}
+    {% endblock food_extra_js_body %}
+
+
+
+
+
+
+    <script>
+        $(document).ready(function() {
+          // 打開導航菜單
+          $(".openbtn").click(function() {
+            $("#curtainMenu").css("width", "100%");
+          });
+        
+          // 關閉導航菜單
+          $(".closebtn").click(function() {
+            $("#curtainMenu").css("width", "0%");
+          });
+        });
+    </script>
+</body>
+
+</html>

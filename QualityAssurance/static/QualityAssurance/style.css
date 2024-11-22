@@ -1,0 +1,109 @@
+/* @media print {
+    body {
+        width: 100%;
+    }
+
+    #printableArea {
+        page-break-after: always;
+        width: 100%;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    .table {
+        width: 100%; 
+        table-layout: fixed; 
+    }
+    .table-responsive {
+        overflow: hidden; 
+    }
+    
+
+} */
+
+@media print {
+    #printableArea {
+        margin-top: 2mm;
+        width: auto;
+        /* 设置为 auto 以适应打印页宽度 */
+        height: auto;
+        /* 设置为 auto 以适应内容高度 */
+        overflow: hidden;
+        /* 隐藏溢出内容 */
+        page-break-after: always;
+        /* 如果需要分页，则在打印区域后强制分页 */
+    }
+
+
+    .table {
+        table-layout: fixed;
+        /* 使用固定表格布局 */
+        width: 100%;
+        /* 表格宽度适应打印页面的宽度 */
+        font-size: 16px;
+        /* 调整字体大小以适应内容 */
+        /* 根据需要调整列宽 */
+    }
+
+    .table th,
+    .table td {
+        padding: 2px;
+        /* 减小单元格内边距 */
+        word-wrap: break-word;
+        /* 如果单词太长，允许在单元格内换行 */
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+/* 螢幕顯示樣式 */
+#printableArea {
+    /* 保持屏幕上的宽度，但不影响打印布局 */
+    margin-top: 2mm;
+    width: 205mm;
+    /* 或者 100% 如果你想让它在屏幕上也是响应式的 */
+    height: 146mm;
+}
+
+
+.table {
+    width: 100%;
+    /* 让表格宽度适应打印页面的宽度 */
+    table-layout: fixed;
+    /* 保持均匀分布的列宽 */
+    font-size: 16px;
+    /* 调整字体大小以适应内容 */
+}
+
+.table th,
+.table td {
+    padding: 2px;
+    /* 减小单元格内边距 */
+    word-wrap: break-word;
+    /* 如果单词太长，允许在单元格内换行 */
+}
+
+
+.button-3d {
+    padding: 10px 20px;
+    background-color: #254f64; /* 深藍灰色背景 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0px 4px #1C313A; /* 為按鈕增加陰影效果 */
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.button-3d:hover {
+    transform: translateY(-2px); /* 滑過時輕微向上移動 */
+    box-shadow: 0px 6px #1C313A;
+}

@@ -1,0 +1,385 @@
+{% extends "form_base.html" %}
+
+{% load static %}
+{% load my_filters %}
+
+{% block static_file %}
+<link rel="stylesheet" href="{% static 'R_D_Department/ExperimentalTest.css' %}">
+<script src="{% static 'Utils/split_file.js' %}"></script>
+
+
+{% endblock static_file %}
+
+{% block title%}
+實驗測試申請單
+{% endblock title %}
+
+
+{% block content %}
+
+<!-- 每一份文件的Title區域 -->
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne" style="background-color: rgb(190, 225, 247); text-align: center;">
+            實驗測試申請單
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <div class="custom-container">
+                    
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label fs-5">
+                            {{ form.test_reason.label }}
+                            <span class="text-danger">
+                                *
+                            </span>
+                            <div class="custom-tooltip-wrapper">
+                                <i class="custom-tooltip">
+                                    <img src="{% static 'Company\question-mark.png' %}" height="20" width="20" alt="提示" />
+                                    <span class="custom-tooltip-text">
+                                        1.可以詳述需要測試的原因或是來源的地方,詳述因果關係以做記錄!
+                                        <br> 
+                                        
+                                    </span>
+                                </i>
+                            </div>
+                            
+                        </label>
+                        
+                        <div class="col-md-10 mt-2">
+                            {{ form.test_reason }}
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label fs-5">{{ form.tags.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.tags }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label fs-5">{{ form.test_type.label }}
+                            <span class="text-danger">
+                                *
+                            </span>
+                            <div class="custom-tooltip-wrapper">
+                                <i class="custom-tooltip">
+                                    <img src="{% static 'Company\question-mark.png' %}" height="20" width="20" alt="提示" />
+                                    <span class="custom-tooltip-text">
+                                        1. 競品比較:競品與元貝相似產品進行比對(競品可以多個)
+                                        <br> 
+                                        2. 競品研究:單純研究競品的功能與特性(單一性)
+                                        <br> 
+                                        3. 強度測試:對零件或組件進行下壓、拉伸、撞擊等，以得知抵抗能力
+                                        <br> 
+                                        4. 壽命測試:對零件或組件進行長時間使用，評估其在實際使用條件下的耐用性和性能表現
+                                        <br> 
+                                        5. 組裝測試:透過裝配作動確認零件或組件能否正常組裝與作動
+                                        <br> 
+                                        6. CAE模擬:透過軟體模擬得知零件或組件的應力分布及差異
+                                        <br> 
+                                        7. 元貝產品系列測試:元貝自有產品進行比對
+                                        <br> 
+                                        8. 功能測試:確認產品能按照需求規格正確運作(拉力值、抗拉強度...)
+                                        <br> 
+                                        
+                                    </span>
+                                </i>
+                            </div>
+                        </label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.test_type }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row prod_type_area">                        
+                        <label for="" class="col-md-2 col-form-label fs-5">{{ form.prod_type.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.prod_type }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row prod_number_area">                        
+                        <label for="" class="col-md-2 col-form-label fs-5">
+                            {{ form.prod_number.label }}
+                            <span class="text-danger">*</span>
+                        </label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.prod_number }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row Compet_prod_number">                        
+                        <label for="" class="col-md-2 col-form-label fs-5">{{ form.Compet_prod_number.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.Compet_prod_number }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row Compet_corporation">                        
+                        <label for="" class="col-md-2 col-form-label fs-5">{{ form.Compet_corporation.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.Compet_corporation }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label fs-5">{{ form.remark.label }}</label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.remark }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label fs-5">{{ form.sample_provider.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.sample_provider }}
+                        </div>
+                    </div>
+                    <div class="sample_area">
+                        <div class="mb-3 row">                        
+                            <label for="" class="col-md-2 col-form-label fs-5">{{ form.sample_num.label }}<span class="text-danger">*</span></label>
+                            <div class="col-md-10 mt-2">
+                                {{ form.sample_num }}
+                            </div>
+                        </div>
+                        <div class="other-container">
+                            <div class="mb-3 row">                        
+                                <label for="" class="col-md-2 col-form-label fs-5">{{ form.if_destroy.label }}<span class="text-danger">*</span></label>
+                                <div class="col-md-10 mt-2">
+                                    {{ form.if_destroy }}
+                                </div>
+                            </div>
+                            <div class="mb-3 row">                        
+                                <label for="" class="col-md-2 col-form-label fs-5">{{ form.if_destroy_remark.label }}</label>
+                                <div class="col-md-10 mt-2">
+                                    {{ form.if_destroy_remark }}
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="other-container">
+                            <div class="mb-3 row">                        
+                                <label for="" class="col-md-2 col-form-label fs-5">{{ form.if_back.label }}<span class="text-danger">*</span></label>
+                                <div class="col-md-10 mt-2">
+                                    {{ form.if_back }}
+                                </div>
+                            </div>
+                            <div class="mb-3 row">                        
+                                <label for="" class="col-md-2 col-form-label fs-5">{{ form.if_back_remark.label }}</label>
+                                <div class="col-md-10 mt-2">
+                                    {{ form.if_back_remark }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                    {% if not if_hide %}
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label fs-5">{{ form.estimated_completion_date.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.estimated_completion_date }}
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label fs-5">{{ form.Exception_date.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.Exception_date }}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="mb-3 row if_ER_remark_area">                        
+                        <label for="" class="col-md-2 col-form-label fs-5">{{ form.if_ER_remark.label }}</label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.if_ER_remark }}
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+
+
+
+{% block attachment_content %}
+<button class="btn btn-primary mb-3" onclick="Open_attachmentarea()">附件操作</button>
+<!-- 這邊會獨立出來是因為有時候使用者上傳的檔案過大 --> 
+<div class="attachmentarea">
+    <div class="attachmentarea-content d-flex flex-column">
+        <div class="d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <p class="text-secondary mb-0"></p>
+                <button onclick="close_window()" class="btn btn-outline-danger">&times;</button>
+            </div>
+
+            <h3 class="text-primary">附件專區</h3>
+                {% if attachments %}
+                    <table >
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>檔案</th>
+                                <th>下載</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for attachment in attachments %}
+                                <tr>
+                                    {% for attachment_en,attachment_cn in attachment_map.items %}
+                                        {% if attachment_en == attachment.name %}
+                                            <td>{{ attachment_cn }}</td>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <td>{{ attachment.file.name }}</td>
+                                    <td><a href="{{ attachment.file.url }}">Download</a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>尚未有資料上傳.</p>
+                {% endif %}
+            <br>
+            <!-- 附件loop -->
+            <!-- 動態生成的附件上傳區塊 -->
+             
+            {% for attachment_str in attachment_map %}
+                {% if forloop.counter == 1 %}
+                    <h3>外部檔案區塊</h3>
+                    <hr>
+                {% endif %}
+                {% if forloop.counter == 6 %}
+                    <h3>內部檔案區塊</h3>
+                    <hr>
+                {% endif %}
+
+                <div class="attachment-upload mb-3">
+                    <input type="file" id="fileInput{{ forloop.counter }}" class="form-control mb-2">
+                    <button type="button" class="btn btn-outline-success" onclick="handleFileUpload({{ forloop.counter }})">上傳附件{{ forloop.counter }}</button>
+                    <span id="percent_to_upload{{ forloop.counter }}">尚無檔案</span>
+                </div>
+            {% endfor %}
+        </div>        
+    </div>
+</div>
+
+
+   
+{% endblock attachment_content %}
+
+
+
+
+
+{% block extra_js_body %}
+
+<script>
+
+
+
+    $(document).ready(function() {
+        // 初始化區域 一開始不必顯示
+        $('.Compet_prod_number').hide()
+        $('.Compet_corporation').hide()
+        $('.prod_number_area').hide()
+        $('.prod_type_area').hide()
+        $('.sample_area').hide()
+
+        // 檢查初始值並顯示相應區域
+        if ($('input[name="sample_provider"]:checked').val() == '是') {
+            $('.sample_area').show();
+            $('input[name="if_destroy"]').prop('required', true);
+            $('input[name="if_back"]').prop('required', true);
+        }
+
+        if ($('#test_type').val() == '競品比較' || $('#test_type').val() == '競品研究') {
+            $('.Compet_prod_number').show();
+            $('.Compet_corporation').show();
+            $('#id_Compet_prod_number').attr('required', 'required');
+            $('#id_Compet_corporation').attr('required', 'required');
+        }
+
+        if ($('#test_type').val() != '競品研究') {
+            $('.prod_number_area').show();
+            $('.prod_type_area').show();
+            $('#prod_number').attr('required', 'required');
+            $('#prod_type').attr('required', 'required');
+        }
+        
+        $('input[name="sample_provider"]').change(function () {
+            var selectedValue = $('input[name="sample_provider"]:checked').val();
+            if (selectedValue == '是'){
+                $('.sample_area').show()
+                $('input[name="if_destroy"]').prop('required', true);
+                $('input[name="if_back"]').prop('required', true);
+            }else{
+                $('.sample_area').hide()
+                // 清除選擇
+                $('input[name="if_destroy"]').prop('checked', false);
+                // 移除必填屬性
+                $('input[name="if_destroy"]').prop('required', false);
+                // 清除選擇
+                $('input[name="if_back"]').prop('checked', false);
+                // 移除必填屬性
+                $('input[name="if_back"]').prop('required', false);
+
+            }
+        });
+        
+        
+        
+        $('#test_type').on('change', function() {            
+            var selectedValue = $(this).val();            
+            if (selectedValue == '競品比較' | selectedValue == '競品研究'){
+                $('.Compet_prod_number').show()
+                $('.Compet_corporation').show()
+
+                $('#id_Compet_prod_number').attr('required', 'required');
+                $('#id_Compet_corporation').attr('required', 'required');
+            }else{
+                $('.Compet_prod_number').hide()
+                $('.Compet_corporation').hide()
+                $("#id_Compet_prod_number").val('')
+                $("#id_Compet_corporation").val('')
+
+                $('#id_Compet_prod_number').removeAttr('required');
+                $('#id_Compet_corporation').removeAttr('required');
+            } 
+
+            // 除了競品研究以外其他都是必填產品型號
+            if (!(selectedValue == '競品研究')) {
+                $('.prod_number_area').show()
+                $('.prod_type_area').show()
+                $('#prod_number').attr('required', 'required');
+                $('#prod_type').attr('required', 'required');
+            }else{
+                $('.prod_number_area').hide()
+                $('.prod_type_area').hide()
+                $("#prod_number").val('').trigger('change');
+                $("#prod_type").val('').trigger('change');
+                $('#prod_number').removeAttr('required');
+                $('#prod_type').removeAttr('required');
+            }
+        });
+
+        
+        // 標籤TAG部份
+        $('#Tags_control').select2({ tags: true });
+        $('#coporation_control').select2({ 
+            tags: true,
+            width: '100%' 
+        });
+        
+
+        // 當使用者填寫表單的時候不需要顯示
+        if (!$('input[name="form_id_Per"]').val()){
+            $(".if_ER_remark_area").hide()
+        }
+    });
+</script>
+
+
+{% endblock extra_js_body %}

@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="43200"> <!-- 每12小時頁面自動刷新 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>重工單核准通知</title>
+    <link href="{% static 'Company/bootstrap.min.css' %}" rel="stylesheet">
+    <style>
+        .alert-symbol {
+            color: red;
+            font-weight: bold;
+            border: 3px solid red;
+            border-radius: 50%;
+            padding: 0 5px;
+            margin-left: 5px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="card" style="width: 18rem;">
+        <div
+            style="display: flex; justify-content: center; align-items: center; height: 100px; background-color:var(--bs-success);">
+            <h1 class="mb-0" style="color: #ffffff;">工作流</h1>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">重工單核准通知</h5>
+            <p class="card-text">重工單已經核准,請繼續完成後續作業<span class="alert-symbol">!</span></p>
+            <span class="text-primary">#</span>            
+            <p class="card-text">
+                <a href="http://192.168.2.118:4080/index" class="stretched-link text-danger"
+                    style="position: relative;">工作流平台</a>
+            </p>
+            <p class="card-text bg-light" style="transform: rotate(0);">
+                若有任何問題請洽資訊課,分機號碼(<span class="text-danger">179</span>)
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

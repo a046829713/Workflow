@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title%}
+流程設計新增表
+{% endblock title %}
+
+
+{% block extra_css %}
+
+<style>
+    body {
+        background-color: #f8f9fa;
+        /* 浅灰色背景 */
+    }
+
+    .card {
+        margin-top: 50px;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .card-header {
+        background-color: #198754;
+        /* 深绿色 */
+        color: white;
+    }
+</style>
+{% endblock extra_css %}
+
+
+
+
+{% block content %}
+
+<div class="container mt-5">
+    <div>
+        <div class="card shadow-lg">
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <div class="card-header">
+                <h2 class="card-title">新增流程</h2>
+            </div>
+            <div class="card-body">
+                <form action="{% url 'add_model' %}" method="post">
+                    {% csrf_token %}
+
+
+
+
+                    {% for field in form %}
+                        {% if field.name == 'station_choice' %}
+                            <div class="mb-3">
+                                <label for="station_choice" class="form-label fs-3">站點選擇</label>
+                                <div class="d-flex justify-content-around">
+                                    {% for choice in form.station_choice.field.choices %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="{{ choice.0 }}" id="{{ choice.0 }}" name="station_choice">
+                                            <label class="form-check-label text-success fs-4" for="{{ choice.0 }}">{{ choice.1 }}</label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                        {% elif field.name == 'station_manager' %}
+                            <!-- 簽核負責人 -->
+                            <div class="mb-3">
+                                <label for="station_manager" class="form-label fs-3">簽核負責人(單人模式)(只允許單一個人)</label>
+                                <div class="d-flex justify-content-around">
+                                    {% for value, label in form.station_manager.field.choices %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" value="{{ value }}" id="{{ value }}" name="station_manager">
+                                            <label class="form-check-label text-success fs-4" for="{{ value }}">{{ label }}</label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% else %}
+                            <p>
+                                <h3>{{ field.label_tag }}</h3>
+                                {{ field }}
+                                    {% if field.help_text %}
+                                        <br><span style="color: gray;">{{ field.help_text }}</span>  <!-- 添加幫助文本 -->
+                                    {% endif %}
+                                {{ field.errors }}
+                            </p>                      
+
+                        {% endif %}
+                    {% endfor %}
+                    <br>
+                    <button type="submit" class="btn btn-outline-success">確認新增</button>
+                </form>
+            </div>
+            
+        </div>
+        
+    </div>
+
+
+
+</div>
+
+{% endblock content %}
+
+{% block extra_js_body %}
+<script>
+    $(document).ready(function () {
+        $('.select2-multiple').select2();
+
+
+        // 送出表單之前檢查
+        $("form").submit(function(){
+            var isValid = true;
+            var endorsement_manager = $("#id_endorsement_manager").val()
+            var endorsement_group = $("#id_endorsement_group").val()
+            var endorsement_mode = $("#id_endorsement_mode").val()
+
+            if (( endorsement_manager | endorsement_group) != (endorsement_mode)) {
+                if ( endorsement_manager | endorsement_group){
+                    alert("忘記勾選加簽的模式，請再次確認")
+                    isValid = false
+                }
+
+                if (not( endorsement_manager | endorsement_group)){
+                    alert("沒有選擇任何加簽人員，請重新確認加簽的模式")
+                    isValid = false
+                }
+            }
+            // 如果驗證不通過，阻止表單提交
+            if (!isValid) {
+                event.preventDefault();
+            }
+        })
+    });
+</script>
+
+{% endblock extra_js_body %}

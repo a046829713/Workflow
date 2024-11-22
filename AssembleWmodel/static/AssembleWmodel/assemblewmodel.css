@@ -1,0 +1,44 @@
+.costom_container{
+    background-color: white;
+    border-radius: 10px;
+}
+
+
+.dotted-line {
+    border-bottom: 2px dashed rgb(255, 165, 30);
+    color: rgb(255, 165, 30);
+}
+
+
+.third_container{
+    width: 85%;
+    margin: 10px auto;
+}
+
+
+.custom-tooltip-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.custom-tooltip-text {
+    visibility: hidden;
+    width: 300px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position the tooltip above the text */
+    left: 50%;
+    margin-left: -60px; /* Use half of the width to center the tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.custom-tooltip-wrapper:hover .custom-tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}

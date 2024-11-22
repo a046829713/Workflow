@@ -1,0 +1,32 @@
+{% extends "Company/base.html" %}
+
+{% load static %}
+
+
+
+{% block extra_css %}
+<link href="{% static 'Company\index.css' %}" rel="stylesheet">
+{% endblock extra_css %}
+
+{% block title%}
+總表專區
+{% endblock title %}
+
+
+{% block content %}
+<div class="mt-3">
+    <h1 class="text-light">共用表單</h1>
+    <hr>
+    <div>
+        <ul class="list-group">
+            {% for each_data in ALL_forms %}
+                <a href="{{ each_data.0 }}" class="list-group-item list-group-item-action px-3">{{ each_data.1 }}</a>
+                
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+
+
+{% endblock content %}

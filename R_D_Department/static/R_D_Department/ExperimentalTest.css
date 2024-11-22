@@ -1,0 +1,122 @@
+.custom-container {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-style: double;
+    border-width: 3px;
+}
+
+
+.other-container {
+    background-color: #dcebfb;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.custom-tooltip-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.custom-tooltip-text {
+    visibility: hidden;
+    width: 550px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position the tooltip above the text */
+    left: 50%;
+    margin-left: -60px; /* Use half of the width to center the tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.custom-tooltip-wrapper:hover .custom-tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+.attachmentarea {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    /* 或其他合適的值 */
+}
+
+.attachmentarea-content {
+    position: absolute;
+    background-color: #fefefe;
+    width: 50%;
+    padding: 20px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    max-height: 80%; /* 設置最大高度 */
+    overflow-y: auto; /* 啟用Y軸滾動 */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    /* 更深的陰影效果 */
+}
+
+th,
+td {
+    padding: 15px;
+    background-color: rgba(38, 50, 56, 0.85);
+    /* 深灰色背景 */
+    color: #E0E0E0;
+    /* 亮灰色文字，增加可讀性 */
+}
+
+th {
+    text-align: left;
+}
+
+thead th {
+    background-color: #263238;
+    /* 更深的藍灰色作為表頭背景 */
+}
+
+tbody tr {
+    &:hover {
+        background-color: rgba(48, 63, 159, 0.3);
+        /* 深藍色滑動效果 */
+    }
+
+    border-bottom: 2px solid #4b814c;
+    /* 暗綠色作為底部邊界 */
+}
+
+tbody td {
+    position: relative;
+
+    &:hover {
+        &:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: -9999px;
+            bottom: -9999px;
+            background-color: rgba(67, 76, 94, 0.2);
+            /* 深色懸停擴展背景 */
+            z-index: -1;
+        }
+    }
+}

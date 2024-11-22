@@ -1,0 +1,444 @@
+{% extends "Company/base.html" %}
+
+{% load static %}
+
+{% block extra_css %}
+<link href="{% static 'Company\application.css' %}" rel="stylesheet">
+<link href="{% static 'Company\index.css' %}" rel="stylesheet">
+{% endblock extra_css %}
+
+{% block content %}
+
+
+<div class="btn_Area mt-3 ">
+    <h1 class="text-center" style="color: var(--bs-purple);">表單申請</h1>
+    <hr>
+    <div class="department">
+        <div class="d-flex justify-content-around">
+            <!-- 總經理室 -->
+            <div>
+                <div class="card">
+                    <div class="card-header text-white" style="background-color: #FFA500;">
+                        總經理室
+                    </div>
+                    
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="btn-group justify-content-end">
+                                <button type="button" class="btn" style="width: 100% ;">總經理室</button>
+                                <button type="button" class="btn dropdown-toggle dropdown-toggle-split me-3"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="{% url 'CorrectiveeActionReportFormWithoutArg' %}"
+                                            >矯正預防措施處理單</a></li>
+                                    <li><a class="dropdown-item" href="#"
+                                            >Nothing</a></li>
+                                    <li><a class="dropdown-item" href="#" >Something else here</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#" >Separated link</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>  
+                </div>
+            </div>
+            
+            
+            <!-- 管理部 -->
+            <div>
+                <div class="card">
+                    <div class="card-header text-white"  style="background-color: #FFA500;">
+                        管理部
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">                            
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn" style="width: 100% ;">資訊課</button>
+                                <button type="button" class="btn dropdown-toggle dropdown-toggle-split me-3"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="{% url 'AssetDataFormWithoutArg' %}">報廢申請單</a></li>
+                                    <li><a class="dropdown-item" href="#">資訊需求申請單</a></li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn" style="width: 100% ;">人資課</button>                                
+                                <button type="button" class="btn dropdown-toggle dropdown-toggle-split me-3"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="{% url 'RecruitmentInterviewEvaluationFormWithoutArg' %}">招募面試評核表</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'PersonnelAdditionApplicationFormWithoutArg' %}">人員增補申請表</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'jobDescriptionFormWithoutArg' %}">職務說明書</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'AccessControlPermissionFormWithoutArg' %}">門禁權限申請單</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'BusinessCardRequestFormWithoutArg' %}">名片申請單</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="{% url 'HR_index' %}" target="_blank">更多表單</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn"style="width: 100% ;">財務總務課</button>
+                                <button type="button" class="btn dropdown-toggle dropdown-toggle-split me-3"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 研發部 -->
+            <div>
+                <div class="card">
+                    <div class="card-header text-white"  style="background-color: #FFA500;">
+                        研發部
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn" style="width: 100% ;">產設課</button>
+                                <button type="button" class="btn dropdown-toggle dropdown-toggle-split me-3"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="{% url 'MeetingMinutesFormWithoutArg' %}" >會議記錄</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'SampleConfirmationFormWithoutArg' %}" >樣品確認單</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'PartApprovalNotificationFormWithoutArg' %}" >部品承認通知單</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#" >Separated link</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="list-group-item">                            
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn" style="width: 100% ;">產研課</button>
+                                <button type="button" class="btn dropdown-toggle dropdown-toggle-split me-3"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                        </li>                        
+                    </ul>
+                </div>
+            </div>
+            <!-- 品技部 -->
+            <div>
+                <div class="card">
+                    <div class="card-header text-white"  style="background-color: #FFA500;">
+                        品技部
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn" style="width: 100% ;">加技課</button>
+                                <button type="button" class="btn dropdown-toggle dropdown-toggle-split me-3"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn" style="width: 100% ;">品保課</button>
+                                <button type="button" class="btn dropdown-toggle dropdown-toggle-split me-3"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="{% url 'QualityAbnormalityReportFormWithoutArg' %}" >品質異常單</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'HeavyworkorderFormWithoutArg' %}" >重工單</a></li>
+                                    <li><a class="dropdown-item" href="#" >Something else here</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#" >Separated link</a></li>
+                                </ul>
+                            </div>
+                        </li>                        
+                    </ul>
+                </div>
+            </div>
+            <!-- 生產部 -->
+            <div>
+                <div class="card">
+                    <div class="card-header text-white"  style="background-color: #FFA500;">
+                        生產部
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn" style="width: 100% ;">組裝課</button>
+                                <button type="button" class="btn dropdown-toggle dropdown-toggle-split me-3"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn" style="width: 100% ;">生管課</button>
+                                <button type="button" class="btn dropdown-toggle dropdown-toggle-split me-3"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Separated link</a></li>
+                                </ul>
+                            </div>                        
+                        </li>                                               
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn" style="width: 100% ;">生技課</button>
+                                <button type="button" class="btn dropdown-toggle dropdown-toggle-split me-3"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="{% url 'ExperimentalTestFormWithoutArg' %}">實驗測試申請單</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Separated link</a></li>
+                                </ul>
+                            </div>                        
+                        </li>                                               
+                    </ul>
+                </div>
+            </div>
+            <!-- 資材部 -->
+            <div>
+                <div class="card">
+                    <div class="card-header text-white"  style="background-color: #FFA500;">
+                        資材部
+                    </div>
+                    <ul class="list-group list-group-flush">
+                                                                       
+                    </ul>
+                </div>
+            </div>
+            <!-- 業務部 -->
+            <div>
+                <div class="card">
+                    <div class="card-header text-white"  style="background-color: #FFA500;">
+                        業務部
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn" style="width: 100% ;">業務部</button>
+                                <button type="button" class="btn dropdown-toggle dropdown-toggle-split me-3"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="{% url 'DrawingDependencyBookFormWithoutArg' %}"
+                                            >出圖依賴書</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'CustomerComplaintRecordFormWithoutArg' %}"
+                                            >客訴紀錄單</a></li>
+                                    <li><a class="dropdown-item" href="#" >Something else here</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#" >Separated link</a></li>
+                                </ul>
+                            </div>     
+                        </li>                                               
+                    </ul>
+                </div>
+            </div>
+            
+        </div>
+       
+
+
+
+    </div>
+</div>
+
+
+<div class="btn_Area_Second mt-3">
+
+    <h1 class="text-center" style="color: var(--bs-purple);">表單查詢</h1>
+    <hr>
+
+    <div class="d-flex justify-content-around">
+        <div class="card zoom" style="width: 18rem; margin-left: 3%; border-color: #1b9b1b;">
+            <div
+                style="display: flex; justify-content: center; align-items: center; height: 100px; background-color:var(--bs-green-600);">
+                <h1 class="mb-0" style="color: #ffffff;">表單草稿</h1>
+            </div>
+
+            <div class="card-body">
+                <p class="card-text text-success">用戶可以編輯草稿表單</p>
+                <a href="{% url 'FormDraft' %}" class="btn btn-outline-success">前往</a>
+            </div>
+        </div>
+
+
+
+        <div class="card zoom" style="width: 18rem; margin-left: 3%; border-color: #FFA500;">
+            <div
+                style="display: flex; justify-content: center; align-items: center; height: 100px; background-color: var(--bs-orange);">
+                <h1 class="mb-0" style="color: #FFFAF0;">待辦審核</h1>
+                <div
+                    style="background-color: #ff0000; color:#FFFAF0; border-radius: 50%; height: 50px; width: 50px; display: flex; justify-content: center; align-items: center; margin-left: 10px;font-size: 24px;">
+                    <span class="fw-bold">{{ approved_form_num }}</span> <!-- 你的數字放在這裡 -->
+                </div>
+            </div>
+            <div class="card-body">
+                <p class="card-text" style="color: var(--bs-orange);">準備核准他人的表單流程</p>
+                <a href="{% url 'approved' %}" class="btn btn-outline-danger">前往</a>
+            </div>
+        </div>
+
+
+
+        <div class="card zoom" style="width: 18rem; margin-left: 3%; border-color: var(--bs-gray);">
+            <div
+                style="display: flex; justify-content: center; align-items: center; height: 100px; background-color: var(--bs-gray);">
+                <h1 class="mb-0" style="color: #FFFAF0;">已審核</h1>
+            </div>
+            <div class="card-body">
+                <p class="card-text text-secondary">查看已經結束的表單</p>
+                <a href="{% url 'already_down' %}" class="btn btn-outline-secondary">前往</a>
+            </div>
+        </div>
+
+        <div class="card zoom" style="width: 18rem; margin-left: 3%; border-color: var(--bs-info);">
+            <div
+                style="display: flex; justify-content: center; align-items: center; height: 100px; background-color: var(--bs-info);">
+                <h1 class="mb-0" style="color: #FFFAF0;">我申請的表單</h1>
+            </div>
+            <div class="card-body">
+                <p class="card-text text-info">查詢表單的歷史紀錄,不包含尚未送出簽核的草稿</p>
+                <a href="{% url 'allform' %}" class="btn btn-outline-info">前往</a>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>
+<div class="btn_Area_Second mt-3">
+
+    <h1 class="text-center" style="color: var(--bs-purple);">表單統計</h1>
+    <hr>
+    <div class="mt-3">
+        <div class="d-flex justify-content-around">
+            <div class="card zoom" style="width: 18rem; margin-left: 3%; border-color: #c72589;">
+                <div
+                    style="display: flex; justify-content: center; align-items: center; height: 100px; background-color:var(--bs-pink);">
+                    <h1 class="mb-0" style="color: #ffffff;">外部申請</h1>
+                </div>
+
+                <div class="card-body">
+                    <p class="card-text" style="color:var(--bs-pink);">別人申請你的部門的表單</p>
+                    <a href="{% url 'OutSideFrom' %}" class="btn btn-outline-danger"
+                        style="color:var(--bs-pink);">前往</a>
+                </div>
+            </div>
+            <div class="card zoom" style="width: 18rem; margin-left: 3%; border-color: #fe7e15;">
+                <div
+                    style="display: flex; justify-content: center; align-items: center; height: 100px; background-color:var(--bs-yellow);">
+                    <h1 class="mb-0" style="color: #ffffff;">內部申請</h1>
+                </div>
+
+                <div class="card-body">
+                    <p class="card-text" style="color:var(--bs-orange);">你的部門申請別人的表單時</p>
+                    <a href="{% url 'InSideFrom' %}" class="btn btn-outline-warning"
+                        style="color:var(--bs-orange);">前往</a>
+                </div>
+            </div>
+            <div class="card zoom" style="width: 18rem; margin-left: 3%; border-color: #036422;">
+                <div class="bg-success"
+                    style="display: flex; justify-content: center; align-items: center; height: 100px;">
+                    <h1 class="mb-0" style="color: #ffffff;">我審核的</h1>
+                </div>
+
+                <div class="card-body">
+                    <p class="card-text text-success">曾經簽核過的表單</p>
+                    <a href="{% url 'reviewedForm' %}" class="btn btn-outline-success">前往</a>
+                </div>
+            </div>
+            <div class="card zoom" style="width: 18rem; margin-left: 3%; border-color: sandybrown;">
+                <div 
+                    style="display: flex; justify-content: center; align-items: center; height: 100px; background-color:sandybrown">
+                    <h1 class="mb-0" style="color: #ffffff;">總表專區</h1>
+                </div>
+
+                <div class="card-body">
+                    <p class="card-text" style="color: sandybrown;">特殊客製化的總表</p>
+                    <a href="{% url 'SummaryForm' %}" class="btn btn-outline-danger">前往</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

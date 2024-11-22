@@ -1,0 +1,1011 @@
+{% extends "form_base.html" %}
+
+{% load static %}
+
+
+{% block static_file %}
+<link rel="stylesheet" href="{% static 'HumanResource/jobDescription.css' %}">
+<script src="{% static 'HumanResource/jobDescription.js' %}"></script>
+
+
+
+
+{% endblock static_file %}
+
+{% block title%}
+職務說明書
+{% endblock title %}
+
+
+{% block content %}
+<!-- 每一份文件的Title區域 -->
+<div style="position: relative;">
+    <h1 class="text-center">職務說明書</h1>
+    <img src="{% static 'Company/YBICO_Logo.png' %}" alt="Description Image" style="position: absolute; top: 0; right: 0; height: 48px; width: 90px;">
+</div>
+
+
+
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne" style="background-color: rgb(190, 225, 247); text-align: center;">
+            基本資料
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <div class="custom-container">
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.corporate_sector.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.corporate_sector }}
+                        </div>
+                    </div>
+                
+                    <div class="mb-3 row">
+                        <!-- 使用 custom-label class 並調整Grid寬度 -->
+                        <label for="{{ form.job_title_select.id_for_label }}" class="col-md-2 col-form-label fs-5 ">{{ form.job_title_select.label }}<span class="text-danger">*</span></label>
+                        
+                        <div class="col-md-10 mt-2">
+                            {{ form.job_title_select }}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3 row">
+                        <!-- Label for the entire field -->
+                        <label for="{{ form.Occupation_category.id_for_label }}" class="col-md-2 col-form-label fs-5">{{ form.Occupation_category.label }}<span class="text-danger">*</span></label>
+
+                        <div class="col-md-2">
+                            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                {% for choice in form.Occupation_category.field.choices %}
+                                <input type="radio" class="btn-check" id="{{ choice.0 }}"
+                                    name="{{ form.Occupation_category.name }}" value="{{ choice.0 }}" autocomplete="off"
+                                    {% if choice.0 == form.Occupation_category.value %}checked{% endif %} 
+                                    {% if forloop.first %}required{% endif %}>
+                                <label class="btn btn-outline-primary" for="{{ choice.0 }}">{{ choice.1 }}</label>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <button class="btn btn-outline-primary btn-no-border" type="button"><a href="{% url 'download_pdf' pdf_filename='職系職等職稱對照表.pdf' %}" target="_blank">職系職等職稱對照表(請參閱附檔)</a></button>
+
+                        </div>  
+                    </div>
+                    
+
+
+                    <div class="mb-3 row">                      
+                        <label for="{{ form.career_level.id_for_label }}" class="col-md-2 col-form-label fs-5">{{ form.career_level.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.career_level }}
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne" style="background-color: rgb(190, 225, 247); text-align: center;">
+            工作內容與職責
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body"> 
+                <div class="custom-container">
+                    <div class="mb-3 row">
+                        <label for="{{ form.main_duty.id_for_label }}" class="col-md-2 col-form-label fs-5">{{ form.main_duty.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.main_duty }}
+                        </div>
+                    </div>
+
+                    <!-- 備註區塊 -->
+                    <div class="mb-3 row">
+                        <span  class="col-md-2"></span>
+                        <div class="col-md-10 mt-2 text-secondary">
+                            註:
+                            <br>
+                            1.說明該職位的主要職責與目的,提供充分的資訊來區分該職位和其他職位在主要功能及活動上的差異
+                            <br>
+                            2.用一至兩句話來說明該職位存在的意義,以及對其組織營運成功的貢獻
+                            <br>
+                            3.簡潔、正確與客觀,並盡量以動詞為句子的開始
+                        </div>
+                    </div>
+                    <hr>
+
+
+                    <!-- 表單區塊 -->
+                    <!-- 為了可以讓表單可以循環插入 -->
+                    <div>
+                        {% for formset in job_formsets %}
+                            {{ formset.management_form }}
+                            {% for form in formset %}
+                                {% if forloop.parentloop.counter == 1 %}
+                                    <div class="row">
+                                        <span  class="col-md-2 col-form-label fs-5">工作職責<span class="text-danger">*</span></span>
+                                        <label class="col-6 fs-5" style="background-color: rgb(234, 234, 234);">列出職務重要的功能及責任,並估計所占用的時間比例</label>
+                                        <label class="col-2 fs-5" style="background-color: rgb(234, 234, 234);">工作時數占比%:</label>
+                                        <label class="col-2 fs-5" style="background-color: rgb(234, 234, 234);">頻率(日/月/年):</label>
+                                    </div>
+                                {% endif %}
+                                <div class="container value_have">
+                                    <div class="row mt-3">
+                                        <span  class="col-md-2 text-center col-form-label fs-5 text-secondary">{{ forloop.parentloop.counter }}.</span>
+                                        <div class="col-6">{{ form.job_function_and_responsibilities_time_estimation }} </div>        
+                                        <div class="col-2">{{ form.work_hours_percentage }}</div>
+                                        <div class="col-1" >{{ form.time_frequency }} </div>
+                                        <div class="col-1"><button  type="button" class="btn btn-outline-danger delete-form-btn">刪除</button></div>
+                                    </div>                    
+                                </div>                
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="mt-3 row">
+                        <span  class="col-md-2"></span>
+                        <div class="col-6">
+                            <button id="addForm" type="button" class="btn btn-outline-primary">+</button>
+                            <span class="text-primary fw-bold">&nbsp;&nbsp;增加一欄</span>
+                        </div>
+                        <span class="col-4  fw-bold color_show_time">工時百分比總和: <span id="percentageTotal" class="color_show_time">0</span>%</span>                      
+                    </div>
+                    <!-- 備註區塊 -->
+                    <div class="mb-3 row">
+                        <span  class="col-md-2"></span>
+                        <div class="col-md-10 mt-2 text-secondary">
+                            註:
+                            <br>
+                            1.說明該職位的職責,而不是在職者的表現
+                            <br>
+                            2.著重應該做的工作
+                            <br>
+                            3.句型結構:動詞+工作內容+目的
+                            <br>
+                            4.工作職責以重要程度為順序排列
+                            <br>
+                            5.寫職責,而非工作項目,職責內容長度並不能反映職位重要性
+                            <br>
+                            6.指明該職位必須要做的判斷和決策,複雜程度如何
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne" style="background-color: rgb(190, 225, 247); text-align: center;">
+            職位條件
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingThree"
+            data-bs-parent="#accordionExample">            
+            <div class="accordion-body">
+                <div class="custom-container">
+                    
+                    <!-- 教育程度 -->
+                    <div class="mb-3 row">
+                        <label for="{{ form.education_level.id_for_label }}" class="col-md-2 col-form-label fs-5">{{ form.education_level.label }}<span class="text-danger">*</span></label>
+                    
+                        <div class="col-md-10 mt-2">
+                            <div class="mb-3 row">
+                                {% for choice in form.education_level.field.choices %}
+                                    <div class="col-md-2 form-check">
+                                        <input class="form-check-input education_level-choice" type="radio" value="{{ choice.0 }}"
+                                            name="{{ form.education_level.name }}" {% if choice.0 in form.education_level.value %}checked{% endif %}
+                                            {% if forloop.first %}required{% endif %}>
+                                        <label class="form-check-label  fs-5" for="{{ choice.0 }}">{{ choice.1 }}</label>
+                                    </div>
+                                {% endfor %}
+                                <div id="custom_education_level" style="display:none;" class="col-md-8">
+                                    <div class="d-flex justify-content-around"  >
+                                        {% for choice in form.custom_education_level.field.choices %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="{{ choice.0 }}"
+                                                name="{{ form.custom_education_level.name }}" {% if choice.0 in form.custom_education_level.value %}checked{% endif %}>
+                                            <label class="form-check-label  fs-5" for="{{ choice.0 }}">{{ choice.1 }}</label>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <!-- 科系 -->
+                    <div class="mb-3 row">                        
+                        <label for="{{ form.department_school.id_for_label }}" class="col-md-2 col-form-label fs-5">{{ form.department_school.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            <div class="mb-3 row">
+                                {% for choice in form.department_school.field.choices %}
+                                <div class="col-md-2 form-check">
+                                    <input class="form-check-input department-choice" type="radio" value="{{ choice.0 }}"
+                                        name="{{ form.department_school.name }}" {% if choice.0 in form.department_school.value %}checked{% endif %}
+                                        {% if forloop.first %}required{% endif %}>
+                                    <label class="form-check-label  fs-5" for="{{ choice.0 }}">{{ choice.1 }}</label>
+                                </div>
+                                {% endfor %}
+                                <div id="custom-department" style="display: none;" class="col-md-6">
+                                    {{ form.custom_department }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 執照證照 -->
+                    <div class="mb-3 row">
+                        <label for="{{ form.certificates.id_for_label }}" class="col-md-2 col-form-label  fs-5">{{ form.certificates.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            <div class="mb-3 row">
+                                {% for choice in form.certificates.field.choices %}
+                                <div class="col-md-2 form-check">
+                                    <input class="form-check-input certificates-choice" type="radio" value="{{ choice.0 }}"
+                                        name="{{ form.certificates.name }}" {% if choice.0 in form.certificates.value %}checked{% endif %}
+                                        {% if forloop.first %}required{% endif %}>
+                                    <label class="form-check-label  fs-5" for="{{ choice.0 }}">{{ choice.1 }}</label>
+                                </div>
+                                {% endfor %}
+                                <div id="custom_certificates" style="display: none;" class="col-md-6">
+                                    {{ form.custom_certificates }}
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+
+                    <!-- 語言能力 -->
+                    <!-- language -->
+                    <div>
+                        {% for formset in formsets %}
+                        {{ formset.management_form }}
+                        {% for each_form in formset %}
+                        <div class="mb-3 row">
+                            {% if forloop.parentloop.counter == 1 %}
+                            <label for="{{  each_form.language.id_for_label }}" class="col-md-2 col-form-label  fs-5">{{  each_form.language.label }}</label>
+                            {% else %}
+                            <span  class="col-md-2"></span>
+                            {% endif %}
+                            <div class="col-md-10 language_group">
+                                
+                                <div class="d-flex justify-content-around mb-2">
+                                    {{ each_form.language }}
+                                    <label class="form-label " style="margin-left: 20px;">聽</label>
+                                    {{ each_form.listen }}
+                                    <label class="form-label " style="margin-left: 20px;">說</label>
+                                    {{ each_form.speak }}
+                                    <label class="form-label " style="margin-left: 20px;">讀</label>
+                                    {{ each_form.read }}
+                                    <label class="form-label " style="margin-left: 20px;">寫</label>
+                                    {{ each_form.write }}
+                                    {% if forloop.parentloop.counter != 1 %}
+                                        <button  type="button" class="btn btn-outline-danger clear_language_form">X</button>
+                                    {% else %}
+                                        <span>&emsp;&emsp;</span>  
+                                    {% endif %}
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {% endfor %}
+                    {% endfor %}
+                    </div>
+                    
+
+                    <div class="row">
+                        <span class="col-md-2"></span>
+                        <div class='col-md-10'>
+                            <button id="add_language" type="button" class="btn btn-outline-success ">+</button>
+                            <span class=" fw-bold">&nbsp;&nbsp;新增語文</span>
+                        </div >
+                       
+                    </div>
+
+                    <!-- 相關工作經驗 -->
+                    <div class="mb-5 row">
+                        <label for="{{ form.work_experience.id_for_label }}" class="col-md-2 col-form-label  fs-5">{{ form.work_experience.label }}<span class="text-danger">*</span></label>                       
+                        <div class="col-md-10 mt-2">
+                            <div class="mb-3 row">
+                                {% for choice in form.work_experience.field.choices %}
+                                <div class="col-md-2 form-check">
+                                    <input class="form-check-input work_experience-choice" type="radio" value="{{ choice.0 }}"
+                                        name="{{ form.work_experience.name }}" {% if choice.0 in form.work_experience.value %}checked{% endif %}
+                                        {% if forloop.first %}required{% endif %}>
+                                    <label class="form-check-label  fs-5" for="{{ choice.0 }}">{{ choice.1 }}</label>
+                                </div>
+                                {% endfor %}                                
+                                <div class="col-md-4">
+                                    {{ form.job_title }}
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="{{ form.work_years.id_for_label }}" class=" col-form-label  fs-5" style="display:none;" id="work_years_label">{{ form.work_years.label }}</label>
+                                </div>
+                                <div class="col-md-2" >
+                                    {{ form.work_years }}
+                                </div>                                
+                            </div>                            
+                        </div>                        
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label class="col-md-2 form-label fs-5">{{ form.licenses.label }}</label>
+                        <div class="col-md-10">
+                            <div class="d-flex justify-content-around" style="margin-left: -55px;">
+                                {% for choice in form.licenses.field.choices %}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="{{ choice.0 }}" id="{{ choice.0 }}"
+                                            name="{{ form.licenses.name }}" {% if choice.0 in form.licenses.value %}checked{% endif %}>
+                                        <label class="form-check-label  fs-5" for="{{ choice.0 }}">{{ choice.1 }}</label>
+                                    </div>
+                                {% endfor %} 
+                            </div>                            
+                                                      
+                        </div>
+                    </div>
+
+                    <div class="mb-5 row">                 
+                        <label for="{{ form.has_management.id_for_label }}" class="col-md-2 col-form-label  fs-5">{{ form.has_management.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            <div class="mb-3 row">
+                                {% for choice in form.has_management.field.choices %}
+                                <div class="col-md-1 form-check">
+                                    <input class="form-check-input has_management-choice" type="radio" value="{{ choice.0 }}" id="{{ choice.0 }}"
+                                        name="{{ form.has_management.name }}" {% if choice.0 in form.has_management.value %}checked{% endif %}
+                                        {% if forloop.first %}required{% endif %}>
+                                    <label class="form-check-label  fs-5" for="{{ choice.0 }}">{{ choice.1 }}</label>
+                                </div>
+                                {% endfor %}                                
+                                <div class="col-md-6">
+                                    <div class="mb-3 row">                                        
+                                        <div id="custom_management_responsibility"  style="display: none;" class="col-md-12">                                    
+                                            {{ form.management_responsibility }}
+                                        </div>                                        
+                                    </div>
+                                </div>                                                           
+                            </div>                            
+                        </div>                        
+                    </div>
+
+                    
+                    <div class="mt-3 row">
+                        <span class="col-md-2 fs-5 mt-3">擅長工具</span>
+                        <span class="col-md-10 fs-5 mt-3">工具種類                            
+                            <button class="btn btn-outline-primary" type="button"><a href="{% url 'download_pdf' pdf_filename='擅長工具.pdf' %}" target="_blank">清單列表</a></button>
+                        </span>
+                        <div class="mt-3 row">
+                            {% for formset in Toolformsets %}                                
+                                <div class="col-md-12 row tool_container">
+                                    <span class="col-md-2 fs-5"></span>
+                                    <div class="col-md-9">
+                                        <div class="d-flex justify-content-around mt-3 ">
+                                            {{ formset.management_form }}
+                                            {% for form in formset %}
+                                                {{ form.first_level }}
+                                                {{ form.second_level }}
+                                                {{ form.third_level }}                                                
+                                            {% endfor %}                                
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 mt-3">                                        
+                                        <div >
+                                            <button  type="button" class="btn btn-outline-danger clear_tool_form">刪除</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <span class="col-md-2"></span>
+                        <div class="col-md-10 mt-3">
+                            <button id="addToolform" type="button" class="btn btn-outline-primary">+</button>
+                            <span class="text-primary fw-bold">&nbsp;&nbsp;增加一欄</span>
+                        </div>
+                    </div>
+                    <div class="mt-3 row">
+                        <span class="col-md-2 fs-5 mt-3">工作技能</span>
+                        <span class="col-md-10 fs-5 mt-3">技能種類
+                            <button class="btn btn-outline-primary" type="button"><a href="{% url 'download_pdf' pdf_filename='工作技能.pdf' %}" target="_blank">清單列表</a></button>
+                        </span>
+
+                        <div class="mt-3 row">
+                            {% for formset in SkillFormSets %}                                
+                                <div class="col-md-12 row skill_container">
+                                    <span class="col-md-2 fs-5"></span>
+                                    <div class="col-md-9">
+                                        <div class="d-flex justify-content-around mt-3 ">
+                                            {{ formset.management_form }}
+                                            {% for form in formset %}
+                                                {{ form.skill_first_level }}
+                                                {{ form.skill_second_level }}
+                                                {{ form.skill_third_level }}                                                
+                                            {% endfor %}                                
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 mt-3">                                        
+                                        <div >
+                                            <button  type="button" class="btn btn-outline-danger clear_skill_form">刪除</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <span class="col-md-2"></span>
+                        <div class="col-md-10 mt-3">
+                            <button id="addskillform" type="button" class="btn btn-outline-primary">+</button>
+                            <span class="text-primary fw-bold">&nbsp;&nbsp;增加一欄</span>
+                        </div>
+                    </div>    
+                    <div class="mb-3 mt-3 communication_area">
+                        <div class="row">
+                            <h3 class="col-md-2 fs-5">內外部溝通與人際關係<span class="text-danger">*</span></h3>    
+                            <div  class="col-md-10 d-flex justify-content-around ">
+                                <label style="margin-left: 20px;">{{ form.communication_internal_external_up.label }}</label>
+                                {{ form.communication_internal_external_up }}
+                                
+                                <label style="margin-left: 20px;">{{ form.communication_internal_external_inner.label }}</label>
+                                {{ form.communication_internal_external_inner }}
+                            </div>    
+
+                            
+                            
+                        </div>
+                        <div class="mt-3 row">
+                            <span class="col-md-2"></span>
+                            <div  class="col-md-10 d-flex justify-content-around ">
+                                <label style="margin-left: 20px;">{{ form.communication_internal_external_down.label }}</label>
+                                {{ form.communication_internal_external_down }}        
+                            
+                                
+                                <label style="margin-left: 20px;">{{ form.communication_internal_external_outer.label }}</label>
+                                {{ form.communication_internal_external_outer }}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>                 
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="d-flex justify-content-around">
+    <h5 class="text-center ">文件編號:HR-005-02</h5>
+    <h5 class="text-center ">版次:A</h5>
+</div>
+<!-- 用來給javescript取用 -->
+<div id="data_pass_area" style="display: none;">{{ form.data }}</div>
+
+{% endblock content %}
+
+{% block extra_js_body %}   
+<script type="text/javascript">
+    $(document).ready(function () {
+        // id_Tool_expert async==================================================
+        async function get_second_level_data(object) {            
+            var selectedValue = object.val();
+            let url = "{% url 'get_level_ajax' %}" + "?first_level=" + selectedValue; // Append data as query parameter
+            var secondLevelSelect = object.parent().find('select[id$="-second_level"]');
+            let response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (response.ok) {
+                let data = await response.json();
+                secondLevelSelect.empty();
+                $.each(data.second_level, function (key, value) {
+                    secondLevelSelect.append($('<option></option>').attr('value', key).text(value));
+                });
+            } else {
+                console.error('AJAX 请求失败');
+            }
+        }
+        
+        async function get_third_level_data(object) {
+            var selectedValue =object.val();           
+            var firstLevelValue = object.parent().find('select[id$="-first_level"]').val();
+            var thirdLevelSelect = object.parent().find('select[id$="-third_level"]');
+            let url = "{% url 'get_level_ajax' %}" + "?first_level=" + firstLevelValue +'&' + "second_level="+ selectedValue; // Append data as query parameter
+            let response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            
+            if (response.ok) {
+                let data = await response.json();                
+                thirdLevelSelect.empty();
+                $.each(data.third_level, function (key, value) {
+                    thirdLevelSelect.append($('<option></option>').attr('value', key).text(value));
+                });
+            } else {
+                console.error('AJAX 请求失败');
+            }
+        }
+
+        // id_Tool_expert async==================================================
+        async function create_tool_first_level() {
+            // 获取所有 first_level 选择框
+            const selects = $('select[id^="id_Tool_expert"][id$="-first_level"]').toArray();
+
+            $('.first_level').select2({
+                width: '100%'  // 設置寬度為100%
+            });
+            $('.second_level').select2({
+                width: '100%'  // 設置寬度為100%
+            });
+            $('.third_level').select2({
+                width: '100%'  // 設置寬度為100%
+            });
+            
+            // 使用 Promise.    all 等待所有请求完成
+            await Promise.all(selects.map(async select => {
+                var firstLevelSelect = $(select);
+                // 使用 fetch 发送 AJAX 请求以获取 first_level 的选项
+                let response = await fetch("{% url 'get_level_ajax' %}");
+                let data = await response.json();
+                firstLevelSelect.empty();
+                $.each(data.first_level, function (key, value) {
+                    firstLevelSelect.append($('<option></option>').attr('value', key).text(value));
+                });
+            }));
+            // 等待所有 AJAX 请求和选项填充完成后，设置默认值
+            var formDataString = $("#data_pass_area").text();
+            // 用隱藏的資料來把儲存的表單寫回去
+            // 檢查是否有資料
+            if (formDataString !== '<MultiValueDict: {}>') {
+                // 如果有資料，則進行處理
+                var correctedString = formDataString.replace(/'/g, '"');
+                // 在這里添加 try-catch 可以捕捉 JSON 解析過程中可能出現的錯誤
+                try {
+                    var formData = JSON.parse(correctedString);                    
+                    var firstLevelSelects = $('select[id^="id_Tool_expert"][id$="-first_level"]').toArray();
+
+                    let count_num = 0
+                    for (let select of firstLevelSelects) {                        
+                        var partNameKey = `Tool_expert${count_num}-0-first_level`;
+                        var initialData = formData[partNameKey];
+                        if (initialData) {
+                            $(select).val(initialData).trigger('change');
+                            await get_second_level_data($(select));
+                        } 
+                        count_num+=1
+                    }
+                    
+                    // 這邊就可以呼叫第二個類別的資料了
+                    var SecondLevelSelects = $('select[id^="id_Tool_expert"][id$="-second_level"]').toArray();
+                    let count_num2 = 0
+                    for (let select of SecondLevelSelects) {                        
+                        var partNameKey = `Tool_expert${count_num2}-0-second_level`;
+                        var initialData = formData[partNameKey];
+                        if (initialData) {
+                            $(select).val(initialData).trigger('change');
+                            await get_third_level_data($(select));
+                        } 
+                        count_num2+=1
+                    }
+
+                    // 測試第三個類別的資料
+                    var ThirdLevelSelects = $('select[id^="id_Tool_expert"][id$="-third_level"]').toArray();
+                    let count_num3 = 0
+                    for (let select of ThirdLevelSelects) {                        
+                        var partNameKey = `Tool_expert${count_num3}-0-third_level`;
+                        var initialData = formData[partNameKey];
+                        if (initialData) {
+                            $(select).val(initialData).trigger('change');
+                        } 
+                        count_num3+=1
+                    }
+
+
+                } catch (e) {
+                    console.error("JSON 解析錯誤:", e);
+                }
+            }
+            // 將多餘的工具隱藏起來
+            $('.tool_container').each(function (index) {
+                // 1 或0都可以調整
+                if (index >= 0) {
+                    let isEmpty = true;
+                    let first_level = $(this).find('select[name*="first_level"]').val();
+                    let second_level = $(this).find('select[name*="second_level"]').val();
+                    let third_level = $(this).find('select[name*="third_level"]').val();  // 改成 select
+                    if (first_level || second_level || third_level) {
+                        isEmpty = false;
+                    }
+                    if (isEmpty) {
+                        $(this).addClass('hiddentool');
+                        change_tool_required()
+                    }
+                }
+            });
+        }
+
+
+        // 初始化商品
+        create_tool_first_level()
+        
+
+        // work_skill =============================================================================================================
+        async function get_work_skill_second_level_data(object) {
+            var selectedValue = object.val();
+            let url = "{% url 'get_skill_level_ajax' %}" + "?first_level=" + selectedValue; // Append data as query parameter
+            var secondLevelSelect = object.parent().find('select[id$="_second_level"]');
+            let response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (response.ok) {
+                let data = await response.json();
+                secondLevelSelect.empty();
+                $.each(data.second_level, function (key, value) {
+                    secondLevelSelect.append($('<option></option>').attr('value', key).text(value));
+                });
+            } else {
+                console.error('AJAX 请求失败');
+            }
+        }
+
+        async function get_work_skill_third_level_data(object) {
+            var selectedValue =object.val();
+            var firstLevelValue = object.parent().find('select[id$="_first_level"]').val();
+            var thirdLevelSelect = object.parent().find('select[id$="_third_level"]');
+            let url = "{% url 'get_skill_level_ajax' %}" + "?first_level=" + firstLevelValue +'&' + "second_level="+ selectedValue; // Append data as query parameter
+            let response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (response.ok) {
+                let data = await response.json();
+                thirdLevelSelect.empty();                
+                $.each(data.third_level, function (key, value) {                    
+                    thirdLevelSelect.append($('<option></option>').attr('value', key).text(value));
+                });
+            } else {
+                console.error('AJAX 请求失败');
+            }
+        }
+
+        async function create_work_skill_level(){
+            // 获取所有 workskiell first_level 选择框
+            const selects = $('select[id^="id_work_skill"][id$="_first_level"]').toArray();
+            $('.skill_first_level').select2({
+                width: '100%'  // 設置寬度為100%
+            });
+            $('.skill_second_level').select2({
+                width: '100%'  // 設置寬度為100%
+            });
+            $('.skill_third_level').select2({
+                width: '100%'  // 設置寬度為100%
+            });
+            // 使用 Promise.all 等待所有请求完成
+            await Promise.all(selects.map(async select => {
+                var firstLevelSelect = $(select);
+                // 使用 fetch 发送 AJAX 请求以获取 first_level 的选项
+                let response = await fetch("{% url 'get_skill_level_ajax' %}");
+                let data = await response.json();
+                firstLevelSelect.empty();
+                $.each(data.first_level, function (key, value) {
+                    firstLevelSelect.append($('<option></option>').attr('value', key).text(value));
+                });
+            }));
+            // 等待所有 AJAX 请求和选项填充完成后，设置默认值
+            var formDataString = $("#data_pass_area").text();
+            // 用隱藏的資料來把儲存的表單寫回去
+            // 檢查是否有資料
+            if (formDataString !== '<MultiValueDict: {}>') {
+                // 如果有資料，則進行處理
+                var correctedString = formDataString.replace(/'/g, '"');
+                // 在這里添加 try-catch 可以捕捉 JSON 解析過程中可能出現的錯誤
+                try {
+                    var formData = JSON.parse(correctedString);                    
+                    var firstLevelSelects = $('select[id^="id_work_skill"][id$="_first_level"]').toArray();
+
+                    let count_num = 0
+                    for (let select of firstLevelSelects) {                        
+                        var partNameKey = `work_skill${count_num}-0-skill_first_level`;
+                        var initialData = formData[partNameKey];
+                        if (initialData) {
+                            $(select).val(initialData).trigger('change');
+                            await get_work_skill_second_level_data($(select));
+                        } 
+                        count_num+=1
+                    }
+                    // 這邊就可以呼叫第二個類別的資料了
+                    var SecondLevelSelects = $('select[id^="id_work_skill"][id$="_second_level"]').toArray();
+                    let count_num2 = 0
+                    for (let select of SecondLevelSelects) {                        
+                        var partNameKey = `work_skill${count_num2}-0-skill_second_level`;
+                        var initialData = formData[partNameKey];
+                        if (initialData) {
+                            $(select).val(initialData).trigger('change');
+                            await get_work_skill_third_level_data($(select));
+                        } 
+                        count_num2+=1
+                    }
+
+                    // 測試第三個類別的資料
+                    var ThirdLevelSelects = $('select[id^="id_work_skill"][id$="_third_level"]').toArray();
+                    let count_num3 = 0
+                    for (let select of ThirdLevelSelects) {                        
+                        var partNameKey = `work_skill${count_num3}-0-skill_third_level`;
+                        var initialData = formData[partNameKey];
+                        if (initialData) {
+                            $(select).val(initialData).trigger('change');
+                        } 
+                        count_num3+=1
+                    }
+                } catch (e) {
+                    console.error("JSON 解析錯誤:", e);
+                }
+            }
+            $('.skill_container').each(function (index) {
+                // 1 或0都可以調整
+                if (index >= 0) {
+                    let isEmpty = true;
+                    let first_level = $(this).find('select[name*="first_level"]').val();
+                    let second_level = $(this).find('select[name*="second_level"]').val();
+                    let third_level = $(this).find('select[name*="third_level"]').val();  // 改成 select
+                    if (first_level || second_level || third_level) {
+                        isEmpty = false;
+                    }
+                    
+                    if (isEmpty) {
+                        $(this).addClass('hiddenskill');
+                        
+                    }
+                }
+            });
+        }
+        
+        create_work_skill_level()
+
+        
+
+        // 设置每个 first_level 选择框的更改事件处理程序
+        $('select[id^="id_work_skill"][id$="_first_level"]').change(function () {
+            var selectedValue = $(this).val();
+            // 找到相应的 second_level 选择框
+            var secondLevelSelect = $(this).parent().find('select[id$="_second_level"]');
+            // 发送 AJAX 请求以获取 second_level 的选项
+            $.get("{% url 'get_skill_level_ajax' %}", { first_level: selectedValue }, function (data) {
+                secondLevelSelect.empty();
+                $.each(data.second_level, function (key, value) {
+                    secondLevelSelect.append($('<option></option>').attr('value', key).text(value));
+                });
+            });
+        });
+
+        // 为 second_level 设置更改事件处理程序，类似于上述代码
+        $('select[id^="id_work_skill"][id$="_second_level"]').change(function () {
+            var selectedValue = $(this).val();
+            var firstLevelValue = $(this).parent().find('select[id$="_first_level"]').val();
+            var thirdLevelSelect = $(this).parent().find('select[id$="_third_level"]');
+            $.get("{% url 'get_skill_level_ajax' %}", { first_level: firstLevelValue, second_level: selectedValue }, function (data) {
+                thirdLevelSelect.empty();
+                $.each(data.third_level, function (key, value) {
+                    thirdLevelSelect.append($('<option></option>').attr('value', key).text(value));
+                });
+            });
+        });
+
+
+        $(".department-choice ").on("change", function () {
+            if ($(this).val() == '科系限制') {
+                $("#custom-department").show();
+                toggleDepartmentRequiredState(true);
+            } else {
+                $("#custom-department").hide();
+                $("#custom-department input").val("");  // 清空自定义科系输入字段的值
+                toggleDepartmentRequiredState(false);
+            }
+        });        
+
+        // 初始狀態檢查
+        if ($(".department-choice:checked").val() == "科系限制") {
+            $("#custom-department").show();
+            toggleDepartmentRequiredState(true);
+        } else {
+            toggleDepartmentRequiredState(false);
+        }
+
+        $(".certificates-choice ").on("change", function () {
+            if ($(this).val() == '需具備證照/執照') {
+                $("#custom_certificates").show();
+                toggleCertificatesRequiredState(true);
+            } else {
+                $("#custom_certificates").hide();
+                $("#custom_certificates input").val("");  // 清空自定义科系输入字段的值
+                toggleCertificatesRequiredState(false);
+            }
+        });
+
+        // 初始狀態檢查
+        if ($(".certificates-choice:checked").val() == "需具備證照/執照") {
+            $("#custom_certificates").show();
+            toggleCertificatesRequiredState(true);
+        } else {
+            toggleCertificatesRequiredState(false);
+        }
+
+        $(".has_management-choice ").on("change", function () {
+            if ($(this).val() == '是') {
+                $("#custom_management_responsibility").show();
+                toggleManagement_responsibilityRequiredState(true);
+            } else {
+                $("#custom_management_responsibility").hide();
+                $("#custom_management_responsibility input").val("");  // 清空自定义科系输入字段的值
+                toggleManagement_responsibilityRequiredState(false);
+            }
+        });
+
+        // 初始狀態檢查
+        if ($(".has_management-choice:checked").val() == "是") {
+            $("#custom_management_responsibility").show();
+            toggleManagement_responsibilityRequiredState(true);
+        } else {
+            toggleManagement_responsibilityRequiredState(false);
+        }
+
+        $(".education_level-choice ").on("change", function () {
+            if ($(this).val() == '學歷限制') {
+                $("#custom_education_level").show();
+                
+            } else {
+                $("#custom_education_level").hide();
+                $("#custom_education_level input[type='checkbox']").prop('checked', false);
+                
+            }
+        });
+
+        // 初始狀態檢查
+        if ($(".education_level-choice:checked").val() == "學歷限制") {
+            $("#custom_education_level").show();
+            
+        } 
+
+        $(".work_experience-choice").on("change", function () {
+            var jobTitleInput = $("#job_title");
+            var workYearsInput = $("#work_years");
+            var workYearsLabel = $("#work_years_label");
+
+
+            if ($(this).val() == "希望具備"){
+                jobTitleInput.show();
+                workYearsInput.show();
+                workYearsLabel.show();
+                jobTitleInput.prop('required', true);
+                workYearsInput.prop('required', true);
+            } else {
+                jobTitleInput.hide();
+                jobTitleInput.val("");
+                workYearsInput.hide();
+                workYearsInput.val("");
+                workYearsLabel.hide();
+                jobTitleInput.prop('required', false);
+                workYearsInput.prop('required', false);
+            }
+        });
+
+
+        // 遍歷所有的表單
+        $('.container.value_have').each(function (index) {
+            // 不知道為甚麼time_frequency 必須要手動強制才能添加required
+            $(this).find('select[name*="time_frequency"]').attr('required', true);  // 為 timeFrequency 添加 required 屬性
+            let isEmpty = true;            
+            let jobTimeEstimation = $(this).find('input[name*="job_function_and_responsibilities_time_estimation"]').val();
+            let workHoursPercentage = $(this).find('input[name*="work_hours_percentage"]').val();
+            let timeFrequency = $(this).find('select[name*="time_frequency"]').val();  // 改成 select
+
+            // 如果表單是第7個或更多，且內部的特定欄位都是空的            
+            if (index >= 6) {
+                if (jobTimeEstimation || workHoursPercentage || timeFrequency) {
+                    isEmpty = false;
+                }
+                if (isEmpty) {
+                    $(this).addClass('hidden');
+                    change_required()
+                }                
+            }
+
+        });
+
+
+        // 遍歷所有語文的表單
+        $('.language_group').each(function (index) {
+            // 如果表單是第7個或更多，且內部的特定欄位都是空的            
+            if (index >= 1) {
+                let isEmpty = true;
+                let language = $(this).find('select[name*="language"]').val();                
+
+                if (language ) {
+                    isEmpty = false;
+                }
+
+                if (isEmpty) {
+                    $(this).addClass('hiddenlanguage');
+                }               
+            }
+
+            // 用來控制語文model的必填欄位
+            $(this).find('select[name*="language"]').on("change", function () {
+                if ($(this).val()) {
+                    $(this).closest('.language_group').find('select[name*="listen"]').prop('required', true);
+                    $(this).closest('.language_group').find('select[name*="speak"]').prop('required', true);
+                    $(this).closest('.language_group').find('select[name*="read"]').prop('required', true);
+                    $(this).closest('.language_group').find('select[name*="write"]').prop('required', true);
+                } else {
+                    $(this).closest('.language_group').find('select[name*="listen"]').prop('required', false);
+                    $(this).closest('.language_group').find('select[name*="speak"]').prop('required', false);
+                    $(this).closest('.language_group').find('select[name*="read"]').prop('required', false);
+                    $(this).closest('.language_group').find('select[name*="write"]').prop('required', false);
+                }
+            });
+        });
+                    
+
+
+
+
+        $('Form').submit(function (e) {            
+            // 表單檢查定義             
+            // 1.列出職務重要的功能及責任,並估計所占用的時間比例 不可以少於6個
+            if ($('.job_responsibilities_time').not('.hidden .job_responsibilities_time').length <6){
+                // 阻止表单的默认提交行为
+                e.preventDefault();
+                alert('工作責任請填寫至少6種');
+                return;
+            }
+
+            // 2.時間加總是否等於100%
+            if ($('#percentageTotal').text()!=='100'){
+                // 阻止表单的默认提交行为
+                e.preventDefault();
+                alert("工作佔比不為100%,請重新檢查資料")
+                return
+            }
+
+            if ($(".education_level-choice:checked").val() == '學歷限制' && $("#custom_education_level input:checked").length == 0) {
+                alert('請至少選擇一個學歷條件');
+                e.preventDefault(); // 防止表單提交
+                return
+            }
+
+            checkTool(e)
+            checkSkill(e)
+        });
+
+
+
+            
+        // 确保在页面加载完毕后调用函数
+        checkValueifexits();
+
+
+
+
+
+
+
+
+        $('.select2-multiple').select2();
+    });
+
+
+
+</script>
+
+{% endblock extra_js_body %}

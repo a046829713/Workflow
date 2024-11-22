@@ -1,0 +1,33 @@
+.custom-container {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-style: double;
+    border-width: 3px;
+}
+
+.tool_area {
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #dadbdb;
+    border-style: groove;
+}
+
+
+#id_work_ability,
+#id_industry_experience,
+#id_industry_connections,
+#id_industry_knowledge,
+#id_school_knowledge_select,
+#id_business_knowledge {
+    width: 300px;
+}
+
+.hiddenlanguage,
+.hiddentool,
+.hiddenskill {
+    display: none;
+}

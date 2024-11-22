@@ -1,0 +1,141 @@
+{% extends "form_base.html" %}
+
+{% load static %}
+
+
+{% block static_file %}
+
+<link rel="stylesheet" href="{% static 'GeneralManagersOffice/CorrectiveeActionReport.css' %}">
+
+{% endblock static_file %}
+
+{% block title%}
+矯正預防措施處理單
+{% endblock title %}
+
+
+{% block content %}
+
+<!-- 每一份文件的Title區域 -->
+<h1 class="text-center text-success">矯正預防措施處理單</h1>
+<h1 class="text-success">表單內容</h1>
+<hr>
+
+
+<div class="mt-3 mb-3">
+    <label for="" class="form-label fs-3">{{ form.resource_no.label }}</label>
+    {{ form.resource_no }}
+</div>
+
+<div class="mt-3 mb-3">
+    <label for="" class="form-label fs-3">{{ form.related_personnel.label }}</label>
+    {{ form.related_personnel }}
+</div>
+
+<div class="mt-3 mb-3">
+    <label for="" class="form-label fs-3">{{ form.complaint_reason.label }}</label>
+    {{ form.complaint_reason }}
+</div>
+
+<div class="mt-3 mb-3">
+    <label for="" class="form-label fs-3">{{ form.temporary_plan.label }}</label>
+    {{ form.temporary_plan }}
+</div>
+
+
+<div class="mt-3 mb-3">
+    <label for="" class="form-label fs-3">{{ form.permanent_countermeasures.label }}</label>
+    {{ form.permanent_countermeasures }}
+</div>
+<div class="mt-3 mb-3">
+    <label for="" class="form-label fs-3">{{ form.happen_again.label }}</label>
+    {{ form.happen_again }}
+</div>
+
+<div class="mb-3 mt-3">
+    <label for="" class="form-label fs-3">{{ form.attachment1.label }}</label>
+    {{ form.attachment1 }}
+    {% if not Reset %}
+    {% for attachment in attachments %}
+    {% if attachment.name == 'attachment1' %}
+    最後上傳檔案:
+    <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</div>
+<div class="mb-3 mt-3">
+    <label for="" class="form-label fs-3">{{ form.attachment2.label }}</label>
+    {{ form.attachment2 }}
+    {% if not Reset %}
+    {% for attachment in attachments %}
+    {% if attachment.name == 'attachment2' %}
+    最後上傳檔案:
+    <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</div>
+<div class="mb-3 mt-3">
+    <label for="" class="form-label fs-3">{{ form.attachment3.label }}</label>
+    {{ form.attachment3 }}
+    {% if not Reset %}
+    {% for attachment in attachments %}
+    {% if attachment.name == 'attachment3' %}
+    最後上傳檔案:
+    <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</div>
+<div class="mb-3 mt-3">
+    <label for="" class="form-label fs-3">{{ form.attachment4.label }}</label>
+    {{ form.attachment4 }}
+    {% if not Reset %}
+    {% for attachment in attachments %}
+    {% if attachment.name == 'attachment4' %}
+    最後上傳檔案:
+    <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</div>
+<div class="mb-3 mt-3">
+    <label for="" class="form-label fs-3">{{ form.attachment5.label }}</label>
+    {{ form.attachment5 }}
+    {% if not Reset %}
+    {% for attachment in attachments %}
+    {% if attachment.name == 'attachment5' %}
+    最後上傳檔案:
+    <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</div>
+<div class="mb-3 mt-3">
+    <label for="" class="form-label fs-3">{{ form.attachment6.label }}</label>
+    {{ form.attachment6 }}
+    {% if not Reset %}
+    {% for attachment in attachments %}
+    {% if attachment.name == 'attachment6' %}
+    最後上傳檔案:
+    <a href="{{ attachment.file.url }}">{{ attachment.file.name }}</a>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</div>
+
+
+
+
+{% endblock content %}
+
+
+
+{% block extra_js_body %}
+<script>
+    $(document).ready(function () {
+        $('.select2-multiple').select2();
+    });
+</script>
+{% endblock extra_js_body %}

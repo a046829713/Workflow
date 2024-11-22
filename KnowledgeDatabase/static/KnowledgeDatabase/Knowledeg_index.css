@@ -1,0 +1,212 @@
+body {
+    margin: 0px;
+    background: linear-gradient(to left, #348F50, #56B4D3);
+    font-family: 'Arial', sans-serif;
+}
+
+.containerCustom {
+    width: 85%;
+    margin: 10px auto;
+
+}
+
+.costom_container {
+    background-color: white;
+    border-radius: 10px;
+}
+
+
+.custom-table {
+    border-collapse: collapse;
+    width: 90%;
+    font-size: 1em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    margin: auto;
+}
+
+.custom-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+.custom-table th,
+.custom-table td {
+    padding: 12px 15px;
+}
+
+.custom-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.custom-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.custom-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.custom-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+
+.editor_area,
+.form_area {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    /* 或其他合適的值 */
+}
+
+
+
+.editor_content,
+.form_content {
+    position: fixed;
+    background-color: #fefefe;
+    width: 80%;
+    max-height: 90%;
+    /* 設置最大高度為視窗高度的80% */
+    overflow-y: auto;
+    /* 啟用垂直滾動條當內容超過最大高度 */
+    padding: 20px;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    /* 或其他合適的值 */
+}
+
+
+/* 編輯器類 */
+.editor_content .ck-editor__editable {
+    min-height: 500px;
+    /* 或者您希望的任何高度 */
+}
+
+.button-shadow {
+    padding: 10px 20px;
+    font-size: 14px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.button-shadow:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+
+
+
+.custom-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #17a2b8; /* Bootstrap info color for a modern look */
+    border: none;
+    border-radius: 25px; /* Rounded corners */
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s; /* Smooth transitions */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.custom-btn:hover {
+    background-color: #138496; /* Slightly darker shade on hover */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.custom-btn:active {
+    background-color: #117a8b; /* Even darker on click */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px); /* Slightly push the button down */
+}
+
+.custom-btn-add-article {
+    background-color: #28a745; /* A vibrant green color */
+}
+
+.custom-btn-add-article:hover {
+    background-color: #218838;
+}
+
+.custom-btn-add-article:active {
+    background-color: #1e7e34;
+}
+
+
+.custom-container {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-style: double;
+    border-width: 3px;
+}
+
+.custom-tooltip-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.custom-tooltip-text {
+    visibility: hidden;
+    width: 450px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position the tooltip above the text */
+    left: 50%;
+    margin-left: -60px; /* Use half of the width to center the tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.custom-tooltip-wrapper:hover .custom-tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+.reset-button {
+    display: inline-block;
+    padding: 10px 10px;
+    margin: 10px 0;
+    background-color: #babcba; /* 按钮背景颜色 */
+    color: white; /* 按钮文字颜色 */
+    text-align: center;
+    text-decoration: none; /* 去除链接下划线 */
+    font-size: 16px;
+    border-radius: 5px; /* 圆角 */
+    transition: background-color 0.3s ease; /* 背景颜色渐变效果 */
+}
+
+.reset-button:hover {
+    background-color: #45a049; /* 悬停时的背景颜色 */
+}
+
+
+.custom-pagination {
+    margin-right: 5%; /* 根據需要調整這個值 */
+}

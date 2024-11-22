@@ -1,0 +1,78 @@
+body {
+    margin: 0px;
+    background: linear-gradient(to left, #b4b3b3, #b9b8b8);
+}
+
+
+.containerCustom {
+    width: 85%;
+    margin: 10px auto;
+
+}
+
+.navbar {
+    border-radius: 10px;
+}
+
+
+#carouselBarOnly {
+    margin-top: 10px;
+}
+
+
+
+
+.approval_opinionarea {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    /* 或其他合適的值 */
+}
+
+.approval_opinion-content {
+    position: fixed;
+    background-color: #fefefe;
+    width: 50%;
+    padding: 20px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    /* 或其他合適的值 */
+}
+
+
+.custom-tooltip-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.custom-tooltip-text {
+    visibility: hidden;
+    width: 300px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position the tooltip above the text */
+    left: 50%;
+    margin-left: -60px; /* Use half of the width to center the tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.custom-tooltip-wrapper:hover .custom-tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+

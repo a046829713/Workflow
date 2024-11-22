@@ -1,0 +1,151 @@
+.costom_container {
+    background-color: white;
+    border-radius: 10px;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    /* 更深的陰影效果 */
+}
+
+th,
+td {
+    padding: 15px;
+    background-color: rgba(38, 50, 56, 0.85);
+    /* 深灰色背景 */
+    color: #E0E0E0;
+    /* 亮灰色文字，增加可讀性 */
+    text-align: left;
+    /* 设置文本居中对齐 */
+}
+
+
+thead th {
+    background-color: #263238;
+    /* 更深的藍灰色作為表頭背景 */
+    text-align: left;
+}
+
+tbody tr {
+    &:hover {
+        background-color: rgba(48, 63, 159, 0.3);
+        /* 深藍色滑動效果 */
+    }
+
+    border-bottom: 2px solid #4b814c;
+    /* 暗綠色作為底部邊界 */
+}
+
+tbody td {
+    position: relative;
+
+    &:hover {
+        &:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: -9999px;
+            bottom: -9999px;
+            background-color: rgba(67, 76, 94, 0.2);
+            /* 深色懸停擴展背景 */
+            z-index: -1;
+        }
+    }
+}
+
+
+#form-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    /* 使弹出窗口靠右 */
+    width: 100%;
+    /* 控制最大宽度 */
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* 背景色稍微透明以看到下面的内容 */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    /* 水平方向靠右对齐 */
+    z-index: 1000;
+    overflow-y: auto;
+    /* 在垂直方向上添加滚动条 */
+}
+
+#check-form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 40%;
+    z-index: 1001;
+}
+
+.pretty_button {
+    background-color: #4CAF50;
+    /* 綠色背景 */
+    border: none;
+    color: white;
+    /* 白色文字 */
+    padding: 6px;
+    /* 按鈕內邊距 */
+    text-align: left;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    /* 文字大小 */
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    /* 過渡效果時間 */
+    cursor: pointer;
+    /* 鼠標指針 */
+    border-radius: 5px;
+    /* 圓角邊框 */
+}
+
+.pretty_button:hover {
+    background-color: #ffffff;
+    /* 滑鼠移上時的背景色 */
+    color: #4CAF50;
+    /* 滑鼠移上時的文字顏色 */
+    border: 1px solid #4CAF50;
+    /* 滑鼠移上時的邊框 */
+}
+
+.custom-pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.custom-pagination li {
+    margin: 0 5px;
+}
+
+.custom-pagination a {
+    display: block;
+    padding: 8px 16px;
+    background-color: rgba(255, 255, 255, 0.1);
+    /* 半透明背景 */
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.custom-pagination a:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    /* 滑鼠懸停時的背景顏色 */
+}
+
+.custom-pagination .custom-active a {
+    background-color: rgba(0, 0, 0, 0.3);
+    /* 當前頁面的背景顏色 */
+    color: white;
+}

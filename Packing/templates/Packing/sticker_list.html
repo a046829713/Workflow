@@ -1,0 +1,216 @@
+{% extends "Packing/index.html" %}
+
+{% load static %}
+{% load my_filters %}
+
+
+{% block extra_css %}
+<!-- 覆盖掉原本的CSS -->
+<link rel="stylesheet" href="{% static 'Company/index.css' %}">
+<link rel="stylesheet" href="{% static 'Packing/index.css' %}">
+<link rel="stylesheet" href="{% static 'Packing/sticker.css' %}">
+{% endblock extra_css %}
+
+{% block content %}
+<button id="show-form" style="border: none; background: none;">
+    <img src="{% static 'Company\setting.png' %}" alt="表單過濾" style="width: 24px; height: 24px;">
+</button>
+
+<div id="form-container" style="display:none;">
+    <div class="d-flex justify-content-end align-items-center mb-3">            
+        <button id="close-form">X</button>
+    </div>    
+    <form id="check-form" method="get" action="{% url 'sticker_index' %}">
+        {% csrf_token %}
+        {{ search_form.PROD_NO.label_tag }}
+        {{ search_form.PROD_NO }}
+
+        {{ search_form.BuyType.label_tag }}
+        {{ search_form.BuyType }}
+
+        {{ search_form.DSCType.label_tag }}
+        {{ search_form.DSCType }}
+
+        {{ search_form.material.label_tag }}
+        {{ search_form.material }}
+
+        {{ search_form.color.label_tag }}
+        {{ search_form.color }}
+
+        {{ search_form.if_BuyType.label_tag }}
+        {{ search_form.if_BuyType }}
+
+        <button type="submit" class="btn btn-primary mt-4">搜尋</button>
+    </form>
+</div>  
+
+
+<div class="mt-3">
+    <h2 style="text-align: center; color: rgba(220, 220, 220, 0.783);">貼紙總覽</h2>
+    <table id="sticker-table">
+        <thead>
+            <tr>
+                <th>產品編號</th>
+                <th>品名規格</th>
+                <th>購買類型</th>
+                <th>描述類型</th>
+                <th>高度大小</th>
+                <th>寬度大小</th>
+                <th>材質</th>
+                <th>顏色</th>
+                <th>備註</th>
+                <th>最後更新人員</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sticker in object_list %}
+            <tr>
+                <td>
+                    <button class="btn btn-outline-light edit-btn" data-pk="{{ sticker.PROD_NO }}">{{ sticker.PROD_NO }}</button>
+                </td>
+                
+
+                <td>{% get_matched_value name_map sticker.PROD_NO %}</td>
+                <td>{{ sticker.BuyType }}</td>
+                <td>{{ sticker.DSCType }}</td>
+                <td>{{ sticker.heightsize }} mm</td>
+                <td>{{ sticker.widthsize }} mm</td>
+                <td>{{ sticker.material }}</td>
+                <td>{{ sticker.color }}</td>
+                <td>{{ sticker.remark }}</td>
+                <td>{{ sticker.last_updated_by.FullName }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8">查無任何相關資料</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+
+<div class="Edit_Area">
+    <div class="Edit-content">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <p></p>
+            <button class="btn btn-outline-danger close" onclick="close_window()">&times;</button>
+        </div>
+        <form id='update_form' method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3 row">                        
+                <label for="" class="col-md-4 fs-5 mt-2 text-danger">{{ form.PROD_NO.label }}</label>
+                <div class="col-md-8 mt-2">
+                    {{ form.PROD_NO }}
+                </div>
+            </div>
+            <div class="mb-3 row">                        
+                <label for="" class="col-md-4 fs-5 mt-2">{{ form.BuyType.label }}</label>
+                <div class="col-md-8 mt-2">
+                    {{ form.BuyType }}
+                </div>
+            </div>
+            <div class="mb-3 row">                        
+                <label for="" class="col-md-4 fs-5 mt-2">{{ form.DSCType.label }}</label>
+                <div class="col-md-8 mt-2">
+                    {{ form.DSCType }}
+                </div>
+            </div>
+            <div class="mb-3 row">                        
+                <label for="" class="col-md-4 fs-5 mt-2">{{ form.heightsize.label }}</label>
+                <div class="col-md-8 mt-2">
+                    {{ form.heightsize }}
+                </div>
+            </div>
+            <div class="mb-3 row">                        
+                <label for="" class="col-md-4 fs-5 mt-2">{{ form.widthsize.label }}</label>
+                <div class="col-md-8 mt-2">
+                    {{ form.widthsize }}
+                </div>
+            </div>
+            <div class="mb-3 row">                        
+                <label for="" class="col-md-4 fs-5 mt-2">{{ form.material.label }}</label>
+                <div class="col-md-8 mt-2">
+                    {{ form.material }}
+                </div>
+            </div>
+            <div class="mb-3 row">                        
+                <label for="" class="col-md-4 fs-5 mt-2">{{ form.color.label }}</label>
+                <div class="col-md-8 mt-2">
+                    {{ form.color }}
+                </div>
+            </div>
+            <div class="mb-3 row">                        
+                <label for="" class="col-md-4 fs-5 mt-2">{{ form.remark.label }}</label>
+                <div class="col-md-8 mt-2">
+                    {{ form.remark }}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-outline-success">送出</button>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}
+
+
+{% block extra_js_body %}
+<script>
+    function close_window() {
+        $('.Edit_Area').hide();
+    }
+
+    $(document).ready(function () {
+        var currentRow;  // 用來保存當前正在編輯的行
+        var currentprod_no;
+
+        // 使用事件委託來處理動態創建的按鈕
+        $('#sticker-table').on('click', '.edit-btn', function () {
+            $('.Edit_Area').show();
+            currentRow = $(this).closest('tr');
+            var prodNo = $(this).data('pk');
+            currentprod_no = $(this).data('pk');
+            var buyType = currentRow.find('td:eq(2)').text();
+            var dscType = currentRow.find('td:eq(3)').text();
+            var height = currentRow.find('td:eq(4)').text().replace(' mm', ''); // 去掉 "mm"
+            var width = currentRow.find('td:eq(5)').text().replace(' mm', ''); // 去掉 "mm"
+            var material = currentRow.find('td:eq(6)').text();
+            var color = currentRow.find('td:eq(7)').text();
+            var remark = currentRow.find('td:eq(8)').text();
+
+            // 假設你的表單有相應的輸入欄位 ID
+            $('#target_prod_no').val(prodNo);
+        });
+
+        $('#update_form').submit(function (event) {
+            event.preventDefault(); // 阻止表单默认提交行为
+            var formData = new FormData(this); // 创建FormData对象，包含表单中的数据
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'update_sticker_view' %}", // 使用Django模板语言动态获取URL
+                data: formData,
+                processData: false,  // 告诉jQuery不要处理发送的数据
+                contentType: false,  // 告诉jQuery不要设置Content-Type请求头
+                success: function (response) {
+                    // 假設 response 是新的行的 HTML
+                    $(currentRow).html(response); // 使用新的 HTML 替換現有行
+                    close_window()
+                },
+                error: function (response) {
+                    alert('更新失败'); // 失败时的回调函数
+                }
+            });
+        });
+
+        $('#show-form').click(function() {
+            $('#form-container').fadeIn(); // 使用 jQuery fadeIn 效果显示表单
+        });
+
+        $('#close-form').click(function() {
+            $('#form-container').fadeOut(); // 使用 jQuery fadeOut 效果隐藏表单
+        });
+
+    });
+</script>
+{% endblock extra_js_body %}

@@ -1,0 +1,1162 @@
+{% extends "Company/form_info_Base.html" %}
+{% load static %}
+{% load my_filters %}
+
+
+{% block title%}
+表單內容
+{% endblock title %}
+
+{% block extra_css %}
+<!-- 沿用所有表單的css -->
+<link href="{% static 'Company\form_information.css' %}" rel="stylesheet">
+<script src="{% static 'Utils/split_file.js' %}"></script>
+{% endblock extra_css %}
+
+
+{% block extra_js_body %}
+
+<script>
+    $(document).ready(function () {
+        $('.approval-date').each(function () {
+            var originalDate = $(this).text();
+            var formattedDate = originalDate.replace(/-/g, '/');
+            $(this).text(formattedDate);
+        });
+
+        $('.approval_status').each(function () {
+            var originalData = $(this).text();
+            var formattedData = originalData.replace(/\[|\]|'/g, '');
+            $(this).text(formattedData);
+        });
+
+        $('#resource_no').select2({
+            width: '100%'  // 這裡您可以自定義寬度，例如 '300px' 或 '100%'
+        });
+    });    
+
+    $(document).ready(function () {
+        // 用來改變表單提交的顏色
+        $('.station_choice').each(function () {
+            var text = $(this).val();            
+            switch (text) {
+                case '核准':
+                    $(this).addClass('btn');
+                    $(this).addClass('btn-outline-success');
+                    break;
+                case '確認':
+                    $(this).addClass('btn');
+                    $(this).addClass('btn-outline-success');
+                    break;
+                case '同意加簽':
+                    $(this).addClass('btn');
+                    $(this).addClass('btn-outline-success');
+                    break;
+                case '結案':
+                    $(this).addClass('btn');
+                    $(this).addClass('btn-outline-success');
+                    break;
+                case '駁回':
+                    $(this).addClass('btn');
+                    $(this).addClass('btn-outline-warning');
+                    break;
+                case '退簽':
+                    $(this).addClass('btn');
+                    $(this).addClass('btn-outline-danger');
+                    break;
+                case '退回至申請人':
+                    $(this).addClass('btn');
+                    $(this).addClass('btn-outline-danger');
+                    break;
+                case '不同意加簽':
+                    $(this).addClass('btn');
+                    $(this).addClass('btn-outline-danger');
+                    break;
+                case '加簽':
+                    $(this).addClass('btn');
+                    $(this).addClass('btn-outline-warning');
+                    break;
+            }
+        });
+
+        //  先禁用
+        $("#department3, #department4").prop("disabled", true);
+
+        handleProductChoiceChangeResource(); // 初始設置
+        $("[name='product_choice']").change(handleProductChoiceChangeResource);
+    });
+
+    $(document).ready(function () {
+        $('.select2-multiple').select2();
+
+
+    });
+
+
+
+    function handleProductChoiceChangeResource() {
+        var isSingleProduct = $("#singleproduct").is(":checked");
+
+        if (isSingleProduct) {
+            $("#resource_no").prop("disabled", false);
+        } else {
+            $("#resource_no").val("").trigger("change");
+            $("#resource_no").prop("disabled", true);
+        }
+    }
+</script>
+
+{% endblock extra_js_body %}
+
+{% block form_content %}
+
+
+
+<!-- 用來顯示同一人簽核的提示內容 -->
+{% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<table class="table table-light table-striped table-hover">
+    <!-- 用來顯示文件內的資料 -->
+    {% if form.form_name  == '招募面試評核表' %}
+        <table class="table table-light table-striped table-hover">
+            {% for key,value in form_clean_data.items %}
+                {% if key  in RecruitmentInterviewEvaluation_to_check %}
+                <tr>
+                    <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                        {{ key }}
+                    </td>
+                    <td {% if key in different_keys %}class="table-danger" {% endif %}>                    
+                        {{ value|replace_linebreaks}}                    
+                    </td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+        <hr>
+        <table class="table table-light table-striped table-hover">
+            <tr>
+                <td></td>
+                <td>行為事例:(面試者所述之紀錄)</td>
+                <td>評語(面試官討論評估結論)</td>
+                <td>小結</td>
+            </tr>
+            {% for each_value in RecruitmentInterviewEvaluation_to_parser %}
+                <tr>
+                    <td>{{ each_value }}</td>
+                    {% for key,value in form_clean_data.items %}
+                        {% if each_value in key and '行為事例:(面試者所述之紀錄)' in key %}                            
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks}}
+                            </td>                               
+                        {% endif %}    
+                        {% if each_value in key and '評語(面試官討論評估結論)' in key %}                            
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks}}
+                            </td>                               
+                        {% endif %}    
+                        {% if each_value in key and '小結' in key %}                            
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks}}
+                            </td>                               
+                        {% endif %}    
+                            
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% elif form.form_name  == '職務說明書' %}
+        <table class="table table-light table-striped table-hover">
+            {% for key,value in form_clean_data.items %}
+                {% if key in jobdescription_to_check %}
+                    <tr>
+                        {% if key != "自訂義教育程度" and key != "自訂系所" and key != "其他證照" and key != "職稱" and key != "管理責任" and key != "工作年數" %}
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>                                
+                                {{ key }}                                
+                            </td>
+                        {% endif %}                        
+                        
+                        {% if  key == "教育程度" and "自訂義教育程度" in form_clean_data %}
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks }} / {{ form_clean_data.自訂義教育程度|replace_special_mark }}
+                            </td>
+                        {% elif key == "科系要求" and "自訂系所" in form_clean_data %}
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks }} / {{ form_clean_data.自訂系所|replace_linebreaks }}
+                            </td>
+                        {% elif key == "主要職責" %}
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks }}
+                                <br>
+                                <hr>                                
+                                <table class="table table-light table-striped table-hover">
+                                    <tr>                
+                                        <td>工作內容與職責</td>
+                                        <td>工作時數占比</td>
+                                        <td>頻率</td>
+                                    </tr>
+                                    {% for each_value in jobdescription_to_check_to_parser %}
+                                        <tr>                
+                                            {% for key,value in form_clean_data.items %}
+                                                {% for each_key in each_value %}
+                                                    {% if each_key == key and '工作職能和責任時間估計' in key %}                            
+                                                        <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                                            {{ value|replace_linebreaks}}
+                                                        </td>                               
+                                                    {% endif %}    
+                                                    {% if each_key == key and '工作時間百分比' in key %}                            
+                                                        <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                                            {{ value|replace_linebreaks}}
+                                                        </td>                               
+                                                    {% endif %}    
+                                                    {% if each_key == key and '時間頻率' in key %}                            
+                                                        <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                                            {{ value|replace_linebreaks}}
+                                                        </td>                               
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endfor %}
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </td>                             
+                        {% elif key == "專業證照/執照" and "其他證照" in form_clean_data %}
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {%  if value|replace_linebreaks == "需具備證照/執照" %}
+                                    需具備證照或執照
+                                {% else %}
+                                    {{  value|replace_linebreaks }}
+                                {% endif %}
+                                / {{ form_clean_data.其他證照|replace_linebreaks }}
+                            </td>                                
+                        {% elif key == "工作經驗" and "職稱" in form_clean_data %}
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks }} / {{ form_clean_data.職稱|replace_linebreaks }} / {{ form_clean_data.工作年數|replace_linebreaks }}
+                            </td>                                
+                        {% elif key == "是否有管理責任" and "管理責任" in form_clean_data %}
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks }} / 
+                                {{ form_clean_data.管理責任|replace_linebreaks }}
+
+                                {% if form_clean_data.管理責任|replace_linebreaks %}
+                                    位
+                                {% endif %} 
+                            </td>
+                        {% elif key == "持有駕照" %}
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks|replace_special_mark }} 
+                            </td>                                 
+                        {% elif key != "自訂義教育程度" and key != '自訂系所' and key != "其他證照" and key != "職稱" and key != "管理責任" and key != "工作年數" %}
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks }}
+                            </td>                                
+                        {% endif %}                   
+                        
+                    </tr>
+                    
+                {% endif %}
+            {% endfor %}
+        </table>
+        
+        
+        <span class="text-success fw-bold">語言能力</span>
+        <hr>
+        <table class="table table-light table-striped table-hover">
+            <tr>                
+                <td>語言</td>
+                <td>聽</td>
+                <td>說</td>
+                <td>讀</td>
+                <td>寫</td>
+            </tr>
+            {% for each_value in jobdescription_language_to_check_to_parser %}
+                <tr>                                  
+                    {% for key,value in form_clean_data.items %}                    
+                        {% if each_value in key and '-語言' in key %}                            
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks}}
+                            </td>                               
+                        {% endif %}    
+                        {% if each_value in key and '聽' in key %}                            
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks}}
+                            </td>                               
+                        {% endif %}    
+                        {% if each_value in key and '說' in key %}                            
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks}}
+                            </td>                               
+                        {% endif %}    
+                        {% if each_value in key and '讀' in key %}                            
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks}}
+                            </td>                               
+                        {% endif %}    
+                        {% if each_value in key and '寫' in key %}                            
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks}}
+                            </td>                               
+                        {% endif %}    
+                        
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+        <span class="text-success fw-bold">擅長工具</span>
+        <hr>
+        <table class="table table-light table-striped table-hover">
+            <tr>                
+                <td>主要大類</td>
+                <td>次要類</td>
+                <td>細項</td>
+            </tr>
+            {% for each_value in jobdescription_tool_to_check_to_parser %}
+                <tr>                                  
+                    {% for key,value in form_clean_data.items %}                    
+                        {% if each_value in key and '類別1' in key %}                            
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks}}
+                            </td>                               
+                        {% endif %}    
+                        {% if each_value in key and '類別2' in key %}                            
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks}}
+                            </td>                               
+                        {% endif %}    
+                        {% if each_value in key and '類別3' in key %}                            
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks}}
+                            </td>                               
+                        {% endif %}    
+                        
+                        
+                        
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+        <span class="text-success fw-bold">工作技能</span>
+        <hr>
+        <table class="table table-light table-striped table-hover">
+            <tr>                
+                <td>主要大類</td>
+                <td>次要類</td>
+                <td>細項</td>
+            </tr>
+            {% for each_value in jobdescription_work_skill_to_check_to_parser %}
+                <tr>                                  
+                    {% for key,value in form_clean_data.items %}                    
+                        {% if each_value in key and '類別1' in key %}                            
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks}}
+                            </td>                               
+                        {% endif %}    
+                        {% if each_value in key and '類別2' in key %}                            
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks}}
+                            </td>                               
+                        {% endif %}    
+                        {% if each_value in key and '類別3' in key %}                            
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks}}
+                            </td>                               
+                        {% endif %}    
+                        
+                        
+                        
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+        <span class="text-success fw-bold">內外部溝通與人際關係</span>
+        <hr>
+        <table class="table table-light table-striped table-hover">
+            {% for each_key in jobdescription_other_to_check %}
+                {% for key,value in form_clean_data.items %}
+                
+                    {% if key == each_key %}
+                        <tr>
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>                                
+                                {{ key }}                                
+                            </td>
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks }}
+                            </td> 
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </table>        
+    {% elif form.form_name  == '人員增補申請表' %}
+        <table class="table table-light table-striped table-hover">
+            {% for key,value in form_clean_data.items %}
+                {% if key in personneladditionapplication_to_check %}
+                    <tr>
+                        <!-- key -->
+                        {% if key == '短期時長' %}
+                            {% if valeue %}
+                                {{ key }}
+                            {% endif %}
+                        {% elif  key != '增加人員原因' %}
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>                                
+                                {{ key }}                                
+                            </td>
+                        {% endif %}
+                        
+                        
+                        <!-- value -->                        
+                        {% if key == '短期時長' %}
+                            {% if value %}
+                                <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                    {{ value|replace_linebreaks }}
+                                </td>
+                            {% endif %}                                                
+                        {% elif key == '增補原因' %}
+                            {% if value %}
+                                <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                    {{  form_clean_data.增加人員原因|replace_linebreaks }} / {{value|replace_linebreaks }}
+                                </td>
+                            {% endif %}                            
+                        {% elif key != '增加人員原因' %}
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks }}
+                            </td>                                
+                        {% endif %}             
+                        
+                    </tr>
+                    
+                {% endif %}
+            {% endfor %}
+        </table>
+        <span class="text-success fw-bold">職務條件程度</span>
+        <hr>
+        <table class="table table-light table-striped table-hover">
+            <tr>
+                <td style="text-align: center; ">低需求程度</td>
+                <td style="text-align: center; ">偏左傾向</td>
+                <td style="text-align: center; ">中等</td>
+                <td style="text-align: center; ">偏右傾向</td>
+                <td style="text-align: center; ">高需求程度</td>
+            </tr>
+
+
+            {% for key,value in form_clean_data.items %}
+                {% if key == '工作能力' %} 
+                    <tr>
+                        <td style="text-align: center; ">依SOP作業</td>
+                        <td style="text-align: center; ">{% if value == '1' %}<span class="text-primary">O</span>{% endif %}</td>
+                        <td style="text-align: center; ">{% if value == '2' %}<span class="text-primary">O</span>{% endif %}</td>
+                        <td style="text-align: center; ">{% if value == '3' %}<span class="text-primary">O</span>{% endif %}</td>
+                        <td style="text-align: center; ">靈活工作</td>
+                    </tr>
+                {% endif %}
+                {% if key == '業界經驗' %} 
+                    <tr>
+                        <td style="text-align: center; ">不需要</td>
+                        <td style="text-align: center; ">{% if value == '1' %}<span class="text-primary">O</span>{% endif %}</td>
+                        <td style="text-align: center; ">{% if value == '2' %}<span class="text-primary">O</span>{% endif %}</td>
+                        <td style="text-align: center; ">{% if value == '3' %}<span class="text-primary">O</span>{% endif %}</td>
+                        <td style="text-align: center; ">業界經驗</td>
+                    </tr>
+                {% endif %}
+                {% if key == '業界人脈' %} 
+                    <tr>
+                        <td style="text-align: center; ">不需要</td>
+                        <td style="text-align: center; ">{% if value == '1' %}<span class="text-primary">O</span>{% endif %}</td>
+                        <td style="text-align: center; ">{% if value == '2' %}<span class="text-primary">O</span>{% endif %}</td>
+                        <td style="text-align: center; ">{% if value == '3' %}<span class="text-primary">O</span>{% endif %}</td>
+                        <td style="text-align: center; ">業界人脈</td>
+                    </tr>
+                {% endif %}
+                {% if key == '業界知識' %} 
+                    <tr>
+                        <td style="text-align: center; ">不需要</td>
+                        <td style="text-align: center; ">{% if value == '1' %}<span class="text-primary">O</span>{% endif %}</td>
+                        <td style="text-align: center; ">{% if value == '2' %}<span class="text-primary">O</span>{% endif %}</td>
+                        <td style="text-align: center; ">{% if value == '3' %}<span class="text-primary">O</span>{% endif %}</td>
+                        <td style="text-align: center; ">業界知識</td>
+                    </tr>
+                {% endif %}
+                {% if key == '學校知識' %} 
+                    <tr>
+                        <td style="text-align: center; ">不需要</td>
+                        <td style="text-align: center; ">{% if value == '1' %}<span class="text-primary">O</span>{% endif %}</td>
+                        <td style="text-align: center; ">{% if value == '2' %}<span class="text-primary">O</span>{% endif %}</td>
+                        <td style="text-align: center; ">{% if value == '3' %}<span class="text-primary">O</span>{% endif %}</td>
+                        <td style="text-align: center; ">學校知識</td>
+                    </tr>
+                {% endif %}
+                {% if key == '企業知識' %} 
+                    <tr>
+                        <td style="text-align: center; ">企業內有的知識</td>
+                        <td style="text-align: center; ">{% if value == '1' %}<span class="text-primary">O</span>{% endif %}</td>
+                        <td style="text-align: center; ">{% if value == '2' %}<span class="text-primary">O</span>{% endif %}</td>
+                        <td style="text-align: center; ">{% if value == '3' %}<span class="text-primary">O</span>{% endif %}</td>
+                        <td style="text-align: center; ">企業內沒有的知識</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+        <span class="text-success fw-bold">需求職缺條件</span>
+        <hr>
+        <table class="table table-light table-striped table-hover">
+            {% for key,value in form_clean_data.items %}
+                {% if key in personneladditionapplication_to_check2 %}
+                    <tr>
+                        <!-- key -->                    
+                        {% if key != "自訂系所" and key != '年齡輸入' and key != '職位名稱' and key != '工作年資' %}
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>                                
+                                {{ key }}                                
+                            </td>
+                        {% endif %}
+                        
+                        
+                        <!-- value -->                        
+                        {% if key == "科系" and "自訂系所" in form_clean_data %}
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks }} / {{ form_clean_data.自訂系所|replace_linebreaks }}
+                            </td>
+                        {% elif key == "年齡" and "年齡輸入" in form_clean_data %}
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {% if form_clean_data.年齡輸入 %}
+                                    {{ value|replace_linebreaks }} / {{ form_clean_data.年齡輸入|replace_linebreaks }} 歲以下
+                                {% else %}
+                                    {{ value|replace_linebreaks }}
+                                {% endif %}
+                            </td>
+                        {% elif key == "經歷職務年資" and "職位名稱" in form_clean_data and "工作年資" in form_clean_data %}
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks }} / {{ form_clean_data.職位名稱|replace_linebreaks }} / {{ form_clean_data.工作年資|replace_linebreaks }}
+                            </td>                    
+                        {% elif key == '持有駕照' %}
+                            {% if value %}
+                                <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                    {{ value|replace_special_mark }}
+                                </td>
+                            {% endif %}      
+                        {% elif key == '學歷' %}
+                            {% if value %}
+                                <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                    {{ value|replace_special_mark }}
+                                </td>
+                            {% endif %}      
+                        {% elif key != '自訂系所' and key != '年齡輸入' and key != '職位名稱' and key != '工作年資'  %}
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks }}
+                            </td>                                
+                        {% endif %}                   
+                        
+
+                        
+                    </tr>
+                    
+                {% endif %}
+            {% endfor %}
+        </table>
+        <span class="text-success fw-bold">語言能力</span>
+        <hr>
+        <table class="table table-light table-striped table-hover">
+            <tr>                
+                <td>語言</td>
+                <td>聽</td>
+                <td>說</td>
+                <td>讀</td>
+                <td>寫</td>
+            </tr>
+            {% for each_value in jobdescription_language_to_check_to_parser %}
+                <tr>                                  
+                    {% for key,value in form_clean_data.items %}                    
+                        {% if each_value in key and '-語言' in key %}                            
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks}}
+                            </td>                               
+                        {% endif %}    
+                        {% if each_value in key and '聽' in key %}                            
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks}}
+                            </td>                               
+                        {% endif %}    
+                        {% if each_value in key and '說' in key %}                            
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks}}
+                            </td>                               
+                        {% endif %}    
+                        {% if each_value in key and '讀' in key %}                            
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks}}
+                            </td>                               
+                        {% endif %}    
+                        {% if each_value in key and '寫' in key %}                            
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks}}
+                            </td>                               
+                        {% endif %}    
+                        
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+        <span class="text-success fw-bold">擅長工具</span>
+        <hr>
+        <table class="table table-light table-striped table-hover">
+            <tr>                
+                <td>主要大類</td>
+                <td>次要類</td>
+                <td>細項</td>
+            </tr>
+            {% for each_value in jobdescription_tool_to_check_to_parser %}
+                <tr>                                  
+                    {% for key,value in form_clean_data.items %}                    
+                        {% if each_value in key and '類別1' in key %}                            
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks}}
+                            </td>                               
+                        {% endif %}    
+                        {% if each_value in key and '類別2' in key %}                            
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks}}
+                            </td>                               
+                        {% endif %}    
+                        {% if each_value in key and '類別3' in key %}                            
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks}}
+                            </td>                               
+                        {% endif %}    
+                        
+                        
+                        
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+        <span class="text-success fw-bold">工作技能</span>
+        <hr>
+        <table class="table table-light table-striped table-hover">
+            <tr>                
+                <td>主要大類</td>
+                <td>次要類</td>
+                <td>細項</td>
+            </tr>
+            {% for each_value in jobdescription_work_skill_to_check_to_parser %}
+                <tr>                                  
+                    {% for key,value in form_clean_data.items %}                    
+                        {% if each_value in key and '類別1' in key %}                            
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks}}
+                            </td>                               
+                        {% endif %}    
+                        {% if each_value in key and '類別2' in key %}                            
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks}}
+                            </td>                               
+                        {% endif %}    
+                        {% if each_value in key and '類別3' in key %}                            
+                            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                                {{ value|replace_linebreaks}}
+                            </td>                               
+                        {% endif %}    
+                        
+                        
+                        
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% elif form.form_name  == '重工單' %}
+        <table class="table table-light table-striped table-hover">
+            {% for key,value in form_clean_data.items %}
+                {%  if key in Heavyworkorder_to_check %}           
+                    <tr>
+                        <td {% if key in different_keys %}class="table-danger" {% endif %}>{{ key }}</td>
+                        <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                            {% if key == '與會人員' %}
+                                {{ value|replace_special_mark }}
+                            {% else %}
+                                {{ value|replace_linebreaks}}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+        <table class="table table-light table-striped table-hover">
+            <tr>                
+                <td>廠商名稱</td>
+                <td>製程名稱</td>
+            </tr>
+            {% for each_value in Heavyworkorder_to_check_to_parser %}
+                <tr>
+                {% for key,value in form_clean_data.items %}                    
+                    {% if each_value in key and '廠商名稱' in key %}                            
+                        <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                            {% for FACT_map_key,FACT_map_value in FACT_map.items %}
+                                {%  if FACT_map_key == value %}
+                                    {{ FACT_map_value|replace_linebreaks}}
+                                {% endif %} 
+                            {% endfor %}
+                        </td>                               
+                    {% endif %}    
+                    {% if each_value in key and '製程名稱' in key %}                            
+                        <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                            {% for ROUT_map_key,ROUT_map_value in ROUT_map.items %}
+                                {%  if ROUT_map_key == value %}
+                                    {{ ROUT_map_value|replace_linebreaks}}
+                                {% endif %} 
+                            {% endfor %}
+                        </td>                               
+                    {% endif %}    
+
+                    
+                {% endfor %}
+
+                </tr>
+            {% endfor %}
+        </table>
+    {% elif form.form_name  == '門禁權限申請單' %}
+        {% for key,value in form_clean_data.items %}
+            <tr>
+                <td {% if key in different_keys %}class="table-danger" {% endif %}>{{ key }}</td>
+                <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                    {% if key == '申請類別'  or key == '申請權限' %}                        
+                        {{ value|replace_special_mark }}
+                    {% else %}
+                        {{ value|replace_linebreaks}}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    {% elif form.form_name  == '客訴紀錄單' %}
+        {% for key,value in form_clean_data.items %}
+        <tr>
+            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                {{ key }}
+                {% if key == '內部處理' %}
+                    <button class="btn btn-outline-warning"><a href="{% url 'ShowRichText' form.form_id %}">查看更多附檔</a></button>
+                {% endif %}
+            </td>
+            <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                {% if key == '與會人員' %}
+                    {{ value|replace_special_mark }}
+                {% else %}
+                    {{ value|replace_linebreaks}}
+                {% endif %}                
+            </td>
+        </tr>
+        {% endfor %}
+    {% else %}
+        {% for key,value in form_clean_data.items %}
+            <tr>
+                <td {% if key in different_keys %}class="table-danger" {% endif %}>{{ key }}</td>
+                <td {% if key in different_keys %}class="table-danger" {% endif %}>
+                    {% if key == '與會人員' or key == '標籤選擇' %}
+                        {{ value|replace_special_mark }}
+                    {% else %}
+                        {{ value|replace_linebreaks}}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+</table>
+{% endblock form_content %}
+
+
+
+
+{% block form_attachment %}
+{% for attachment in attachments %}
+<tr>
+    {% for key ,value in translate_data.items%}
+        {% if key == attachment.name %}
+            <td>{{ value }}</td>
+        {% endif %}
+
+    {% endfor %}
+    <td><a href="{{ attachment.file.url }}" target="_blank">{{ attachment.file.name }}</a></td>
+</tr>
+{% endfor %}
+{% endblock form_attachment %}
+
+
+
+
+
+{% block form_level %}
+    {% for level in all_level %}
+        <!-- 每3个站点分为一组 -->
+        {% if forloop.counter0|divisibleby:3 %}
+            {% if not forloop.first %}
+                </div><!-- 关闭前一个分组的div -->
+            {% endif %}
+            <div class="d-flex justify-content-around level_area mt-3">
+        {% endif %}
+
+        <!-- 如果是下一个站点，更改样式 -->
+        {% if '加簽' in approval_status and This_site_record == level.station_name %}            
+            <h3 class="text-danger fw-bold">
+                {{ level.station_name }}
+            </h3>
+        {% elif '同意加簽' in approval_status  and This_site_record == level.station_name %}
+            <h3 class="text-danger fw-bold">
+                {{ level.station_name }}
+            </h3>    
+        {% elif '不同意加簽' in approval_status  and This_site_record == level.station_name %}
+            <h3 class="text-danger fw-bold">
+                {{ level.station_name }}
+            </h3>    
+        {% elif next_station == level.station_name and '加簽' not in approval_status and '同意加簽' not in approval_status and '不同意加簽' not in approval_status %}
+            <h3 class="text-danger fw-bold">
+                {{ level.station_name }}
+                <!-- 如果是“数据准备完成”，则添加描述 -->
+                {% if next_station == '資料準備完成' %}
+                    <span class="text-secondary">(估價彙總表完成)</span>
+                {% endif %}
+            </h3>
+        {% else %}
+            <h3 class="text-success fw-bold">{{ level.station_name }}</h3>
+        {% endif %}
+
+        
+        <!-- 在站点之间添加箭头，除了最后一个 -->
+        {% if not forloop.last %}
+            <h3 class="text-success fw-bold">&#8594;</h3>
+        {% endif %}
+
+        <!-- 如果是最后一个元素，关闭div -->
+        {% if forloop.last %}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endblock form_level %}
+
+
+
+
+
+
+
+{% block form_process %}
+<section class="gradient-custom-5">
+    <div class="container py-5">
+        <div class="main-timeline-5">
+            {% for Process in ProcessHistory %}
+                <div class="timeline-5 right-5 flex-container">
+                    <div class="first-label">
+                        <div class="inner-wrapper">
+                            <div class="text-light fw-bold fs-3">
+                                {% if '同意加簽' in Process.approval_status %}
+                                    {{ Process.site_record }}'(加簽)'
+                                {% else %}
+                                    {{ Process.site_record }}
+                                {% endif %}
+                            </div>
+                            <div class="fw-bold">
+                                {{ Process.approver.FullName }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="left-label">
+                    </div>
+                    <div class="card">
+                        <div class="card-body p-4">
+                            <div class="text-secondary fw-bold fs-3 approval-date">
+                                {{ Process.approval_time|slice:":16" }}
+                            </div>
+                            <span class="small text-muted">
+                                <i class="fas fa-clock me-1">
+                                </i>{{ Process.approver.username }}
+                            </span>
+                            <p class="mt-2 mb-0">{{ Process.approval_opinion }}</p>
+                            <p class="mt-2 mb-0 approval_status {%if '駁回' not in Process.approval_status %}pretty_context_normal{% else %}pretty_context_warning {% endif %}">{{ Process.approval_status }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock form_process %}
+
+
+
+
+{% block select_form_process_next_active %}
+{% if not form_finish %}
+<h1 class="text-success">簽核
+    
+</h1>
+<form action="/action/{{ form.form_id }}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="hidden" name="next_station" value="{{ next_station }}">
+    <input type="hidden" name="previous_station" value="{{ previous_station }}">
+    <input type="hidden" name="process_id" value="{{ process_id }}">
+    <input type="hidden" name="This_site_record" value="{{ This_site_record }}">
+
+    <div class="action_approved_area mb-3">
+        <div class="d-flex justify-content-around mb-3">
+            {% for each_value in station_choice %}            
+                <button type="submit" name="station_choice" value="{{ each_value }}"  onclick="return handleClick(this);"
+                    class="station_choice">
+                    {% if each_value == '退簽' %}
+                        退回至申請人(退簽)
+                    {% else %}
+                        {{ each_value }}
+                    {% endif %}
+                </button>            
+            {% endfor %}
+        </div>
+    </div>
+    
+</form>
+
+<!-- 專門給客訴表單使用,並且於客訴處理員跳出 -->
+<div id="complaintarea" class="complaintarea">
+    <div class="complaintarea-content d-flex flex-column">
+        <div class="d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <p class="text-secondary mb-0">請填寫資料:</p>
+                <button onclick="close_window()" class="btn btn-outline-danger">&times;</button>
+            </div>
+
+            <div class="mt-3 mb-6">
+                <!-- inside to resolve customer complaint -->
+                <label class="form-check-label text-success fs-3" for="IRCC">內部初步回覆</label>
+                <textarea class="form-control" name="complaint_resolution_status" id="IRCC"
+                    rows="20">{{ CustomerServiceResponse }}</textarea>
+                <div class="mt-3">
+                    <button class="btn btn-outline-success"><a href="{% url 'Richtext' form.form_id %}">編輯回覆內容</a></button>
+                    <div class="mt-3">
+                        {% if messages %}
+                            <ul style="list-style-type: none; padding: 0; margin: 0;">
+                                {% for message in messages %}
+                                    <li style="{% if message.tags %}background-color: #f2f2f2; border-left: 5px solid;{% endif %}
+                                            padding: 10px; margin-bottom: 5px; border-radius: 5px;
+                                            {% if message.tags == 'success' %}border-color: #4CAF50;{% elif message.tags == 'error' %}border-color: #F44336;{% elif message.tags == 'warning' %}border-color: #FFC107;{% else %}border-color: #2196F3;{% endif %}">
+                                        {{ message }}
+                                    </li>
+                                {% endfor %}
+                            </ul>                    
+                        {% endif %}
+                    </div>                    
+                </div>                
+            </div>
+        </div>
+        <button onclick="submitComplaint();" class="btn btn-outline-success mt-3">提交</button>
+    </div>
+</div>
+<!-- 專門給客訴表單使用,並且於申請業務確認跳出 -->
+<div id="ExternalProcessingarea" class="ExternalProcessingarea">
+    <div class="ExternalProcessingarea-content d-flex flex-column">
+        <div class="d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <p class="text-secondary mb-0">請填寫資料:</p>
+                <button onclick="close_window()" class="btn btn-outline-danger">&times;</button>
+            </div>
+            <div class="custom-tooltip-wrapper">
+                <i class="custom-tooltip">
+                    <img src="{% static 'Company\question-mark.png' %}" height="20" width="20" alt="提示" />
+                    <span class="custom-tooltip-text">
+                        1.根據客訴處理人員的回覆, 將要已回覆給客人的訊息寫入欄位中
+                        <br>
+                        2.建議客人已經同意處理辦法，並且整個狀況告一段落在提交
+                    </span>
+                </i>
+            </div>
+            <div class="mt-3 mb-6">
+                <!-- respone_customer -->
+                <label class="form-check-label text-success fs-3" for="respone_customer">對外處理</label>
+                <textarea class="form-control" name="respone_customer_area" id="respone_customer"
+                    rows="20">{{ form.data.externalprocessing }}</textarea>
+            </div>            
+
+        </div>
+        <button onclick="submitResponeCustomer();" class="btn btn-outline-success mt-3">提交</button>
+    </div>
+</div>
+
+<!-- 專門給名片申請單使用 -->
+<div id="BusinessCardRequestarea" class="BusinessCardRequestarea">
+    <div class="BusinessCardRequestarea-content d-flex flex-column">
+        <div class="d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <p class="text-secondary mb-0">名片發放:</p>
+                <button onclick="close_window()" class="btn btn-outline-danger">&times;</button>
+            </div>
+        
+            <div class="mt-3 mb-3">
+                <!-- Releasedate -->
+                <label class="form-label text-success fs-3" for="id_releasedate">發放日期</label>
+                <input type="date" class="form-control" name="releasedate" id="id_releasedate">
+            </div>
+            
+            <div class="mt-3 mb-3">
+                <!-- ifRecycle -->
+                <label class="form-label text-success fs-3">是否回收舊式卡片</label>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" name="ifRecycle" id="id_ifRecycle_yes" value="是">
+                    <label class="form-check-label" for="id_ifRecycle_yes">是</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" name="ifRecycle" id="id_ifRecycle_no" value="否">
+                    <label class="form-check-label" for="id_ifRecycle_no">否</label>
+                </div>
+            </div>
+              
+
+        </div>
+        <button onclick="submitBusinessCardRequest()" class="btn btn-outline-success mt-3">提交</button>
+    </div>
+</div>
+
+
+<!-- 專門給品質異常單資料核實使用 -->
+<div id="dataVerification" class="dataVerification">
+    <div class="dataVerification-content d-flex flex-column">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <p class="text-secondary mb-0">請輸入相關資料：</p>
+            <button onclick="close_window()" class="btn btn-outline-danger">&times;</button>
+        </div>
+        <div class="mt-3 mb-6">
+            <label for="" class="form-label fs-3">{{ QAR_form.cause_analysis.label }}</label>
+            {{ QAR_form.cause_analysis }}
+        </div>
+        <div class="mt-3 mb-6">
+            <label for="" class="form-label fs-3">{{ QAR_form.temporary_measures.label }}</label>
+            {{ QAR_form.temporary_measures }}
+        </div>
+        <div class="mt-3 mb-6">
+            <label for="" class="form-label fs-3">{{ QAR_form.permanent_disposal_countermeasures.label }}</label>
+            {{ QAR_form.permanent_disposal_countermeasures }}
+        </div>
+        <button onclick="submitdataVerification()" class="btn btn-outline-success mt-3">提交</button>
+    </div>
+</div>
+
+<!-- 專門給品質異常單品技經理指定通知部門使用 -->
+<div id="QARarea" class="QARarea">
+    <div class="QARarea-content d-flex flex-column">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <p class="text-secondary mb-0">請選擇需要加簽的人員：</p>
+            <button onclick="close_window()" class="btn btn-outline-danger">&times;</button>
+        </div>
+        {% for key,value in employee_data.items %}
+        <h4 class="text-success">{{ key }}</h4>
+        <select class="form-control mb-3 select2-multiple" multiple>
+            {% for each_value in value %}
+            <option value="{{ each_value|get_element:0 }}">{{ each_value|get_element:1 }}</option>
+            {% endfor %}
+        </select>
+        {% endfor %}
+        <button onclick="submitQAR()" class="btn btn-outline-success mt-3">提交</button>
+    </div>
+</div>
+
+<!-- 專門給出圖依賴書B版本站點資料準備完成- 使用 -->
+<div id="DDBarea" class="DDBarea">
+    <div class="DDBarea-content d-flex flex-column">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <p class="text-danger">請將相關圖檔和資料上傳至平台上。</p>
+            <button onclick="close_window()" class="btn btn-outline-danger">&times;</button>
+        </div>
+        {% for attachment_str in attachment_map %}
+            <!-- 多餘的隱藏 -->
+            {% if forloop.counter >= 6 %}
+                <div class="attachment-upload mb-3">
+                    <input type="file" id="fileInput{{ forloop.counter }}" class="form-control mb-2">
+                    <button type="button" class="btn btn-outline-success" onclick="handleFileUpload({{ forloop.counter }},'{{ form.form_id}}')">上傳附件{{ forloop.counter }}</button>
+                    <span id="percent_to_upload{{ forloop.counter }}">尚無檔案</span>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <button onclick="submitDDB()" class="btn btn-outline-success mt-3">提交</button>
+    </div>
+</div>
+
+<!-- 專門給出圖依賴書B版本 使用 -->
+<div id="DrawingDependencyBookarea" class="DrawingDependencyBookarea">
+    <div class="DrawingDependencyBookarea-content d-flex flex-column">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <p class="text-secondary mb-0">請選擇下一關需要審閱的人員：</p>
+            <button onclick="close_window()" class="btn btn-outline-danger">&times;</button>
+        </div>
+
+        {% if next_station == '研發主管發案確認' %}
+            <select class="form-control mb-3" id="rdgroupSelect">
+                {% for user in respone_groups %}
+                    <option value="{{ user.username }}">{{ user.FullName }}</option>
+                {% endfor %}
+            </select>
+        {% elif next_station == '研發負責組別' and not is_product_research_head %}
+            <select class="form-control mb-3" id="rdgroupSelect">
+                {% for user in rd_groups %}
+                    <option value="{{ user.username }}">{{ user.FullName }}</option>
+                {% endfor %}
+            </select>
+        {% elif next_station == '研發負責組別' and is_product_research_head %}
+        <select class="form-control mb-3" id="rdgroupSelect">
+            {% for user in product_reserchs %}
+                <option value="{{ user.username }}">{{ user.FullName }}</option>
+            {% endfor %}
+        </select>
+        {% endif %}
+        <button onclick="submitDDB()" class="btn btn-outline-success mt-3">提交</button>
+    </div>
+</div>
+
+<!-- 專門給重工單B版本 生產管理員 使用 -->
+<div id="Heavyworkorderarea" class="Heavyworkorderarea">
+    <div class="Heavyworkorderarea-content d-flex flex-column">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <p class="text-secondary mb-0">請選擇預計完工的日期：</p>
+            <button onclick="close_window()" class="btn btn-outline-danger">&times;</button>
+        </div>
+        <div class="mt-3 mb-3">            
+            <label class="form-label text-success fs-3" for="id_estimated_completion_date">預計完工日期</label>
+            <input type="date" class="form-control" name="estimated_completion_date" id="id_estimated_completion_date">
+        </div>
+        <textarea rows="4" cols="50" placeholder="請輸入您的意見或備註訊息" class="form-control mb-3" id="Heavyworkorder_opinion"></textarea>
+        <button onclick="submitRWF(this)" class="btn btn-outline-success mt-3">提交</button>
+    </div>
+</div>
+
+<!-- 用來跳出使用者輸入框 -->
+<div class="approval_opinionarea">
+    <div class="approval_opinion-content">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <p></p>
+            <button class="btn btn-outline-danger close" onclick="close_window()">&times;</button>
+        </div>
+        <textarea rows="4" cols="50" placeholder="請輸入您的意見或備註訊息" class="form-control mb-3 noteInput"></textarea>
+        <button onclick="submitNote(this)" class="btn btn-outline-success">提交</button>
+    </div>
+</div>
+
+
+<!-- 專門給實驗測試申請單 >> 實驗交期回覆 -->
+<div id="ExperimentalTestarea" class="ExperimentalTestarea">
+    <div class="ExperimentalTestarea-content d-flex flex-column">
+        <div class="d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <p class="text-secondary mb-0"></p>
+                <button onclick="close_window()" class="btn btn-outline-danger">&times;</button>
+            </div>
+            <div class="mt-3 mb-6">                
+                <label class="form-check-label text-success fs-3" for="estimated_completion_date">預計完成日期</label>
+                <input class="form-control" name ="estimated_completion_area" id="estimated_completion_date" type="date"></input>
+            </div>            
+
+        </div>
+        <button onclick="submitExperimentalTest();" class="btn btn-outline-success mt-3">提交</button>
+    </div>
+</div>
+{% endif %}
+{% endblock select_form_process_next_active %}
+

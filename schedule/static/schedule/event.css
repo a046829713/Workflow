@@ -1,0 +1,236 @@
+@media (max-width: 768px) {
+    .muji_container {
+        flex-direction: column;
+    }
+
+    .infoArea {
+        border-left: none;
+        border-top: 1px solid #E0E0E0;
+    }
+}
+
+
+/* 重置默认的边距和内边距 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans TC', 'Arial', sans-serif;
+    background-color: #ffffff;
+    /* 浅色背景 */
+    color: #333333;
+}
+
+.muji_container {
+    display: flex;
+    width: 80%;
+    margin: 2% auto;
+    background-color: #f9f5eb;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-wrap: wrap;
+    /* 增强响应式布局 */
+    border: 1px solid #DDDDDD;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.selfArea,
+.infoArea {
+    padding: 40px 20px;
+}
+
+.selfArea {
+    flex: 7;
+}
+
+.infoArea {
+    flex: 3;
+    background-color: #F5F5F5;
+    border-left: 1px solid #452d14;
+}
+
+/* 描述区域样式调整 */
+p.description_area {
+    width: 90%;
+    margin: auto;
+    font-size: 24px;
+    /* 从 24px 调整为 1.125rem */
+    color: #4D4D4D;
+    margin-bottom: 30px;
+    border: #d8edfc dashed ;
+}
+
+.form-navigation {
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 10px;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.btn-success {
+    background-color: #3C8031;
+    /* 无印风格的绿色 */
+    border: none;
+    color: #FFFFFF;
+}
+
+.btn-secondary {
+    background-color: #A0A0A0;
+    /* 中性色灰色 */
+    border: none;
+    color: #FFFFFF;
+}
+
+.btn:hover {
+    opacity: 0.85;
+}
+
+.text-danger {
+    color: #D9534F;
+}
+
+.fs-2 {
+    font-size: 3rem;
+}
+
+.fw-bold {
+    font-weight: bold;
+}
+
+.timeline-event {
+    position: relative;
+    margin-bottom: 40px;
+}
+
+
+.timeline-event::before {
+    content: '';
+    position: absolute;
+    left: -30px;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    background-color: #fffaa5;
+    border-radius: 50%;
+    /* 圆形 */
+    border: 2px solid #B0C4DE;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.timeline-event.current-step::before {
+    background-color: #ff0000;
+    /* 當前步驟的背景顏色，例如紅色 */
+    border-color: #8B0000;
+    /* 當前步驟的邊框顏色，例如深紅色 */
+}
+
+.timeline-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 20px;
+    color: #312525;
+}
+
+.timeline-content {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #555555;
+}
+
+/* 标题样式新增 */
+h2 {
+    font-size: 2rem;
+    color: #2C2C2C;
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: #2C2C2C;
+    margin-top: 20px;
+}
+
+
+/* 空狀態文字樣式 */
+.text-center p {
+    font-size: 1.1rem;
+    color: #777777;
+    margin-top: 20px;
+}
+
+
+
+/* 優化後的表格樣式，保持簡潔且更具現代感 */
+.custom_table {
+    width: 90%;
+    border-collapse: collapse;
+    margin: 3% auto;
+    color: #333;
+    font-weight: normal;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    background-color: #fff;
+}
+
+.custom_table th,
+.custom_table td {
+    padding: 18px;
+    text-align: left;
+}
+
+.custom_table thead {
+    background-color: #4a90e2;
+    /* 更加現代且清新的表頭背景顏色 */
+    color: #ffffff;
+    /* 表頭文字顏色為白色 */
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.custom_table tbody tr {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.custom_table tbody tr:nth-of-type(even) {
+    background-color: #f7faff;
+    /* 偶數行背景顏色，增強對比 */
+}
+
+.custom_table tbody tr:hover {
+    background-color: #eaf3ff;
+    /* 滑鼠懸停變色，增加交互感 */
+    cursor: pointer;
+}
+
+/* 文字對齊 */
+.text-center {
+    text-align: center;
+}
+
+/* 表格標題字體 */
+.custom_table th {
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* 表格數據字體 */
+.custom_table td {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* 調整表格間距 */
+.custom_table.mt-2 {
+    margin-top: 30px;
+}

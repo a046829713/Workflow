@@ -1,0 +1,14 @@
+{% load my_filters %}
+<td>
+    <button class="btn btn-outline-light edit-btn" data-pk="{{ sticker.PROD_NO }}">{{ sticker.PROD_NO }}</button>
+</td>
+<td>{% get_matched_value name_map sticker.PROD_NO %}</td>
+<td>{{ sticker.BuyType }}</td>
+<td>{{ sticker.DSCType }}</td>
+<td>{{ sticker.heightsize }} mm</td>
+<td>{{ sticker.widthsize }} mm</td>
+<td>{{ sticker.material }}</td>
+<td>{{ sticker.color }}</td>
+<td>{{ sticker.remark }}</td>
+<td>{{ sticker.last_updated_by.FullName }}</td>
+

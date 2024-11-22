@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="43200"> <!-- 每12小時頁面自動刷新 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>開立品質異常單通知</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e1f5fe;
+            /* 更淺的藍色背景 */
+            margin: 0;
+            padding: 20px;
+        }
+
+        .form_number {
+            color: #2962ff;
+            /* 深藍色 */
+        }
+
+        .alert-symbol {
+            color: #2962ff;
+            /* 深藍色 */
+            font-weight: bold;
+            border: 3px solid #2962ff;
+            /* 深藍色邊框 */
+            border-radius: 50%;
+            padding: 0 5px;
+            margin-left: 5px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            background-color: #fff;
+            padding: 40px;
+            margin: auto;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .card h1 {
+            color: #42a5f5;
+            /* 淡藍色 */
+            margin-bottom: 20px;
+        }
+
+        .card p {
+            color: #333;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .card a {
+            display: inline-block;
+            background-color: #42a5f5;
+            /* 淡藍色按鈕 */
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .motivational-slogan {
+            margin-top: 20px;
+            font-style: italic;
+            color: #555;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="card">
+        <h1>接獲客戶投訴，請走紙本品質異常單！</h1>
+        <p>工作流系統通知</p>
+        <p>您有工作尚未完成<span class="alert-symbol">!</span></p>
+        <span class="form_number">#</span>
+        <p><a href="http://192.168.2.118:4080/SignatureBusiness/CustomerComplaintRecordsummary">點擊這裡前往客訴紀錄單總表</a></p>
+        <p>若有任何問題請洽資訊課,分機號碼(<span>179</span>)</p>
+        <div class="motivational-slogan">每天都是一個新的開始，讓我們以積極的心態迎接挑戰！</div>
+    </div>
+</body>
+
+</html>

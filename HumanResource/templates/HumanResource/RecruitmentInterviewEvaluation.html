@@ -1,0 +1,338 @@
+{% extends "form_base.html" %}
+
+{% load static %}
+
+
+{% block static_file %}
+<link rel="stylesheet" href="{% static 'HumanResource/RecruitmentInterviewEvaluation.css' %}">
+{% endblock static_file %}
+
+{% block title%}
+招募面試評核表
+{% endblock title %}
+
+
+{% block content %}
+
+<!-- 每一份文件的Title區域 -->
+<div style="position: relative;">
+    <h1 class="text-center">招募面試評核表</h1>
+    <img src="{% static 'Company/YBICO_Logo.png' %}" alt="Description Image" style="position: absolute; top: 0; right: 0; height: 48px; width: 90px;">
+</div>
+
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne" style="background-color: rgb(190, 225, 247); text-align: center;">
+            基本資料
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <div class="cu_container">
+                    <div class="mb-3 row">                    
+                        <label for="" class="col-md-2 col-form-label fs-5">{{ form.user_name.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10">
+                            {{ form.user_name }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">                    
+                        <label for="" class="col-md-2 col-form-label fs-5">{{ form.interviewjobvacancies.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.interviewjobvacancies }}
+                        </div>
+                    </div> 
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label fs-5">{{ form.corporate_sector.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.corporate_sector }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label fs-5">{{ form.interview_date.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.interview_date }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- 第二部分 -->
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne" style="background-color: rgb(190, 225, 247); text-align: center;">
+            適性分析
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <div class="cu_container">
+                    <div class="mb-3 row">                        
+                        <span class="col-1 fs-5" style="background-color: rgb(234, 234, 234);"> 項次</span>
+                        <span class="col-2 fs-5" style="background-color: rgb(234, 234, 234);"> 構面</span>
+                        <span class="col-4 fs-5" style="background-color: rgb(234, 234, 234);"> 行為事例(面試者所述之紀錄)</span>
+                        <span class="col-3 fs-5" style="background-color: rgb(234, 234, 234);"> 評語(面試官討論評估結論)</span>
+                        <span class="col-2 fs-5" style="background-color: rgb(234, 234, 234);"> 小結</span>
+                        <div class="mt-3 row">
+                            <h5 class="col-1 fs-2 fw-bold">1.</h5>
+                            <h5 class="col-1 fw-bold">性格/人格偏好與價值觀</h5>                            
+                            <div class="col-8">
+                                <div class="d-flex justify-content-around">
+                                    <div>{{ form.character_behavior }}</div>
+                                    <div>{{ form.character_control }}</div>                                    
+                                </div>
+                            </div>
+                            <div class="col-2">                                
+                                {% for choice in form.character_option.field.choices %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="{{ form.character_option.name }}" id="{{ form.character_option.auto_id }}_{{ forloop.counter0 }}" value="{{ choice.0 }}" {% if form.character_option.value == choice.0 %}checked{% endif %} 
+                                    {% if forloop.first %}required{% endif %}>
+                                    <label class="form-check-label" for="{{ form.character_option.auto_id }}_{{ forloop.counter0 }}">
+                                        {{ choice.1 }}
+                                    </label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <hr class="mt-3">
+                        <div class="mt-3 row">
+                            <h5 class="col-1 fs-2 fw-bold">2.</h5>
+                            <h5 class="col-1 fw-bold">Intent意圖(獲取報酬、被滿足的方向)</h5>
+                            <div class="col-8">
+                                <div class="d-flex justify-content-around">        
+                                    <div>{{ form.intent_behavior }}</div>
+                                    <div>{{ form.intent_control }}</div>
+                                </div>
+                            </div>
+                            <div class="col-2">                                
+                                {% for choice in form.intent_option.field.choices %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="{{ form.intent_option.name }}" id="{{ form.intent_option.auto_id }}_{{ forloop.counter0 }}" value="{{ choice.0 }}" {% if form.intent_option.value == choice.0 %}checked{% endif %}
+                                    {% if forloop.first %}required{% endif %}>
+                                    <label class="form-check-label" for="{{ form.intent_option.auto_id }}_{{ forloop.counter0 }}">
+                                        {{ choice.1 }}
+                                    </label>
+                                </div>
+                                {% endfor %}                                
+                            </div>
+                        </div>
+                        <hr class="mt-3">
+                        <div class="mt-3 row">
+                            <h5 class="col-1 fs-2 fw-bold">3.</h5>
+                            <h5 class="col-1 fw-bold">學歷背景與天賦(教育學習歷程)</h5>
+                            <div class="col-8">
+                                <div class="d-flex justify-content-around">        
+                                    <div>{{ form.educational_backgroud_behavior }}</div>
+                                    <div>{{ form.educational_backgroud_control }}</div>
+                                </div>
+                            </div>
+                            <div class="col-2">                                
+                                {% for choice in form.educational_backgroud_option.field.choices %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="{{ form.educational_backgroud_option.name }}" id="{{ form.educational_backgroud_option.auto_id }}_{{ forloop.counter0 }}" value="{{ choice.0 }}" {% if form.educational_backgroud_option.value == choice.0 %}checked{% endif %}
+                                    {% if forloop.first %}required{% endif %}>
+                                    <label class="form-check-label" for="{{ form.educational_backgroud_option.auto_id }}_{{ forloop.counter0 }}">
+                                        {{ choice.1 }}
+                                    </label>
+                                </div>
+                                {% endfor %}                                
+                            </div> 
+                        </div>
+                        <hr class="mt-3">
+                        <div class="mt-3 row">
+                            <h5 class="col-1 fs-2 fw-bold">4.</h5>
+                            <h5 class="col-1 fw-bold">業界知識、經驗與技能</h5>
+                            <div class="col-8">
+                                <div class="d-flex justify-content-around">        
+                                    <div>{{ form.Industry_knowledge_behavior }}</div>
+                                    <div>{{ form.Industry_knowledge_control }}</div>
+                                </div>
+                            </div>
+                            <div class="col-2">                                
+                                {% for choice in form.Industry_knowledge_option.field.choices %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="{{ form.Industry_knowledge_option.name }}" id="{{ form.Industry_knowledge_option.auto_id }}_{{ forloop.counter0 }}" value="{{ choice.0 }}" {% if form.Industry_knowledge_option.value == choice.0 %}checked{% endif %}
+                                    {% if forloop.first %}required{% endif %}>
+                                    <label class="form-check-label" for="{{ form.Industry_knowledge_option.auto_id }}_{{ forloop.counter0 }}">
+                                        {{ choice.1 }}
+                                    </label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <hr class="mt-3">
+                        <div class="mt-3 row">
+                            <h5 class="col-1 fs-2 fw-bold">5.</h5>
+                            <h5 class="col-1 fw-bold">自我概念(一個人對自己的看法)</h5>
+                            <div class="col-8">
+                                <div class="d-flex justify-content-around">        
+                                    <div>{{ form.person_self_behavior }}</div>
+                                    <div>{{ form.person_self_control }}</div>
+                                </div>
+                            </div>                            
+                            <div class="col-2">                                
+                                {% for choice in form.person_self_option.field.choices %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="{{ form.person_self_option.name }}" id="{{ form.person_self_option.auto_id }}_{{ forloop.counter0 }}" value="{{ choice.0 }}" {% if form.person_self_option.value == choice.0 %}checked{% endif %}
+                                    {% if forloop.first %}required{% endif %}>
+                                    <label class="form-check-label" for="{{ form.person_self_option.auto_id }}_{{ forloop.counter0 }}">
+                                        {{ choice.1 }}
+                                    </label>
+                                </div>
+                                {% endfor %}                                
+                            </div>
+                        </div>
+                        <hr class="mt-3">
+                        <div class="mt-3 row">
+                            <h5 class="col-1 fs-2 fw-bold">6.</h5>
+                            <h5 class="col-1 fw-bold">對知識的追求與學習能力</h5>
+                            <div class="col-8">
+                                <div class="d-flex justify-content-around">        
+                                    <div>{{ form.learning_behavior }}</div>
+                                    <div>{{ form.learning_control }}</div>
+                                </div>
+                            </div>
+                            <div class="col-2">                                
+                                {% for choice in form.learning_option.field.choices %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="{{ form.learning_option.name }}" id="{{ form.learning_option.auto_id }}_{{ forloop.counter0 }}" value="{{ choice.0 }}" {% if form.learning_option.value == choice.0 %}checked{% endif %}
+                                    {% if forloop.first %}required{% endif %}>
+                                    <label class="form-check-label" for="{{ form.learning_option.auto_id }}_{{ forloop.counter0 }}">
+                                        {{ choice.1 }}
+                                    </label>
+                                </div>
+                                {% endfor %}                                
+                            </div>
+                        </div>
+                        <hr class="mt-3">
+                        <div class="mt-3 row">
+                            <h5 class="col-1 fs-2 fw-bold">7.</h5>
+                            <h5 class="col-1 fw-bold">業界人脈<br>(依職務需要)<br><span class="text-primary">(若無請填寫無)</span></h5>
+                            <div class="col-8">
+                                <div class="d-flex justify-content-around">        
+                                    <div>{{ form.contacts_behavior }}</div>
+                                    <div>{{ form.contacts_control }}</div>
+                                </div>
+                            </div>
+                            <div class="col-2">                                
+                                {% for choice in form.contacts_option.field.choices %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="{{ form.contacts_option.name }}" id="{{ form.contacts_option.auto_id }}_{{ forloop.counter0 }}" value="{{ choice.0 }}" {% if form.contacts_option.value == choice.0 %}checked{% endif %}
+                                    {% if forloop.first %}required{% endif %}>
+                                    <label class="form-check-label" for="{{ form.contacts_option.auto_id }}_{{ forloop.counter0 }}">
+                                        {{ choice.1 }}
+                                    </label>
+                                </div>
+                                {% endfor %}                                
+                            </div>
+                        </div>
+                        <hr class="mt-3">
+                        <div class="mt-3 row">
+                            <h5 class="col-1 fs-2 fw-bold">8.</h5>
+                            <h5 class="col-1 fw-bold">行為觀察備註(如眼神,行為,服裝,姿態)</h5>
+                            <div class="col-8">
+                                <div class="d-flex justify-content-around">        
+                                    <div>{{ form.behavior_behavior }}</div>
+                                    <div>{{ form.behavior_control }}</div>
+                                </div>
+                            </div>
+                            <div class="col-2">                                
+                                {% for choice in form.behavior_option.field.choices %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="{{ form.behavior_option.name }}" id="{{ form.behavior_option.auto_id }}_{{ forloop.counter0 }}" value="{{ choice.0 }}" {% if form.behavior_option.value == choice.0 %}checked{% endif %}
+                                    {% if forloop.first %}required{% endif %}>
+                                    <label class="form-check-label" for="{{ form.behavior_option.auto_id }}_{{ forloop.counter0 }}">
+                                        {{ choice.1 }}
+                                    </label>
+                                </div>
+                                {% endfor %}                                
+                            </div>
+                        </div>
+
+                        
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne" style="background-color: rgb(190, 225, 247); text-align: center;">
+            審核結果
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <div class="cu_container">
+                    <div class="mb-3 row">                    
+                        <label for="" class="col-md-2 col-form-label fs-5">{{ form.interview_result.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10">
+                            {% for choice in form.interview_result.field.choices %}
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ form.interview_result.name }}" id="{{ form.interview_result.auto_id }}_{{ forloop.counter0 }}" value="{{ choice.0 }}" {% if form.interview_result.value == choice.0 %}checked{% endif %} {% if forloop.first %}required{% endif %}>
+                                <label class="form-check-label" for="{{ form.interview_result.auto_id }}_{{ forloop.counter0 }}">
+                                    {{ choice.1 }}
+                                </label>
+                            </div>
+                            {% endfor %}
+                            {% if form.interview_result.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.interview_result.errors %}
+                                    {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3 row">
+                        <label for="" class="col-md-2 col-form-label fs-5">{{ form.unit_interviewer.label}}<span class="text-danger">*</span></label>
+                        <div class="col-md-10">
+                            {{ form.unit_interviewer }}
+                        </div>
+                    </div>
+                                   
+                    <div class="mb-3 row">
+                        <label for="" class="col-md-2 col-form-label fs-5">{{ form.hr_interviewer.label}}</label>
+                        <div class="col-md-10">
+                            {{ form.hr_interviewer }}
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="d-flex justify-content-around">
+    <h5 class="text-center ">文件編號:HR-005-04</h5>
+    <h5 class="text-center ">版次:A</h5>
+</div>
+{% endblock content %}
+
+
+{% block extra_js_body %}
+<script>
+    $(document).ready(function () {
+        $('.select2-multiple').select2();
+    });
+</script>
+
+{% endblock extra_js_body %}

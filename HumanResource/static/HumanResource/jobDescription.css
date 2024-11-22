@@ -1,0 +1,41 @@
+.custom-container {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-style: double;
+    border-width: 3px;
+}
+
+
+.communication_area {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-style: solid;
+    border-width: 3px;
+    border-color: darkslategray;
+}
+
+.hidden,
+.hiddenlanguage,
+.hiddentool,
+.hiddenskill {
+    display: none;
+}
+
+.tool_area {
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #dadbdb;
+    border-style: groove;
+}
+
+
+.btn-no-border {
+    border: none;
+    outline: none;
+}

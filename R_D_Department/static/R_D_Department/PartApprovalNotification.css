@@ -1,0 +1,125 @@
+.custom-container {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-style: double;
+    border-width: 3px;
+}
+
+
+.communication_area {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-style: solid;
+    border-width: 3px;
+    border-color: darkslategray;
+}
+
+.hidden,
+.hiddenlanguage,
+.hiddentool,
+.hiddenskill {
+    display: none;
+}
+
+.tool_area {
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #dadbdb;
+    border-style: groove;
+}
+
+
+.btn-no-border {
+    border: none;
+    outline: none;
+}
+
+
+
+#title_show {
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+
+#confirmbutton {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#confirmbutton:hover {
+    background-color: #2980b9;
+}
+
+.strikethrough {
+    text-decoration: line-through;
+}
+
+#checklistContainer{
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    /* 或其他合適的值 */
+}
+.checklistContainer-content {
+    position: fixed;
+    background-color: #fefefe;
+    width: 50%;
+    padding: 20px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    /* 或其他合適的值 */
+}
+
+
+.custom-tooltip-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.custom-tooltip-text {
+    visibility: hidden;
+    width: 600px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position the tooltip above the text */
+    left: 50%;
+    margin-left: -60px; /* Use half of the width to center the tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 24px;
+}
+
+.custom-tooltip-wrapper:hover .custom-tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}

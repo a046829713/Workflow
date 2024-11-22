@@ -1,0 +1,20 @@
+body {
+    margin: 0px;
+    background: linear-gradient(to left, #eea291, #f8dba6);
+}
+
+.containerCustom {
+    width: 85%;
+    margin: 10px auto;
+
+}
+
+.navbar {
+    border-radius: 10px;
+}
+
+
+#carouselBarOnly {
+    margin-top: 10px;
+}
+

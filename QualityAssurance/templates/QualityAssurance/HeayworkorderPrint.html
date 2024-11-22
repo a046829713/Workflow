@@ -1,0 +1,105 @@
+{% load static %}
+{% load my_filters %}
+
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="43200"> <!-- 每12小時頁面自動刷新 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列印頁面</title>
+    <link href="{% static 'Company/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'QualityAssurance/style.css' %}" rel="stylesheet">
+    
+</head>
+
+<body>
+    <div class="container" id="printableArea">
+        <div class="table-responsive">
+            <br>
+            <table class="table table-bordered border-dark">
+                <thead>
+                    <tr>
+                        <th colspan="12" class="text-center fw-bold">元貝實業股份有限公司</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        
+                        <td colspan="5" class="text-center"><a href="#" onclick="window.print();return false;" style="text-decoration: none;">異常重工申請單</a></td>
+                        <td colspan="2" class="text-center">編號</td>
+                        <td colspan="5" class="text-center">{{ form.form_id }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-center">執行重工的廠商</td>
+                        <td colspan="3">{{ factnamestr }}</td>
+                        <td colspan="2" class="text-center">日期</td>
+                        <td colspan="3" class="text-center">{{ form.application_date }}</td>
+                        <td colspan="1" class="text-center">數量</td>
+                        <td colspan="1">{{ form.data.quantity }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-center">產品編號<br>(重工前)</td>
+                        <td colspan="3" class="text-center">{{ form.data.prod_no_before }}</td>
+                        <td colspan="2" class="text-center">產品編號<br>(重工後)</td>
+                        <td colspan="3" class="text-center">{{ form.data.prod_no_after }}</td>
+                        <td colspan="1" class="text-center">責任<br>單位</td>
+                        <td colspan="1" class="text-center">{{ form.data.responsible_unit }}</td>
+                        
+                    </tr>                    
+                    <tr>
+                        <td colspan="2" class="text-center">品名規格<br>(重工前)</td>
+                        <td colspan="3" class="text-center">{{ form.data.prod_name_before }}</td>
+                        <td colspan="2" class="text-center">品名規格<br>(重工後)</td>
+                        <td colspan="3" class="text-center">{{ form.data.prod_name_after }}</td>
+                        <td colspan="1" class="text-center">付費<br>單位</td>
+                        <td colspan="1" class="text-center">{{ form.data.paying_unit }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-center">重工項目</td>
+                        <td colspan="10" class="text-center">{{ form.data.Heavy_industry_projects }}</td>                        
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-center">重工原因</td>
+                        <td colspan="10" class="text-center">{{ form.data.rebuild_reason }}</td>                        
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-center">重工訊息來源</td>
+                        <td colspan="3" class="text-center">{{ form.data.heavy_industry_information }}</td>                        
+                        <td colspan="2" class="text-center">來源備註</td>
+                        <td colspan="5" class="text-center">{{ form.data.source_notes }}</td>                        
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-center">重工後處置</td>
+                        <td colspan="3" class="text-center">{{ form.data.pay_after_heavy_work }}</td>                        
+                        <td colspan="2" class="text-center">備註</td>
+                        <td colspan="5" class="text-center">{{ form.data.remark }}</td>                        
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-center">品技經理</td>
+                        <td colspan="3" class="text-center">
+                            {% if checkasignname == True %}
+                                游鎮僑
+                            {% endif %}
+                        </td>                        
+                        <td colspan="2" class="text-center">預計完工日</td>
+                        <td colspan="2" class="text-center">{{ form.data.estimated_completion_date }}</td>                        
+                        <td colspan="1" class="text-center">開單者</td>
+                        <td colspan="2" class="text-center">{{ applicantname }}</td>                        
+                    </tr>
+                    <tr >
+                        <td colspan="12">YB-0064  VER.B</td>                                              
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    
+
+
+</body>
+
+</html>

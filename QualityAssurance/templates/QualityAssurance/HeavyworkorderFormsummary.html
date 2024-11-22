@@ -1,0 +1,419 @@
+{% extends "Company/summaryForm_detailed.html" %}
+
+{% load static %}
+{% load my_filters %}
+
+
+{% block extra_css_second %}
+<link href="{% static 'QualityAssurance\style.css' %}" rel="stylesheet">
+{% endblock extra_css_second %}
+{% block form_content %}
+                        
+<table>
+    <thead>
+        <tr>
+            <th scope="col">數量</th>
+            <th scope="col">
+                產品編號
+                <br>
+                (重工前)
+                <form action="" method="post" style="margin: 0;">
+                    <!-- {% url 'Slow_moving' %} -->
+                    {% csrf_token %}
+
+                    <input type="hidden" name="start_date" {% if start_date %}value="{{ start_date }}"{% endif %}>
+                    <input type="hidden" name="end_date" {% if end_date %}value="{{ end_date }}"{% endif %}>
+                    <input type="hidden" name="start_estimated_completion_date" {% if start_estimated_completion_date %}value="{{ start_estimated_completion_date }}"{% endif %}>
+                    <input type="hidden" name="end_estimated_completion_date" {% if end_estimated_completion_date %}value="{{ end_estimated_completion_date }}"{% endif %}>
+                    <input type="hidden" name="end_estimated_completion_date" {% if end_estimated_completion_date %}value="{{ end_estimated_completion_date }}"{% endif %}>
+                    <input type="hidden" name="applicant" {% if applicant %}value="{{ applicant }}"{% endif %}>
+                    <input type="hidden" name="form_name" {% if form_name %}value="{{ form_name }}"{% endif %}>
+                    <input type="hidden" name="status" {% if status %}value="{{ status }}"{% endif %}>
+                    <input type="hidden" name="form_number" {% if form_number %}value="{{ form_number }}"{% endif %}>
+                    <input type="hidden" name="RWF_form_number" {% if RWF_form_number %}value="{{ RWF_form_number }}"{% endif %}>
+                    <input type="hidden" name="prod_no_before" {% if prod_no_before %}value="{{ prod_no_before }}"{% endif %}>
+                    <input type="hidden" name="prod_no_after" {% if prod_no_after %}value="{{ prod_no_after }}"{% endif %}>
+                    <input type="hidden" name="fact_re_no" {% if fact_re_no %}value="{{ fact_re_no }}"{% endif %}>
+
+                    {% if sort_direction == 'DESC' %}
+                        <!-- 即將送出的狀態非當下之狀態 -->
+                        <input type="hidden" name="sort_direction" value="ASC"> 
+                        <button type="submit" style="border: none; background: none; padding: 0;">
+                            <img src="{% static 'Company\DESC.png' %}" alt="表單排序" style="width: 24px; height: 24px;">
+                        </button>
+                    {% elif sort_direction == 'ASC'%}
+                        <!-- 即將送出的狀態非當下之狀態 -->                                        
+                        <button type="submit" style="border: none; background: none; padding: 0;">
+                            <img src="{% static 'Company\ASC.png' %}" alt="表單排序" style="width: 24px; height: 24px;">
+                        </button>
+                    {% else %}
+                        <input type="hidden" name="sort_direction" value="DESC">
+                        <button type="submit" style="border: none; background: none; padding: 0;">
+                            <img src="{% static 'Company\display.png' %}" alt="表單排序" style="width: 24px; height: 24px;">
+                        </button>
+                    {% endif %}
+                </form>
+            </th>
+            <th scope="col">品名規格<br>(重工前)</th>
+            <th scope="col">產品編號<br>(重工後)</th>
+            <th scope="col">品名規格<br>(重工後)</th>
+            <th scope="col">重工項目</th>
+            <th scope="col">重工原因</th>
+            <th scope="col">預計完工日</th>
+                      
+        </tr>
+        <tbody>            
+            {% for form_id,each_data in method_datas %}
+                {% if form_id == form.form_id %}                   
+                    <tr>
+                        <td>{{ each_data.quantity }}</td>
+                        <td>{{ each_data.prod_no_before }}</td>
+                        <td>{{ each_data.prod_name_before }}</td>
+                        <td>{{ each_data.prod_no_after }}</td>
+                        <td>{{ each_data.prod_name_after }}</td>
+                        <td>{{ each_data.Heavy_industry_projects | replace_linebreaks }}</td>
+                        <td>{{ each_data.rebuild_reason }}</td>
+                        <td>{{ each_data.estimated_completion_date }}</td>
+                    </tr>                
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </thead>
+</table>
+<h4 class="fc_title">加工廠商</h4>
+<table class="fc_table">
+    <thead>
+        <tr>
+            <th scope="col">加工廠商</th>
+            <th scope="col">加工製程</th>                      
+            <th scope="col">單價</th>                      
+            <th scope="col">總價</th>
+            <th scope="col">操作</th>                      
+        </tr>
+        <tbody>
+            {% for abnormalfactna in abnormalfactnas %}
+                {% if abnormalfactna.form_id == form.form_id %}              
+                    <tr>
+                        <td>{{ abnormalfactna.factoryname }}</td>
+                        <td>{{ abnormalfactna.makename }}</td>
+
+                        {% if abnormalfactna.unit_price is None %}
+                            <td></td>
+                            <td></td>
+                        {% else %}
+                            <td>{{ abnormalfactna.unit_price }}</td>                        
+                            <td>{{ abnormalfactna.total_price }}</td>
+                        {% endif %}
+
+                        
+                        <td>
+                            <button type="button" class="button-3d" data-bs-toggle="modal" data-bs-target="#priceModal" data-form-id="{{ abnormalfactna.form_id }}" data-item="{{ abnormalfactna.item }}">
+                                輸入單價
+                            </button>
+                            <button type="button" class="button-3d" data-bs-toggle="modal" data-bs-target="#mknumberModal" data-form-id="{{ abnormalfactna.form_id }}" data-item="{{ abnormalfactna.item }}">
+                                輸入MK單
+                            </button>
+                        </td>
+                    </tr>                
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </thead>
+</table>
+<h4 class="mk_title">製令單資料</h4> 
+<table  class="mk_table" id="{{ form.form_id }}_table">
+    <thead>
+        <tr>
+            <th scope="col">加工廠商</th>
+            <th scope="col">加工製程</th>  
+            <th scope="col">MK單號</th>
+            <th scope="col">製令已開數量</th>
+            <th scope="col">製令未開數量</th>
+            <th scope="col">備註</th>            
+            <th scope="col">狀態</th>            
+            <th scope="col">操作</th>            
+        </tr>
+        <tbody>            
+            {% for abnormalfactna in abnormalfactnas %}
+                {% if abnormalfactna.form_id == form.form_id %}  
+                    {% for each_mk in allmk %}
+                        {% if each_mk.form_id == abnormalfactna.form_id and each_mk.item == abnormalfactna.item %}                    
+                            <tr>
+                                <td>{{ abnormalfactna.factoryname }}</td>
+                                <td>{{ abnormalfactna.makename }}</td>                                        
+                                <td>{{ each_mk.mk_number }}</td>
+                                
+
+                                <td>
+                                    {% for mk_number,qty in MKQTY_map.items %}
+                                        {% if mk_number == each_mk.mk_number %}                                        
+                                            {{ qty }}
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>                               
+                                <td>
+                                    {% for mk_number,qty in diff_map.items %}
+                                        {% if mk_number == each_mk.mk_number %}                                        
+                                            {{ qty }}
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td>{{ each_mk.remarks }}</td>
+                                <td>
+                                    {% for mk_number,yn in MKYN_map.items %}
+                                        {% if mk_number == each_mk.mk_number %}
+                                            <div {%if yn == '已結' or yn == '特結' %} class="text-success" {% else %} class="text-warning" {% endif %}>
+                                                {{ yn }}
+                                            </div>                                            
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    <button type="button" class="button-3d" data-bs-toggle="modal" data-bs-target="#deletemkModal" data-id="{{ each_mk.id }}">
+                                        刪除
+                                    </button>                                
+                                </td>                                
+                            </tr>
+                        {% endif %}  
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </thead>
+</table>
+
+<!-- 確認刪除 -->
+<div class="modal fade" id="deletemkModal" tabindex="-1" aria-labelledby="deletemkModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-dark" id="deletemkModalLabel">刪除確認</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'delAbnormalMK' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" class="IdInput" name="id">
+                    <h4 class="text-danger">刪除後無法復原，確認刪除嗎?</h4>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger">確認刪除</button>
+                    </div>                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- 價格輸入 -->
+<div class="modal fade" id="priceModal" tabindex="-1" aria-labelledby="priceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-dark" id="priceModalLabel">單價輸入</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- 將單價傳出去 -->
+                <form class='pricemodal_write' action="{% url 'pricemodal' %}" method="post">
+                    {% csrf_token %}
+                    <input type="number" class="form-control" id="priceInput" placeholder="请輸入單價" step="0.001" name="price">
+                    <input type="hidden" class="formIdInput" name="form_id">
+                    <input type="hidden" class="itemInput" name="item">
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">送出</button>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="mknumberModal" tabindex="-1" aria-labelledby="mknumberModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-dark" id="mknumberModalLabel">MK單號輸入</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- 將單價傳出去 -->
+                <form class='mknumberModal_write' action="{% url 'mknumberModal' %}" method="post">
+                    {% csrf_token %}
+                    <input type="text" class="form-control" id="mknumberInput" placeholder="請輸入MK單號" name="mknumber">
+                    <textarea class="form-control" id="mknumber_remarkInput" placeholder="如有備註請輸入" name="mknumber_remark"></textarea>
+                    <input type="hidden" class="formIdInput" name="form_id">
+                    <input type="hidden" class="itemInput" name="item">
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">送出</button>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock form_content %}
+
+
+{% block action_area %}
+<form action="{% url 'HeayworkorderPrint' form.form_id %}" method="post" target="_blank">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success">列印</button>
+</form>
+<br>
+{% for key,value in FORMURLS_ONLYCHANGEDATA.items %}
+    {% if key == form.form_name %}
+    <form action="{% url value form_id_Per=form.form_id OnlyChangeData=True %}" method="post">
+    {% endif %}
+{% endfor %}
+{% csrf_token %}
+<button class="btn btn-primary">編輯</button>
+<input type="hidden" name="form_id" value="{{ form.form_id }}">
+</form>
+
+{% endblock action_area %}
+
+
+{% block extra_js_body2 %}
+<script>
+    $(document).ready(function () {
+        $('#all_expand').click(function(){
+            $('.fc_table').show()
+            $('.fc_title').show()
+            $('.mk_table').show()
+            $('.mk_title').show()
+        })    
+        $('#all_expand_arrows').click(function(){
+            $('.fc_table').hide()
+            $('.fc_title').hide()
+            $('.mk_table').hide()
+            $('.mk_title').hide()
+        })    
+
+
+
+
+
+
+        $('.pricemodal_write').on('submit', function (e) {
+            e.preventDefault(); // 阻止表单的正常提交
+
+            var formData = {
+                'form_id': $(this).find('[name=form_id]').val(),
+                'item': $(this).find('[name=item]').val(),
+                'price': $('#priceInput').val(),
+                'csrfmiddlewaretoken': $(this).find('[name=csrfmiddlewaretoken]').val(), // 从表单中获取 CSRF token
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "pricemodal" %}', // Django URL
+                data: formData,
+                success: function (response) {
+                    // 处理成功的响应
+                    console.log('成功：', response);
+                    location.reload()
+                },
+                error: function (response) {
+                    if (response.responseJSON && response.responseJSON.error) {
+                        alert(`錯誤: ${response.responseJSON.error}`);
+                    } else {
+                        alert('發生未知錯誤');
+                    }
+                }
+
+            });
+        });
+
+
+        $('.mknumberModal_write').on('submit', function (e) {
+            e.preventDefault(); // 阻止表單的正常提交
+            var mknumber = $('#mknumberInput').val();
+            var _form_id = $(this).find('[name=form_id]').val();
+
+            // 檢查mknumber是否為空
+            if (!mknumber) {
+                alert('MK單號不能為空！');
+                return; // 終止函數執行
+            }
+
+            var formData = {
+                'form_id': _form_id,
+                'item': $(this).find('[name=item]').val(),
+                'mknumber': mknumber,
+                'remarks': $('#mknumber_remarkInput').val(),
+                'csrfmiddlewaretoken': $(this).find('[name=csrfmiddlewaretoken]').val(), // 從表單中獲取 CSRF token
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "mknumberModal" %}', // Django URL
+                data: formData,
+                success: function (response) {
+                    // 處理成功的響應
+                    console.log('成功：', response);
+                    $('#' + _form_id + '_table').html(response);
+                    // 關閉模態框
+                    $('#mknumberModal').modal('hide');
+                    alert("MK單號更新成功!")
+                },
+                error: function (response) {
+                    // 處理錯誤響應
+                    alert(`錯誤:${response}`);
+                }
+            });
+        });
+
+        $('#fact_re_no').select2({
+            width: '50%' // 或者使用其他单位，如 '50%', '20em' 等
+        });
+    });
+
+    
+
+    $('#priceModal').on('hidden.bs.modal', function () {
+        $('#priceInput').val('');  // 清空输入框的值
+    });
+    $('#mknumberModal').on('hidden.bs.modal', function () {
+        $('#mknumberInput').val('');  // 清空输入框的值
+    });
+
+
+    $(document).on('click', '.button-3d[data-bs-target="#priceModal"]', function () {
+        var formId = $(this).data('form-id');
+        var item = $(this).data('item');
+        $('#priceModal .formIdInput').val(formId);
+        $('#priceModal .itemInput').val(item);
+    });
+    
+    $(document).on('click', '.button-3d[data-bs-target="#mknumberModal"]', function () {
+        // 打開模態框
+        $('#mknumberModal').modal('show');
+        var formId = $(this).data('form-id');
+        var item = $(this).data('item');
+        $('#mknumberModal .formIdInput').val(formId);
+        $('#mknumberModal .itemInput').val(item);
+    });
+
+    $(document).on('click', '.button-3d[data-bs-target="#deletemkModal"]', function () {
+        // 打開模態框
+        $('#deletemkModal').modal('show');
+        var Id = $(this).data('id');
+        console.log(Id)
+        $('#deletemkModal .IdInput').val(Id);
+
+    });
+
+
+
+</script>
+  
+
+{% endblock extra_js_body2 %}

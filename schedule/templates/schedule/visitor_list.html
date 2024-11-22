@@ -1,0 +1,78 @@
+{% extends 'schedule/base.html' %}
+{% load i18n scheduletags static %}
+{% load my_filters %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'schedule/visitor_list.css' %}" type="text/css" media="screen">
+{% endblock extra_head%}
+
+
+{% block body %}
+<div class="selfArea">
+    <h3 class="text-primary">拜訪人資料列表</h3>
+    <a href="{% url 'VisitorCreate' %}" class="btn btn-success mb-2">+拜訪資料</a>
+    <a href='{% url "calendar_create_event" "VendorVisitScheduler" %}' class="btn btn-primary mb-2">繼續新增日歷</a>
+    <a href="{% url 'fullcalendar' 'VendorVisitScheduler' %}" class="btn btn-primary mb-2">返回日歷首頁</a>
+    <table>
+        <thead>
+            <tr>
+                <th>拜訪單位</th>
+                <th>拜訪人</th>
+                <th>拜訪人數</th>
+                <th>目的</th>
+                <th>受訪人</th>
+                <th>分機號碼</th>
+
+                <th>編輯內容</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for visitor in visitors %}
+            <tr>
+
+                <td>{{ visitor.company_name }}</td>
+                <td>{{ visitor.visitor_name }}</td>
+                <td>{{ visitor.number_of_visitors }}</td>
+                <td>{{ visitor.purpose }}</td>
+                <td>
+                    {% for name in visitor.interviewee_name %}
+                        <span class="btn btn-outline-primary">{{ name }}</span>
+                    {% endfor %}
+                </td>
+                <td>{{ visitor.tellphone_number|replace_special_mark }}  </td> 
+                <td>
+                    
+                    <a href="{% url 'VisitorUpdate'  visitor.id %}" class="btn btn-outline-success">編輯內容</a>
+                    <a href="{% url 'visitor_delete'  visitor.id %}" class="btn btn-outline-danger">刪除</a>
+                </td>
+                <!-- 添加其他字段 -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- 添加分页控制 -->
+    {% if is_paginated %}
+        <div class="pagination">
+            <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; 最前一頁</a>
+                <a href="?page={{ page_obj.previous_page_number }}">上一頁</a>
+            {% endif %}
+
+            <span class="current">
+                頁數: {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">下一頁</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">最後一頁 &raquo;</a>
+            {% endif %}
+            </span>
+        </div>
+    {% endif %}
+</div>
+
+
+{% endblock body%}

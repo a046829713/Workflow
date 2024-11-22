@@ -1,0 +1,54 @@
+<thead>
+    <tr>
+        <th scope="col">加工廠商</th>
+        <th scope="col">加工製程</th>  
+        <th scope="col">MK單號</th>
+        <th scope="col">製令已開數量</th>
+        <th scope="col">製令未開數量</th>
+        <th scope="col">備註</th>
+        <th scope="col">狀態</th>
+        <th scope="col">操作</th>            
+    </tr>
+    <tbody>            
+        {% for abnormalfactna in abnormalfactnas %}                
+            {% for each_mk in abnormalmks %}
+                {% if each_mk.form_id == abnormalfactna.form_id and each_mk.item == abnormalfactna.item %}                
+                <tr>
+                    <td>{{ abnormalfactna.factoryname }}</td>
+                    <td>{{ abnormalfactna.makename }}</td>                                        
+                    <td>{{ each_mk.mk_number }}</td>
+                    <td>
+                        {% for mk_number,qty in MKQTY_map.items %}
+                            {% if mk_number == each_mk.mk_number %}                                        
+                                {{ qty }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>                               
+                    <td>
+                        {% for mk_number,qty in diff_map.items %}
+                            {% if mk_number == each_mk.mk_number %}                                        
+                                {{ qty }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>{{ each_mk.remarks }}</td>
+                    <td>
+                        {% for mk_number,yn in MKYN_map.items %}
+                            {% if mk_number == each_mk.mk_number %}
+                                <div {%if yn == '已結' or yn == '特結' %} class="text-success" {% else %} class="text-warning" {% endif %}>
+                                    {{ yn }}
+                                </div>                                            
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <button type="button" class="button-3d" data-bs-toggle="modal" data-bs-target="#deletemkModal" data-id="{{ each_mk.id }}">
+                            刪除
+                        </button>                                
+                    </td>                                 
+                </tr>
+                {% endif %}
+            {% endfor %}                 
+        {% endfor %}
+    </tbody>
+</thead>

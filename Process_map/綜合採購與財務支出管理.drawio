@@ -1,0 +1,60 @@
+<mxfile host="app.diagrams.net" modified="2024-01-22T08:42:27.280Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="tYYhlt-_bN451W7zmWGs" version="22.1.21" type="device">
+  <diagram name="第 1 页" id="IfDILIqxMtS9YbyaD9c2">
+    <mxGraphModel dx="1434" dy="772" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="AmCX8XT5jmxyl_71s8iJ-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="AmCX8XT5jmxyl_71s8iJ-1" target="AmCX8XT5jmxyl_71s8iJ-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AmCX8XT5jmxyl_71s8iJ-1" value="申請人提出需求" style="ellipse;whiteSpace=wrap;html=1;fontSize=22;" vertex="1" parent="1">
+          <mxGeometry x="309" y="130" width="210" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="AmCX8XT5jmxyl_71s8iJ-14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="AmCX8XT5jmxyl_71s8iJ-2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="414" y="880" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="AmCX8XT5jmxyl_71s8iJ-2" value="財務人員審核" style="whiteSpace=wrap;html=1;fontSize=22;" vertex="1" parent="1">
+          <mxGeometry x="317" y="760" width="194" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AmCX8XT5jmxyl_71s8iJ-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="AmCX8XT5jmxyl_71s8iJ-6" target="AmCX8XT5jmxyl_71s8iJ-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AmCX8XT5jmxyl_71s8iJ-6" value="部門主管審核" style="whiteSpace=wrap;html=1;fontSize=22;" vertex="1" parent="1">
+          <mxGeometry x="317" y="490" width="194" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AmCX8XT5jmxyl_71s8iJ-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="AmCX8XT5jmxyl_71s8iJ-7" target="AmCX8XT5jmxyl_71s8iJ-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AmCX8XT5jmxyl_71s8iJ-7" value="直屬主管審核" style="whiteSpace=wrap;html=1;fontSize=22;" vertex="1" parent="1">
+          <mxGeometry x="317" y="350" width="194" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AmCX8XT5jmxyl_71s8iJ-12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="AmCX8XT5jmxyl_71s8iJ-10" target="AmCX8XT5jmxyl_71s8iJ-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AmCX8XT5jmxyl_71s8iJ-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="AmCX8XT5jmxyl_71s8iJ-10" target="AmCX8XT5jmxyl_71s8iJ-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AmCX8XT5jmxyl_71s8iJ-10" value="申請人確認採買成功" style="whiteSpace=wrap;html=1;fontSize=22;" vertex="1" parent="1">
+          <mxGeometry x="317" y="630" width="194" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AmCX8XT5jmxyl_71s8iJ-15" value="結案" style="whiteSpace=wrap;html=1;fontSize=22;" vertex="1" parent="1">
+          <mxGeometry x="317" y="880" width="194" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="AmCX8XT5jmxyl_71s8iJ-19" value="" style="swimlane;startSize=0;" vertex="1" parent="1">
+          <mxGeometry x="670" y="445" width="420" height="430" as="geometry" />
+        </mxCell>
+        <mxCell id="AmCX8XT5jmxyl_71s8iJ-26" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="AmCX8XT5jmxyl_71s8iJ-19" source="AmCX8XT5jmxyl_71s8iJ-24" target="AmCX8XT5jmxyl_71s8iJ-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="AmCX8XT5jmxyl_71s8iJ-24" value="購買相關物品、簽署相關合約、資訊課代買電子產品、財務總務代買庶務性用品" style="rounded=0;whiteSpace=wrap;html=1;fontSize=18;" vertex="1" parent="AmCX8XT5jmxyl_71s8iJ-19">
+          <mxGeometry x="28.5" y="25" width="363" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="AmCX8XT5jmxyl_71s8iJ-25" value="貨物、服務、相關機台抵達元貝公司" style="rounded=0;whiteSpace=wrap;html=1;fontSize=18;" vertex="1" parent="AmCX8XT5jmxyl_71s8iJ-19">
+          <mxGeometry x="28.5" y="335" width="363" height="75" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

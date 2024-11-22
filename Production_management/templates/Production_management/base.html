@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="refresh" content="43200"> <!-- 每12小時頁面自動刷新 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <title>{% block title%}{% endblock title %}</title>
+    {% load static %}
+    {% block extra_css %}
+    {% endblock extra_css %}
+    {% block extra_css_second %}
+    {% endblock extra_css_second %}
+
+    <link href="{% static 'Company/base.css' %}" rel="stylesheet">
+    <link href="{% static 'Company/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'Company/select2.min.css' %}" rel="stylesheet">
+    <link href="{% static 'Company/jquery-ui.css' %}" rel="stylesheet" >
+    <script src="{% static 'Company/jquery.min.js' %}"></script>
+    <script src="{% static 'Company/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'Company/select2.min.js' %}"></script>
+    <script src="{% static 'Company/jquery-ui.js' %}"></script>
+    
+
+
+</head>
+
+<body>
+    <div class="containerCustom">
+        <nav class="navbar navbar-expand-lg bg-light">
+            <div class="container-fluid">
+                {% comment %} <a class="navbar-brand" href="#"><img src="YBICO_Logo.png" alt="YBCIO_logo" width="80"
+                        height="60"></a> {% endcomment %}
+                <a class="navbar-brand text-success fs-2" href="{% url 'index' %}">YBICO</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active text-success" aria-current="page" href="{% url 'index' %}">首頁</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-success" href="https://www.ybico.com.tw/">形象官網</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link  dropdown-toggle text-success" href="#"role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">其他功能</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item text-success" href="{% url 'AssembleWmodel' %}">W型號組裝</a></li>
+                                <li><a class="dropdown-item text-success" href="{% url 'Dailyvalue' %}">日用量查詢</a></li>
+                                <li><a class="dropdown-item text-success" href="{% url 'article-list' %}">知識庫</a></li>
+                                <li><a class="dropdown-item text-success" href="{% url 'packing_index' %}">包裝系統</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-success" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                線上表單
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item text-success" href="{% url 'form_application' %}">表單功能</a></li>
+                                <li><a class="dropdown-item text-success" href="{% url 'IllustrateForm' %}">功能說明</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item text-success" href="{% url 'add_model' %}">表單流程添加</a></li>
+                                <li><a class="dropdown-item text-success" href="{% url 'admin:index' %}">系統維護</a></li>                                
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                {% if user.is_authenticated %}
+                <p class="me-4">歡迎進入，{{ user.FullName }}
+                    <a href="{% url 'change_passward' %}" class="text-primary">
+                        密碼修改
+                    </a>
+                </p>
+                
+                
+                <a href="{% url 'logout' %}">
+                    <button class="btn btn-outline-success me-2" type="button">登出</button>
+                </a>
+                {% else %}
+                <a href="{% url 'login' %}">
+                    <button class="btn btn-outline-success me-2" type="button">登入</button>
+                </a>
+                {% endif %}
+            </div>
+        </nav>
+        <!-- 生產管理的導覽列 -->
+        <div class="costom_container mt-3">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link" href="{% url 'Dailyvalue' %}">日用量查詢</a>
+                        <a class="nav-link" href="{% url 'Slow_moving' %}">現貨庫存查詢(SlowM)</a>
+                    </div>
+                  </div>
+                </div>
+              </nav>
+        </div>
+        {% block content %}
+
+        {% endblock content %}
+
+
+
+        {% block extra_js_body %}
+
+        {% endblock extra_js_body %}
+
+    </div>
+</body>
+
+</html>
+

@@ -1,0 +1,74 @@
+{% extends 'schedule/base.html' %}
+{% load static %}
+
+
+{% block extra_head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<link rel="stylesheet" href="{% static 'schedule/event.css' %}" type="text/css" media="screen">
+{% endblock extra_head%}
+
+
+
+{% block body %}
+<div class="selfArea">
+    <h1>
+        {% if form.instance.pk %}
+            訪客資料更新
+        {% else %}
+            建立新訪客
+        {% endif %}
+    </h1>
+
+
+	
+	<form action="" method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<br>
+		<button type="submit" class="btn btn-outline-success">
+            {% if form.instance.pk %}
+                更新
+            {% else %}
+                建立
+            {% endif %}
+        </button>
+		
+	</form>
+</div>
+
+
+
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		flatpickr('.flatpickr', {
+			enableTime: true,  // 开启时间选择
+			dateFormat: "Y-m-d H:i",  // 设置日期和时间格式
+		});
+	});
+
+	$(document).ready(function () {
+		// 先為所有 .django-select2 初始化，不包含 id_company_id
+		$('.django-select2').not('#id_company_id').select2({
+			tags: false  // 不允許用戶輸入新選項
+		});
+
+		// 然後單獨為 id_company_id 初始化
+		$('#id_company_id').select2({
+			tags: true  // 允許用戶輸入新選項
+		});
+
+		$('.select2-multiple').select2({
+			tags: true  // 允許用戶輸入新選項
+		});
+
+		// 如果 Django 没有正确自动选中，可以手动选中值
+		const selectedInterviewees = {{ form.interviewee_name.value|safe }};
+    	$('#id_interviewee_name').val(selectedInterviewees).trigger('change');
+		const selectedtellphone_numbers = {{ form.tellphone_number.value|safe }};
+    	$('#id_tellphone_number').val(selectedtellphone_numbers).trigger('change');
+
+
+	});
+</script>
+{% endblock %}

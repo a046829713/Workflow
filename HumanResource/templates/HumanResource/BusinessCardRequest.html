@@ -1,0 +1,155 @@
+{% extends "form_base.html" %}
+
+{% load static %}
+
+
+{% block static_file %}
+<link rel="stylesheet" href="{% static 'HumanResource/BusinessCardRequest.css' %}">
+
+{% endblock static_file %}
+
+{% block title%}
+名片申請單
+{% endblock title %}
+
+
+{% block content %}
+<!-- 每一份文件的Title區域 -->
+<div style="position: relative;">
+    <h1 class="text-center">名片申請單</h1>
+    <img src="{% static 'Company/YBICO_Logo.png' %}" alt="Description Image" style="position: absolute; top: 0; right: 0; height: 48px; width: 90px;">
+</div>
+
+
+
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne" style="background-color: rgb(190, 225, 247); text-align: center;">
+            申請資料
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <div class="custom-container">
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.english_name.label }}</label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.english_name }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.Internalprofessionaltitle_display.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.Internalprofessionaltitle_display }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.Externalprofessionaltitle.label }}
+                            <span class="text-danger">*</span>
+                            <div class="custom-tooltip-wrapper">
+                                <i class="custom-tooltip">
+                                    <img src="{% static 'Company\question-mark.png' %}" height="20" width="20" alt="提示" />
+                                    <span class="custom-tooltip-text">
+                                        1.預設帶入公司職稱，若有其他需求可以更動。
+                                        <br>
+                                        2.名片上顯示的職稱
+                                    </span>
+                                </i>
+                            </div>
+                        </label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.Externalprofessionaltitle }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.Englishprofessionaltitle.label }}</label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.Englishprofessionaltitle }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.ExtensionNumber.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.ExtensionNumber }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.Fax.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.Fax }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.email.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.email }}
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.boxes.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.boxes }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.ifremainingamount.label }}
+                            <span class="text-danger">*</span>
+                            <div class="custom-tooltip-wrapper">
+                                <i class="custom-tooltip">
+                                    <img src="{% static 'Company\question-mark.png' %}" height="20" width="20" alt="提示" />
+                                    <span class="custom-tooltip-text">
+                                        1.如個人資料有異動時，會將剩餘的舊名片回收
+                                        <br>
+                                        (發新名片的時候會一同回收)
+                                    </span>
+                                </i>
+                            </div>                        
+                        </label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.ifremainingamount }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.Reasonforapplication.label }}<span class="text-danger">*</span></label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.Reasonforapplication }}
+                        </div>
+                    </div>
+                    <div class="mb-3 row">                        
+                        <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.Skype_number.label }}</label>
+                        <div class="col-md-10 mt-2">
+                            {{ form.Skype_number }}
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 表單隱藏部分 -->
+{{ form.Internalprofessionaltitle }}
+
+{% endblock content %}
+
+{% block extra_js_body %}   
+<script type="text/javascript">
+    $('form').submit(function (e) {
+        var email = $('input[type="email"]').val(); // 获取电子邮件输入字段的值
+        if (!email.endsWith('@mail.ybico.com.tw')) { // 检查电子邮件是否以指定的域名结尾
+            alert('請輸入一個有效的公司電子郵件地址。'); // 如果不是，显示警告
+            e.preventDefault(); // 阻止表单提交
+        }
+
+        if (email == 'example@mail.ybico.com.tw') {
+            alert('信箱尚未變更，請更改為實際信箱'); 
+            e.preventDefault(); 
+        }
+    });
+
+    
+</script>
+
+{% endblock extra_js_body %}

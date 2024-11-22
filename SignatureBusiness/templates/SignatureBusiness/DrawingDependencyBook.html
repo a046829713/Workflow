@@ -1,0 +1,165 @@
+{% extends "form_base.html" %}
+
+{% load static %}
+
+
+{% block static_file %}
+<link rel="stylesheet" href="{% static 'SignatureBusiness/DrawingDependencyBook.css' %}">
+<script src="{% static 'Utils/split_file.js' %}"></script>
+{% endblock static_file %}
+
+{% block title%}
+出圖依賴書
+{% endblock title %}
+
+
+{% block content %}
+
+<!-- 每一份文件的Title區域 -->
+<h1 class="text-center text-success">出圖依賴書</h1>
+<h1 class="text-success">表單內容</h1>
+<hr>
+
+
+
+
+<!-- 報價預定日 -->
+<div class="mb-3">
+    <label for="" class="form-label fs-3">{{ form.QuotationScheduledDate.label }}</label>
+    {{ form.QuotationScheduledDate }}
+</div>
+
+<!-- 新產品編號 -->
+<div class="mb-3">
+    <label for="" class="form-label fs-3">{{ form.newProductNumber.label }}</label>
+    {{ form.newProductNumber }}
+</div>
+
+<!-- 新產品名稱 -->
+<div class="mb-3">
+    <label for="" class="form-label fs-3">{{ form.newProductName.label }}</label>
+    {{ form.newProductName }}
+</div>
+
+<!-- 預估量 -->
+<div class="mb-3">
+    <label for="" class="form-label fs-3">{{ form.EstimatedAmount.label }}</label>
+    {{ form.EstimatedAmount }}
+</div>
+
+
+<!-- 客戶 -->
+<div class="mb-3">
+    <label for="" class="form-label fs-3">{{ form.client.label }}</label>
+    {{ form.client }}
+</div>
+
+<div class="custom-container">
+    <div class="d-flex justify-content-around">
+        <div>
+            <label for="" class="form-label fs-3">{{ form.drawing.label }}</label>
+            {{ form.drawing }}
+        </div>
+        <div>
+            <label for="" class="form-label fs-3">{{ form.sample.label }}</label>
+            {{ form.sample }}
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+<!-- 設計程序 -->
+
+<div>
+    <label for="" class="form-label fs-3">{{ form.design_procedure.label }}</label>
+    {{ form.design_procedure }}
+</div>
+
+<div>
+    <label for="" class="form-label fs-3">{{ form.usage.label }}</label>
+    {{ form.usage }}
+</div>
+
+<div>
+    <label for="" class="form-label fs-3">{{ form.description.label }}</label>
+    {{ form.description }}
+</div>
+<div>
+    <label for="" class="form-label fs-3">{{ form.specification.label }}</label>
+    {{ form.specification }}
+</div>
+
+{% endblock content %}
+
+
+
+{% block attachment_content %}
+<button class="btn btn-primary mb-3" onclick="Open_attachmentarea()">附件操作</button>
+<!-- 這邊會獨立出來是因為有時候使用者上傳的檔案過大 --> 
+<div class="attachmentarea">
+    <div class="attachmentarea-content d-flex flex-column">
+        <div class="d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <p class="text-secondary mb-0"></p>
+                <button onclick="close_window()" class="btn btn-outline-danger">&times;</button>
+            </div>
+
+            <h3 class="text-primary">附件專區</h3>
+                {% if attachments %}
+                    <table >
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>檔案</th>
+                                <th>下載</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for attachment in attachments %}
+                                <tr>
+                                    {% for attachment_en,attachment_cn in attachment_map.items %}
+                                        {% if attachment_en == attachment.name %}
+                                            <td>{{ attachment_cn }}</td>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <td>{{ attachment.file.name }}</td>
+                                    <td><a href="{{ attachment.file.url }}">Download</a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>尚未有資料上傳.</p>
+                {% endif %}
+            <br>
+            <!-- 附件loop -->
+            <!-- 動態生成的附件上傳區塊 -->
+             
+            {% for attachment_str in attachment_map %}
+                {% if forloop.counter == 1 %}
+                    <h3>業務檔案區塊</h3>
+                    <hr>
+                {% endif %}
+                {% if forloop.counter == 6 %}
+                    <h3>研發檔案區塊</h3>
+                    <hr>
+                {% endif %}
+
+                <div class="attachment-upload mb-3">
+                    <input type="file" id="fileInput{{ forloop.counter }}" class="form-control mb-2">
+                    <button type="button" class="btn btn-outline-success" onclick="handleFileUpload({{ forloop.counter }})">上傳附件{{ forloop.counter }}</button>
+                    <span id="percent_to_upload{{ forloop.counter }}">尚無檔案</span>
+                </div>
+            {% endfor %}
+        </div>        
+    </div>
+</div>
+
+
+   
+{% endblock attachment_content %}

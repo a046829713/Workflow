@@ -1,0 +1,38 @@
+.custom-container {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-style:double;
+    border-width:3px;
+}
+
+.custom-container h3 {
+    color: #6c757d;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.custom-container label {
+    color: #343a40;
+    font-size: 18px;
+    margin-right: 20px;
+}
+
+.custom-container .form-check-label {
+    color: #495057;
+}
+
+.custom-container .form-check-input {
+    margin-right: 10px;
+}
+
+
+.cu_container {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-style: double;
+    border-width: 3px;
+}

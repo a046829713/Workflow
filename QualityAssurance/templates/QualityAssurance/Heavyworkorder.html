@@ -1,0 +1,331 @@
+{% extends "form_base.html" %}
+
+{% load static %}
+
+
+{% block static_file %}
+<link href="{% static 'Company\base.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'QualityAssurance/Heavyworkorder.css' %}">
+{% endblock static_file %}
+
+{% block title%}
+重工單
+{% endblock title %}
+
+
+{% block content %}
+
+
+
+<!-- 每一份文件的Title區域 -->
+<div style="position: relative;">
+    <h1 class="text-center">重工單</h1>
+</div>
+
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne" style="background-color: rgb(190, 225, 247); text-align: center;">
+            表單內容
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                <div class="mt-3 row">
+                    <span class="col-md-2 fs-5">執行重工的廠商</span>
+                    <div class="col-md-10 factname_area">
+                        {% for formset in formsets %}
+                            {{ formset.management_form }}
+                            {% for form in formset %}
+                                <div class="factname_group">
+                                    <div class="mb-3 row">                        
+                                        <label for="" class="col-md-2 col-form-label form-label fs-5">{{ forloop.parentloop.counter}}.{{ form.Factname.label }}</label>
+                                        <div class="col-md-4 mt-2">
+                                            {{ form.Factname }}
+                                        </div>                     
+                                        <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.ROUTname.label }}</label>
+                                        <div class="col-md-4 mt-2">
+                                            {{ form.ROUTname }}
+                                        </div>
+                                                                          
+                                    </div>   
+                                </div>
+                                                             
+                            {% endfor %}
+                        {% endfor %}
+                        <button type="button" class="btn btn-outline-primary addfactname">新增</button>
+                        <button type="button" class="btn btn-outline-danger clearfactname">刪除</button>
+                          
+                    </div>                    
+                </div>
+                <div class="mb-3 row">                        
+                    <label for="id_prod_no_before" class="col-md-2 col-form-label form-label fs-5">{{ form.prod_no_before.label }}
+                        <span class="text-danger">*</span>
+                        <div class="custom-tooltip-wrapper">
+                            <i class="custom-tooltip">
+                                <img src="{% static 'Company\question-mark.png' %}" height="20" width="20" alt="提示" />
+                                <span class="custom-tooltip-text">
+                                    為了加快載入速度，改讓使用者自己搜尋
+                                    <br> 
+                                    
+                                </span>
+                            </i>
+                        </div>
+                    
+                    </label>
+                    <div class="col-md-10 mt-2">
+                        {{ form.prod_no_before }}
+                    </div>
+                </div>
+
+                <div class="mb-3 row">                        
+                    <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.prod_name_before.label }}<span class="text-danger">*</span><br><span>(資料自動帶入)</span></label>
+                    <div class="col-md-10 mt-2">
+                        {{ form.prod_name_before }}
+                    </div>
+                </div>
+                
+                
+                <div class="mb-3 row">                        
+                    <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.prod_no_after.label }}
+                        <span class="text-danger">*</span>
+                        <div class="custom-tooltip-wrapper">
+                            <i class="custom-tooltip">
+                                <img src="{% static 'Company\question-mark.png' %}" height="20" width="20" alt="提示" />
+                                <span class="custom-tooltip-text">
+                                    為了加快載入速度，改讓使用者自己搜尋
+                                    <br> 
+                                    
+                                </span>
+                            </i>
+                        </div>
+                    </label>
+                    <div class="col-md-10 mt-2">
+                        {{ form.prod_no_after }}
+                    </div>
+                </div>
+                
+                <div class="mb-3 row">                        
+                    <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.prod_name_after.label }}<span class="text-danger">*</span><br><span>(資料自動帶入)</span></label>
+                    <div class="col-md-10 mt-2">
+                        {{ form.prod_name_after }}
+                    </div>
+                </div>
+
+                <div class="mb-3 row">                        
+                    <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.quantity.label }}<span class="text-danger">*</span></label>
+                    <div class="col-md-10 mt-2">
+                        {{ form.quantity }}
+                    </div>
+                </div>
+                <div class="mb-3 row">                        
+                    <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.paying_unit.label }}<span class="text-danger">*</span></label>
+                    <div class="col-md-10 mt-2">
+                        {{ form.paying_unit }}
+                    </div>
+                </div>
+
+                <div class="mb-3 row">                        
+                    <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.responsible_unit.label }}<span class="text-danger">*</span></label>
+                    <div class="col-md-10 mt-2">
+                        {{ form.responsible_unit }}
+                    </div>
+                </div>
+
+                <div class="mb-3 row">                        
+                    <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.heavy_industry_information.label }}<span class="text-danger">*</span></label>
+                    <div class="col-md-10 mt-2">
+                        {{ form.heavy_industry_information }}
+                    </div>
+                </div>
+
+                <div class="mb-3 row">                        
+                    <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.source_notes.label }}<span class="text-danger">*</span></label>
+                    <div class="col-md-10 mt-2">
+                        {{ form.source_notes }}
+                    </div>
+                </div>
+
+                <div class="mb-3 row">                        
+                    <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.pay_after_heavy_work.label }}</label>
+                    <div class="col-md-10 mt-2">
+                        {{ form.pay_after_heavy_work }}
+                    </div>
+                </div>
+
+                <div class="mb-3 row">                        
+                    <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.remark.label }}</label>
+                    <div class="col-md-10 mt-2">
+                        {{ form.remark }}
+                    </div>
+                </div>
+                <div class="mb-3 row">                        
+                    <label for="" class="col-md-2 col-form-label form-label fs-5">
+                        {{ form.Withdraw_TYPE.label }}
+                        <span class="text-danger">*</span>
+                    </label>
+                    <div class="col-md-10 mt-2">
+                        {{ form.Withdraw_TYPE }}
+                    </div>
+                </div>
+                <div class="mb-3 row">                        
+                    <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.io_number.label }}</label>
+                    <div class="col-md-10 mt-2">
+                        {{ form.io_number }}
+                    </div>
+                </div>
+                <div class="mb-3 row">                        
+                    <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.rebuild_reason.label }}<span class="text-danger">*</span></label>
+                    <div class="col-md-10 mt-2">
+                        {{ form.rebuild_reason }}
+                    </div>
+                </div>
+
+                <div class="mb-3 row">                        
+                    <label for="" class="col-md-2 col-form-label form-label fs-5">{{ form.Heavy_industry_projects.label }}<span class="text-danger">*</span></label>
+                    <div class="col-md-10 mt-2">
+                        {{ form.Heavy_industry_projects }}
+                    </div>
+                </div>
+                
+                
+                
+                
+                
+                {% if show_area or OnlyChangeData %}
+                <div class="mb-3 row">                        
+                    <label for="" class="col-md-2 col-form-label form-label fs-5">
+                        {{ form.estimated_completion_date.label }}
+                    </label>
+                    <div class="col-md-10 mt-2">
+                        {{ form.estimated_completion_date }}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>   
+<br>
+
+
+
+
+{% endblock content %}
+
+{% block extra_js_body %}
+
+
+<script>
+// 改用ajax
+function initializeSelect2(selectElement,input_url) {
+    selectElement.select2({
+        ajax: {
+            url: input_url,  // 使用模板字符串插入参数
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                // 會將使用者輸入的的值送到ajax裡面{"term": "S","_type": "query"}
+                return {
+                    q: params.term
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data.results
+                };
+            },
+            cache: true
+        },
+        minimumInputLength: 1
+        // 设置用户在触发搜索前必须输入的最小字符数，这里设为 1，意味着用户输入任何字符后即开始搜索。
+
+    });
+
+}
+$(document).ready(function () {    
+    // 為了加快載入速度，改讓使用者自己搜尋
+    initializeSelect2($('#id_prod_no_before'),`{% url 'get_prod_choices_ajax' %}`);
+    initializeSelect2($('#id_prod_no_after'),`{% url 'get_prod_choices_ajax' %}`);
+    initializeSelect2($('#id_io_number'),`{% url 'get_io_number' %}`);
+
+    $('#id_prod_no_before').change(function(){
+        $('#id_prod_name_before').val($('#select2-id_prod_no_before-container').text().split('--')[1])
+    })
+
+
+    $('#id_prod_no_after').change(function(){
+        $('#id_prod_name_after').val($('#select2-id_prod_no_after-container').text().split('--')[1])
+    })
+
+    // 初始化隱藏所有的 factname_group
+    $('.factname_group').each(function() {
+        // 檢查這個 factname_group 是否有輸入的值
+        var hasValue = false;
+        $(this).find('select').each(function() {
+            if ($(this).val()) {
+                hasValue = true;
+                return false; // 如果找到值，則停止進一步檢查
+            }
+        });
+
+        // 如果沒有值，則隱藏這個 factname_group
+        if (!hasValue) {
+            $(this).hide();
+        }
+    });
+
+
+    // 新增按鈕的點擊事件
+    $('.addfactname').on('click', function () {
+        // 顯示第一個隱藏的 factname_group
+        $('.factname_group:hidden').first().show();
+    });
+
+    // 刪除按鈕的點擊事件
+    $('.clearfactname').on('click', function () {
+        // 找到最後一個顯示的 factname_group
+        var lastVisible = $('.factname_group:visible').last();
+        lastVisible.find('select').val(null).trigger('change');
+
+        // 隱藏這個 factname_group
+        lastVisible.hide();
+    });
+
+    $('form').on('submit', function(event) {
+        let allValid = true; // 重命名並初始化變量
+        let i = 0; // 使用 let 聲明變量 i
+        $('.factname_group').each(function() {
+            // 檢查這個 factname_group 是否有輸入的值
+            var hasValue = false;
+            let Factname = $(this).find(`[name=factmk_name${i}-0-Factname]`).val(); // 使用模板字符串
+            let ROUTname = $(this).find(`[name=factmk_name${i}-0-ROUTname]`).val(); // 更正選擇器，並使用模板字符串
+            if (!(Boolean(Factname) == Boolean(ROUTname))) {
+                allValid = false; // 如果不匹配，則設置 allValid 為 false
+            }
+            i += 1;
+        });
+
+        if (!allValid) {
+            event.preventDefault(); // 阻止表單提交
+            alert('每個廠商必須與對應的製程同時填寫。');
+        }
+
+    });
+
+    $('#id_Withdraw_TYPE').change(function() {
+        var selectedValue = $(this).val();
+        if (selectedValue == '庫存') {
+            $('#id_io_number').attr('required', true);
+        } else {
+            $('#id_io_number').attr('required', false);
+        }
+    });
+})
+
+
+
+
+
+</script>
+
+{% endblock extra_js_body %}

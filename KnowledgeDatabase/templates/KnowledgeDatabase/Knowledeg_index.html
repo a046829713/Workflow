@@ -1,0 +1,298 @@
+{% extends "Company/base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link href="{% static 'KnowledgeDatabase/Knowledeg_index.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+{% endblock extra_css %}
+
+{% block title%}
+YBICO知識庫
+{% endblock title %}
+
+
+{% block content %}
+<div class="costom_container mt-2">
+    <div class="mt-2 d-flex justify-content-end" style="width: 95%;">
+        <div class="mt-2">
+            <div class="row">
+                <div class="col-md-6">
+                    <form action="#" method="post" class="d-flex ml-2 mt-2">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="searchTerm" placeholder="輸入搜索詞" required>
+                            <div class="input-group-append">
+                                <button class="btn btn-secondary" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-3">                    
+                    <a href="{% url 'article-list' %}" class="reset-button">
+                        重置篩選
+                    </a>
+                </div>
+                <div class="col-md-3 mt-2">
+                    <button id="create_from" class="btn btn-primary">建立文章</button>
+                </div>
+            </div>
+        </div>
+        <div class="mt-3 custom-pagination">
+            {% if is_paginated %}
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1" aria-label="First">
+                                    <span aria-hidden="true">&laquo; 最前一頁</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                    <span aria-hidden="true">上一頁</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <span class="page-link">&laquo; 最前一頁</span>
+                            </li>
+                            <li class="page-item disabled">
+                                <span class="page-link">上一頁</span>
+                            </li>
+                        {% endif %}
+        
+                        <li class="page-item disabled">
+                            <span class="page-link text-dark">頁數: {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+                        </li>
+        
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                    <span aria-hidden="true">下一頁</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+                                    <span aria-hidden="true">最後一頁 &raquo;</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <span class="page-link">下一頁</span>
+                            </li>
+                            <li class="page-item disabled">
+                                <span class="page-link">最後一頁 &raquo;</span>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+        </div>
+    </div>
+    
+
+
+
+    <table class="custom-table mt-2">
+        <thead>
+            <th>文章名稱</th>
+            <th>所屬部門</th>
+            <th>標籤</th>
+            <th>建立日期</th>
+            <th>最後建立日期</th>
+            <th>建立人員</th>
+            <th>隱私</th>
+            <th>動作</th>
+            <th>刪除</th>
+        </thead>
+        <tbody>
+            {% for each_data in kd_list %}
+            <tr>
+                <td>{{ each_data.project_name }}</td>
+                <td>{{ each_data.unit }}</td>
+                <td>
+                    {% for each_key in each_data.tags %}
+                        {% for key,value in tagged_colors.items %}
+                            {% if each_key == key %}
+                            <div class='button-shadow mt-2' style="background-color: {{ value }};">
+                                {{ each_key }}
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </td>
+                <td>{{ each_data.created_at|date:"Y-m-d H:i:s" }}</td>
+                <td>{{ each_data.last_edit_time|date:"Y-m-d H:i:s" }}</td>
+                {% for key, value in fullname_map.items%}
+                    {% if each_data.applicant == key %}
+                        <td>{{ each_data.applicant }} / {{ value }}</td>
+                    {% endif %}
+                {% endfor%}
+                <td>{{ each_data.privacy }}</td>
+                <td>
+                    <!-- <button class="btn btn-primary">編輯文章</button> -->
+                    {% if each_data.applicant == request.user.username %}
+                        <form action="{% url 'article-edit' pk=each_data.id %}" method="get">
+                            {% csrf_token %}
+                            <button class="btn btn-primary">編輯文章</button>
+                        </form>
+                    {% endif %}
+
+                    <div class="mt-2">
+                        <a href="{% url 'show-article' pk=each_data.id %}" class="btn btn-primary" target="_blank">瀏覽文章</a>
+                    </div>
+                    
+                    
+                    
+                </td>
+                <td>
+                    {% if each_data.applicant == request.user.username %}
+                        <form action="{% url 'article-delete' pk=each_data.id %}" method="post" onsubmit="return confirmDelete()">
+                            {% csrf_token %}
+                            <button class="btn btn-outline-danger">刪除</button>
+                        </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="mt-3 d-flex justify-content-end  custom-pagination">
+        {% if is_paginated %}
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1" aria-label="First">
+                                <span aria-hidden="true">&laquo; 最前一頁</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">上一頁</span>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <span class="page-link">&laquo; 最前一頁</span>
+                        </li>
+                        <li class="page-item disabled">
+                            <span class="page-link">上一頁</span>
+                        </li>
+                    {% endif %}
+    
+                    <li class="page-item disabled">
+                        <span class="page-link">頁數: {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+                    </li>
+    
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">下一頁</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+                                <span aria-hidden="true">最後一頁 &raquo;</span>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <span class="page-link">下一頁</span>
+                        </li>
+                        <li class="page-item disabled">
+                            <span class="page-link">最後一頁 &raquo;</span>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endif %}
+    </div>
+
+
+</div>
+
+
+
+<div class="form_area">
+    <div class="form_content d-flex flex-column">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-outline-danger close-button">X</button>
+        </div>
+        <form id='article-add-form' action="{% url 'article-add' %}" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <label for="" class="col-md-2 form-label fs-5">{{ form.project_name.label }}<span
+                        class="text-danger">*</span></label>
+                <div class="col-md-10">
+                    {{ form.project_name }}
+                </div>
+            </div>
+            <div class="row mt-2">
+                <label for="" class="col-md-2 col-form-label fs-5">{{ form.Tags.label }}<span
+                        class="text-danger">*</span></label>
+                <div class="col-md-10">
+                    {{ form.Tags }}
+                </div>
+            </div>
+            <div class="row mt-2">
+                <label for="" class="col-md-2 col-form-label fs-5">{{ form.privacy.label }}
+                    <span class="text-danger">*</span>
+                    <div class="custom-tooltip-wrapper">
+                        <i class="custom-tooltip">
+                            <img src="{% static 'Company\question-mark.png' %}" height="20" width="20" alt="提示" />
+                            <span class="custom-tooltip-text">
+                                1.公開:所有同仁都可以瀏覽
+                                <br>
+                                2.不公開:只有本部門和權限更大的上級部門可以瀏覽
+                                <br> 
+                                
+                            </span>
+                        </i>
+                    </div>
+                </label>
+                <div class="col-md-10">
+                    {{ form.privacy }}
+                </div>
+            </div>
+
+
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-outline-success">新增</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+{% endblock content %}
+
+
+{% block each_js_body %}
+<script>
+    function confirmDelete() {
+        return confirm("你確定要刪除嗎？");
+    }
+    $(document).ready(function () {
+        $('#create_from').on('click', function () {
+            $(".form_area").css("display", "block");
+            $('#Tags_control').select2({ tags: true });
+        })
+        // 關閉按鈕事件
+        $('.close-button').on('click', function () {            
+            $(".form_area").css("display", "none");
+        });
+
+
+
+        $('article-add-form').submit(function(){
+            console.log("test")
+        })
+
+        
+    });
+</script>
+{% endblock each_js_body %}

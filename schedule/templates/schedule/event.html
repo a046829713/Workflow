@@ -1,0 +1,123 @@
+{% extends 'schedule/base.html' %}
+{% load i18n scheduletags static %}
+{% load my_filters %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'schedule/event.css' %}" type="text/css" media="screen">
+{% endblock %}
+
+
+{% block body %}
+<div class="muji_container">
+    <div class="selfArea">
+        <div class="event_actions" align="center">
+            <a href="{% url 'fullcalendar' event.calendar.slug %}">
+                <span class="glyphicon glyphicon-circle-arrow-left">返回月排程</span>
+            </a>
+            &nbsp;
+            
+            {% if event.calendar.slug == 'VendorVisitScheduler' %}
+                <a href="{% url 'edit_visitor_event' event.calendar.slug event.id %}">
+                    編輯事件 <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+            {% else %}
+                <a href="{% url 'edit_event' event.calendar.slug event.id %}">
+                    編輯事件 <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+            {% endif %}
+
+            &nbsp;
+            <a href="{% url 'delete_event' event.id %}">
+                刪除事件 <span class="glyphicon glyphicon-remove"></span>
+            </a>
+        </div>
+        
+        <h2>{{ event.title }}</h2>
+        <table class="custom_table">
+            <tr>
+                <td>開始日期</td>
+                <td>
+                    {% blocktrans with event.start|date:_("DATETIME_FORMAT") as start_date %}
+                        {{ start_date }}
+                    {% endblocktrans %}
+                </td>
+            </tr>
+            <tr>
+                <td>結束日期</td>
+                <td>
+                    {% blocktrans with event.end|date:_("DATETIME_FORMAT") as end_date %}
+                        {{ end_date }}
+                    {% endblocktrans %}
+                </td>
+            </tr>
+            <tr>
+                <td>週期</td>
+                {% if event.rule %}
+                    <td>{{ event.rule.name }} {% trans "until" %} 
+                        {% blocktrans with event.end_recurring_period|date:_("DATETIME_FORMAT") as end_recurring_date %}
+                            {{ end_recurring_date }}
+                        {% endblocktrans %}
+                    </td>
+                {% else %}
+                    <td>單次事件</td>
+                {% endif %}
+            </tr>
+        </table>
+        
+        {% if event.description %}
+            {% if visitor %}
+                <table class="custom_table">
+                    <thead>
+                        <tr>                
+                            <th>廠商名稱</th>
+                            <th>拜訪人名稱</th>
+                            <th>目的</th>
+                            <th>受訪人名稱</th>
+                            <th>分機號碼</th>                                   
+                            <th>拜訪人數</th>                                                                  
+                        </tr>
+                    </thead>
+                    
+                    <tr>
+                        <td>{{ visitor.company_name }}</td>
+                        <td>{{ visitor.visitor_name }}</td>
+                        <td>{{ visitor.purpose }}</td>
+                        <td>
+    
+                            {% for user in users %}
+                                <span class="btn btn-outline-success">{{ user.FullName }}</span>
+                                {% for key, value in unit.items %}
+                                    {% if user.username == key %}
+                                        <span class="btn btn-outline-primary">{{ value }}</span>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        </td>
+                        <td>{{ visitor.tellphone_number|replace_special_mark }}</td>
+    
+                        <td>{{ visitor.number_of_visitors }}</td>                    
+                    </tr>
+                </table>
+            {% endif %}
+            <h3>內容說明</h3>
+            <p class="description_area">{{ event.description }}</p>
+            <div class="d-flex justify-content-around">
+                {% if event.form_id %}
+    
+                    <form action="{% url 'form_information_finish' form_id=event.form_id %}" method="post">
+                        {% csrf_token %}
+                        <button class="btn btn-success">{{ event.form_id }}</button>
+                        <input type="hidden" name="form_id" value="{{ event.form_id }}">
+                    </form>
+    
+                {% endif %}
+            </div>
+    
+            
+            
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock %}

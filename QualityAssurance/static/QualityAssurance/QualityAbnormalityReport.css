@@ -1,0 +1,13 @@
+.custom-container {
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-style:double;
+    border-width:3px;
+}
+
+.hidden-alternative {
+    visibility: hidden;
+    position: absolute;
+    left: -9999px; /* 移到屏幕之外 */
+}

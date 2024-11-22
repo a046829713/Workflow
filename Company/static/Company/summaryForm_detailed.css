@@ -1,0 +1,140 @@
+#form-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    /* 使弹出窗口靠右 */
+    width: 100%;
+    /* 控制最大宽度 */
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* 背景色稍微透明以看到下面的内容 */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    /* 水平方向靠右对齐 */
+    z-index: 1000;
+    overflow-y: auto;
+    /* 在垂直方向上添加滚动条 */
+}
+
+#check-form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 40%;
+    z-index: 1001;
+}
+
+#close-form {
+    padding: 5px 10px;
+    background-color: #ff9494;
+    border: none;
+    border-radius: 5px;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#close-form:hover {
+    background-color: #e6e6e6;
+    color: #000;
+}
+
+#check-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#check-form>#close-form {
+    align-self: flex-end;
+    margin: 10px 0;
+}
+
+#show-form {
+    border: none;
+    /* 去掉按钮的边框 */
+    background: none;
+    /* 去掉按钮的背景色 */
+    padding: 0;
+    /* 去掉内边距 */
+}
+
+#show-form img {
+    width: 24px;
+    /* 控制图像的宽度 */
+    height: 24px;
+    /* 控制图像的高度 */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    /* 更深的陰影效果 */
+}
+
+th,
+td {
+    padding: 15px;
+    background-color: rgba(38, 50, 56, 0.85);
+    /* 深灰色背景 */
+    color: #E0E0E0;
+    /* 亮灰色文字，增加可讀性 */
+}
+
+th {
+    text-align: left;
+}
+
+thead th {
+    background-color: #263238;
+    /* 更深的藍灰色作為表頭背景 */
+}
+
+tbody tr {
+    &:hover {
+        background-color: rgba(48, 63, 159, 0.3);
+        /* 深藍色滑動效果 */
+    }
+
+    border-bottom: 2px solid #4b814c;
+    /* 暗綠色作為底部邊界 */
+}
+
+tbody td {
+    position: relative;
+
+    &:hover {
+        &:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: -9999px;
+            bottom: -9999px;
+            background-color: rgba(67, 76, 94, 0.2);
+            /* 深色懸停擴展背景 */
+            z-index: -1;
+        }
+    }
+}
+
+
+.selectable {
+    user-select: text;
+    /* 讓內容可選擇 */
+    display: none;
+    /* 預設隱藏 */
+}
+
+.custom_btn {
+    background-color: #ffffff00;
+    border: none;
+}
+
+.custom_btn:hover {
+    background-color: #ffffff63;
+    border-radius: 10px;
+}

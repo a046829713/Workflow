@@ -1,0 +1,65 @@
+{% extends 'schedule/base.html' %}
+{% load i18n %}
+
+{% block head_title %}計畫表: {{ object.name }}{% endblock %}
+{% block tab_id %}id='home_tab'{% endblock %}
+
+
+{% block extra_head %}
+
+    <style>
+        body.dark-mode {
+            background-color: #343a40;
+            color: #f8f9fa;
+        }
+    </style>
+
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-11">
+        </div>
+        <div class="col-md-1">
+            {% if calendar_slug != 'VendorVisitScheduler' %}
+                <button id="theme-toggle" class="btn btn-light fs-5">切換模式</button>
+            {% endif %}
+            <a href="{% url 'guardroom' %}" class="btn btn-primary fs-5">警衛室</a>
+        </div>        
+    </div>
+    <h1>{{ object.name }}</h1>
+    <br>
+
+    <div id='calendar'></div>
+    {% include "schedule/fullcalendar_modal.html" %}
+
+
+    {% if calendar_slug != 'VendorVisitScheduler' %}
+        <script>
+            $('document').ready(function(){
+                
+                // 檢查存儲的主題偏好並應用
+                if (localStorage.getItem('theme') === 'dark') {
+                    document.body.classList.add('dark-mode');
+                }
+
+                // 切換模式並存儲設定
+                document.getElementById('theme-toggle').addEventListener('click', function() {
+                    document.body.classList.toggle('dark-mode');
+                    if (document.body.classList.contains('dark-mode')) {
+                        localStorage.setItem('theme', 'dark');
+                    } else {
+                        localStorage.removeItem('theme');
+                    }
+                });
+            })
+
+        </script>
+    {% endif %}
+{% endblock %}
+
+
+{% block expand_footer %}
+{% include "schedule/fullcalendar_script.html" %}
+
+{% endblock expand_footer %}

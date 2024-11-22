@@ -1,0 +1,99 @@
+{% extends "Company/summaryForm_detailed.html" %}
+
+{% load static %}
+{% load my_filters %}
+
+{% block extra_css %}
+<link href="{% static 'Company\index.css' %}" rel="stylesheet">
+<link href="{% static 'Company\summaryForm_detailed.css' %}" rel="stylesheet">
+<link href="{% static 'R_D_Department\ExperimentalTestsummary.css' %}" rel="stylesheet">
+
+
+{% endblock extra_css %}
+
+
+{% block form_content %}
+<table class="table table-secondary table-striped table-hover table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">Tag</th>                      
+            <th scope="col">測試類別</th>
+            <th scope="col">產品類別</th>
+            <th scope="col">產品型號</th>
+            <th scope="col">競品型號</th>                      
+            <th scope="col">期望繳交日期</th>                      
+            <th scope="col">預計完成日期</th>                      
+        </tr>
+        <tbody>
+            <tr>
+                {% for key,value in form.data.items %}
+                    {% if key == 'tags' %}
+                        <td>
+                            {% for each_key in value %}
+                                {% for color_key,color_value in tagged_tags_colors.items %}
+                                    {% if each_key == color_key %}
+                                    <div class='button-shadow' style="background-color: {{ color_value }};">
+                                        {{ each_key }}
+                                    </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        </td>
+                    {% endif %}
+                    {% if key == 'test_type' %}
+                        <td>{{ value }}</td>                                    
+                    {% endif %}
+                    {% if key == 'prod_type' %}
+                        <td>{{ value }}</td>                                    
+                    {% endif %}
+                    {% if key == 'prod_number' %}
+                        <td>{{ value }}</td>                                    
+                    {% endif %}                    
+                    {% if key == 'Compet_prod_number' %}
+                        <td>{{ value }}</td>                                    
+                    {% endif %}
+                    {% if key == 'Exception_date' %}
+                        <td>{{ value }}</td>                                    
+                    {% endif %}
+                    {% if key == 'estimated_completion_date' %}
+                        <td>{{ value }}</td>                                    
+                    {% endif %}
+                {% endfor %}
+
+            </tr>            
+            
+        </tbody>
+    </thead>
+</table>
+
+
+
+{% endblock form_content %}
+
+
+{% block action_area %}
+
+<!-- 因為實驗測試單，他們怕其他人亂編輯，希望可以鎖起來 -->
+{% if button_show %}
+    {% for key,value in FORMURLS_ONLYCHANGEDATA.items %}
+        {% if key == form.form_name %}
+        <form action="{% url value form_id_Per=form.form_id OnlyChangeData=True %}" method="post">
+        {% endif %}
+    {% endfor %}
+    {% csrf_token %}
+    <button class="btn btn-primary">編輯</button>
+    <input type="hidden" name="form_id" value="{{ form.form_id }}">
+    </form>
+{% endif %}
+
+{% endblock action_area %}
+
+
+
+{% block each_js_body %}
+<script>
+
+
+</script>
+
+{% endblock each_js_body %}

@@ -1,0 +1,313 @@
+.level_area {
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #eceeee;
+    border-style: groove;
+}
+
+/* The actual timeline (the vertical ruler) */
+.main-timeline-5 {
+    position: relative;
+    max-width: 80%;
+    margin: 0 auto;
+
+}
+
+/* The actual timeline (the vertical ruler) */
+.main-timeline-5::after {
+    content: "";
+    position: absolute;
+    width: 3px;
+    background-color: #ffffff;
+    top: 0;
+    bottom: 0;
+    left: auto;
+    margin-left: 22%;
+
+}
+
+/* Container around content */
+.timeline-5 {
+    position: relative;
+    background-color: inherit;
+    width: 100%;
+}
+
+/* The circles on the timeline */
+/* .timeline-5::after {
+    content: "";
+    position: relative;
+    width: 17px;
+    height: 17px;
+    right: 1px;
+    background-color: #ff9d9d;
+    top: 18px;
+    border-radius: 50%;
+    z-index: 1;
+} */
+
+/* Place the container to the right */
+/* .right-5 {
+    padding: 0px 0px 20px 40px;
+    left: auto;
+} */
+
+
+/* Fix the circle for containers on the right side */
+/* .right-5::after {
+    left: -10px;
+} */
+
+@media (max-width: 991px) {
+    .main-timeline-5 {
+        max-width: 100%;
+    }
+}
+
+.gradient-custom-5 {
+    /* fallback for old browsers */
+    /* background: #ebbba7; */
+
+    /* Chrome 10-25, Safari 5.1-6 */
+    /* background: -webkit-linear-gradient(to right,
+            rgba(235, 187, 167, 1),
+            rgba(207, 199, 248, 1)); */
+
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    /* background: linear-gradient(to right,
+            rgba(235, 187, 167, 1),
+            rgba(207, 199, 248, 1)); */
+    background: linear-gradient(to left, #348F50, #56B4D3);
+    border-radius: 10px;
+}
+
+
+.flex-container {
+    display: flex;
+    /* 將容器設為 flex 以使子項目水平排列 */
+    margin-top: 1%;
+}
+
+
+.first-label {
+    position: relative;
+    width: 20%;
+    margin-top: 2%;
+    text-align: center;
+    /* 將文字置中 */
+    font-family: 'Arial', sans-serif;
+    /* 你可以更改字體 */
+
+}
+
+.inner-wrapper {
+    width: 80%;
+    border: 2px solid #ffffff;
+    /* 添加白色邊框 */
+    padding: 10px;
+    /* 可以調整填充以更改外觀 */
+    border-radius: 10px;
+}
+
+.pretty_context_normal {
+    width: 12%;
+    border: 2px solid #3751ff;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #e6e9ff;
+    background-image: linear-gradient(to right, #ffffff, #e6e9ff);
+    text-align: center;
+    color: #3751ff;
+    display: inline-block;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.pretty_context_normal:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.pretty_context_warning {
+    width: 12%;
+    border: 2px solid #ff001e;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #ffccd5;
+    
+    text-align: center;
+    color: #ff001e;
+    display: inline-block;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.pretty_context_warning:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+
+.left-label {
+    position: relative;
+    width: 25px;
+    /* 大圓的寬度 */
+    height: 25px;
+    /* 大圓的高度 */
+    left: 10px;
+    top: 53px;
+    background-color: #000000;
+    /* 大圓的背景色 */
+    border-radius: 50%;
+    /* 設置為圓形 */
+    display: inline-block;
+    /* 使其成為行內塊以與其他元素並排顯示 */
+    z-index: 1;
+}
+
+.left-label::after {
+    content: "";
+    position: absolute;
+    width: 17px;
+    /* 小圓的寬度 */
+    height: 17px;
+    /* 小圓的高度 */
+    background-color: #ffb700;
+    /* 小圓的背景色 */
+    top: 50%;
+    /* 設置小圓在大圓中的頂部位置為50% */
+    left: 50%;
+    /* 設置小圓在大圓中的左側位置為50% */
+    transform: translate(-50%, -50%);
+    /* 使用轉換使小圓居中 */
+    border-radius: 50%;
+    /* 設置為圓形 */
+    z-index: 1;
+}
+
+.card {
+    width: 70%;
+    margin-left: 5%;
+
+}
+
+/* Add arrows to the right container (pointing left) */
+.right-5::before {
+    content: " ";
+    position: absolute;
+    top: 55px;
+    z-index: 1;
+    left: 245px;
+    border: medium solid #fff;
+    border-width: 10px 10px 10px 0;
+    border-color: transparent #fff transparent transparent;
+}
+
+
+
+
+.complaintarea,
+.QARarea,
+.dataVerification,
+.DDBarea,
+.approval_opinionarea,
+.DrawingDependencyBookarea,
+.ExternalProcessingarea,
+.BusinessCardRequestarea,
+.Heavyworkorderarea,
+.ExperimentalTestarea {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    /* 或其他合適的值 */
+}
+
+.complaintarea-content,
+.QARarea-content,
+.dataVerification-content,
+.DDBarea-content,
+.approval_opinion-content,
+.DrawingDependencyBookarea-content,
+.ExternalProcessingarea-content,
+.BusinessCardRequestarea-content,
+.Heavyworkorderarea-content,
+.ExperimentalTestarea-content {
+    position: fixed;
+    background-color: #fefefe;
+    width: 50%;
+    padding: 20px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    /* 或其他合適的值 */
+}
+
+.dataVerification-content,
+.complaintarea-content {
+    overflow-y: auto;
+    /* 允許內容在容器中垂直滾動 */
+    max-height: 80vh;
+    /* 限制容器的最大高度，比如80%的可視窗口高度 */
+}
+
+
+.custom-container {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-style: double;
+    border-width: 3px;
+}
+
+
+
+.custom-tooltip-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.custom-tooltip-text {
+    visibility: hidden;
+    width: 600px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position the tooltip above the text */
+    left: 50%;
+    margin-left: -60px; /* Use half of the width to center the tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 24px;
+}
+
+.custom-tooltip-wrapper:hover .custom-tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+.action_approved_area {
+    width: 100%;
+    height: auto; /* Allows the area to grow based on content */
+    padding: 15px; /* Adds some spacing inside the box */
+    border-radius: 6px; /* Rounded corners */
+    border: 2px solid #ff9595; /* Red border, 1em width */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Adds subtle shadow */
+    margin-bottom: 15px; /* Adds some space below the box */
+}

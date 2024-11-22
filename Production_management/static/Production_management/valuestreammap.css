@@ -1,0 +1,122 @@
+body {
+    margin: 0px;
+    background: #eee;
+    font-family: 'Arial', sans-serif;
+}
+
+.node circle {
+    fill: #fff;
+    stroke-width: 3px;
+}
+
+
+
+.node text {
+    font: 16px sans-serif;
+
+}
+
+.link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 2px;
+}
+
+
+
+#status_id {
+    color: red;
+    font-size: 16px;
+}
+
+
+
+
+/* Style inputs */
+input[type=text],
+select {
+    width: 20%;
+    padding: 12px 5px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+
+}
+
+/* Style the submit button */
+input[type=submit] {
+    width: 5%;
+    background-color: #04AA6D;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+/* Add a background color to the submit button on mouse-over */
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+
+
+
+.containerCustom {
+    width: 85%;
+    margin: 10px auto;
+
+}
+
+.change_ranking-content {
+    position: fixed;
+    background-color: #fefefe;
+    width: 50%;
+    padding: 20px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    /* 或其他合適的值 */
+}
+
+
+.change_ranking {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    /* 或其他合適的值 */
+}
+
+.navbar {
+    border-radius: 10px;
+}
+
+.overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    background-color: rgba(72, 72, 72, 0.9);
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.overlay-content {
+    position: relative;
+    top: 25%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
